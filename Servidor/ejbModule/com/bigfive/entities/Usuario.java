@@ -150,4 +150,13 @@ public class Usuario implements Serializable {
 		this.genero = genero;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [idUsuario=" + idUsuario + ", apellido=" + apellido + ", contrasenia=" + contrasenia
+				+ ", documento=" + documento + ", fechaNac=" + fechaNac + ", localidad=" + localidad + ", mail=" + mail
+				+ ", mailInstitucional=" + mailInstitucional + ", nombre=" + nombre + ", telefono=" + telefono
+				+ ", departamento=" + departamento + ", genero=" + genero + "]";
+	}
+	
+
 }
