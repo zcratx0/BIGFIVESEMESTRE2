@@ -15,6 +15,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import funcionalidades.FuncionalidadesITR;
 
 public class ListaAuxITR {
 
@@ -133,6 +136,20 @@ public class ListaAuxITR {
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
+		//	FUNCIONALIDAD
+		cargarTabla();
 		
 	}
+	
+	public void cargarTabla() {
+		DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addColumn("ITR");
+		tableModel.addColumn("NOMBRE");
+		FuncionalidadesITR.getInstance().getItrBean().listarElementos().forEach(t -> {
+			Object[] tabla = {t.getNombre(), t.getDepartamento()};
+			tableModel.addColumn(tableModel);
+		});
+	}
+	
+	
 }

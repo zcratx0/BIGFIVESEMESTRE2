@@ -13,12 +13,19 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LogIn {
 
-	private JFrame frame;
-	private JTextField tfUsuario;
-	private JPasswordField pasFContra;
+	JFrame frame = new JFrame();
+	JLabel lblUsuario = new JLabel("Usuario");
+	JTextField tfUsuario = new JTextField();
+	JLabel lblContrasenia = new JLabel("Contraseña");
+	JPasswordField pasFContra = new JPasswordField();
+	JLabel lblOlvidContra = new JLabel("¿Olvidaste tu Contraseña?");
+	
+
 
 	/**
 	 * Launch the application.
@@ -47,7 +54,6 @@ public class LogIn {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb")); 
 		frame.setBounds(100, 100, 453, 330);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,12 +66,10 @@ public class LogIn {
 		
 		
 		//Usuario
-		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Bookman Old Style", Font.BOLD, 10)); 
 		lblUsuario.setBounds(226, 42, 45, 13);
 		frame.getContentPane().add(lblUsuario);
 		
-		tfUsuario = new JTextField();
 		tfUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 10)); 
 		tfUsuario.setBounds(226, 74, 188, 19);
 		frame.getContentPane().add(tfUsuario);
@@ -77,12 +81,11 @@ public class LogIn {
 		frame.getContentPane().add(lblImgUsuario);
 		
 		//Contraseña
-		JLabel lblContrasenia = new JLabel("Contraseña");
 		lblContrasenia.setFont(new Font("Bookman Old Style", Font.BOLD, 10)); 
 		lblContrasenia.setBounds(226, 131, 83, 13);
 		frame.getContentPane().add(lblContrasenia);
 		
-		pasFContra = new JPasswordField();
+		
 		pasFContra.setBounds(226, 154, 188, 19);
 		frame.getContentPane().add(pasFContra);
 		
@@ -92,7 +95,6 @@ public class LogIn {
 		frame.getContentPane().add(lblImgContrasenia);
 		
 		//Olvidaste tu contraseña
-		JLabel lblOlvidContra = new JLabel("¿Olvidaste tu Contraseña?");
 		lblOlvidContra.setFont(new Font("Bookman Old Style", Font.PLAIN, 10)); 
 		lblOlvidContra.setBounds(226, 194, 171, 13);
 		frame.getContentPane().add(lblOlvidContra);
@@ -101,14 +103,19 @@ public class LogIn {
 			//Ingresar
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.setBackground(Color.decode("#0284c7"));
-		btnIngresar.setFont(new Font("Bookman Old Style", Font.PLAIN, 10)); 
+		btnIngresar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnIngresar.setForeground(Color.decode("#f0f9ff"));
 		btnIngresar.setBounds(337, 243, 92, 29);
 		frame.getContentPane().add(btnIngresar);
 			//Registrarse
 		JButton btnRegistro = new JButton("Registrarse");
+		btnRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistroUsuario.main(null);
+			}
+		});
 		btnRegistro.setBackground(Color.decode("#0284c7"));
-		btnRegistro.setFont(new Font("Bookman Old Style", Font.PLAIN, 10)); 
+		btnRegistro.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnRegistro.setForeground(Color.decode("#f0f9ff"));
 		btnRegistro.setBounds(191, 243, 118, 29);
 		frame.getContentPane().add(btnRegistro);

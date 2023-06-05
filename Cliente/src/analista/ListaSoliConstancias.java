@@ -145,6 +145,7 @@ public class ListaSoliConstancias {
 		btnAtras.setBounds(239, 485, 85, 21);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PrincipalAnalista.main(null);
 				frame.dispose();
 			}
 		});
@@ -156,6 +157,8 @@ public class ListaSoliConstancias {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
+		
+		
+		
 	}
-	
 }

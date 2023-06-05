@@ -144,6 +144,7 @@ public class ListaReclamo {
 		btnAtras.setBounds(224,445, 85, 27);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PrincipalAnalista.main(null);
 				frame.dispose();
 			}
 		});

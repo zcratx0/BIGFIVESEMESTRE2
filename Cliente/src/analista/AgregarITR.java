@@ -9,11 +9,18 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 
+import com.bigfive.entities.Departamento;
+import com.bigfive.entities.Itr;
+
+import funcionalidades.FuncionalidadesDepartamento;
+import funcionalidades.FuncionalidadesITR;
 
 import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -25,7 +32,7 @@ public class AgregarITR {
 	JLabel lblNombre = new JLabel("Nombre");
 	JTextField tfNombre = new JTextField();
 	JLabel lblDepa = new JLabel("Departamento");
-	JTextField tfDepa = new JTextField();
+	JComboBox<Departamento> cbDepa = new JComboBox<Departamento>();
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
 
@@ -84,9 +91,8 @@ public class AgregarITR {
 		lblDepa.setBounds(25, 120, 105, 13);
 		frame.getContentPane().add(lblDepa);
 		
-		tfDepa.setBounds(142, 117, 274, 19);
-		frame.getContentPane().add(tfDepa);
-		tfDepa.setColumns(10);
+		cbDepa.setBounds(142, 117, 274, 19);
+		frame.getContentPane().add(cbDepa);
 		
 		
 		//Boton Agregar
@@ -95,8 +101,16 @@ public class AgregarITR {
 		btnConfirmar.setBackground(Color.decode("#0284c7"));
 		btnConfirmar.setBounds(311, 184, 105, 33);
 		frame.getContentPane().add(btnConfirmar);
-		
-		
+		btnConfirmar.addActionListener(e -> {
+			Itr itr = new Itr();
+			itr.setDepartamento((Departamento) cbDepa.getSelectedItem());
+			itr.setNombre(tfNombre.getText());
+			if (FuncionalidadesITR.getInstance().getItrBean().crear(itr)) {
+				System.out.println("ITR CREADO");
+			} else {
+				System.out.println("ERROR AL CREAR ITR");
+			}
+		});
 		
 		//Boton Cancelar
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
@@ -117,6 +131,9 @@ public class AgregarITR {
 		lblLogoUtec.setBounds(25, 0, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
+		
+		//	FUNCIONALIDADES
+		FuncionalidadesDepartamento.getInstance().cargarComboBox(cbDepa);
 	}
 
 }

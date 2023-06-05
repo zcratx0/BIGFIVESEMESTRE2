@@ -9,16 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import com.bigfive.entities.Usuario;
-
-import funcionalidades.FuncionalidadesUsuario;
-
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class ListaUsuarios {
@@ -38,9 +31,6 @@ public class ListaUsuarios {
 	JButton btnAtras = new JButton("Atrás");
 	JButton btnModificar = new JButton("Modificar");
 	
-	Object[][] datosUsu;
-	JTable tablaUsu;
-	
 	
 	/**
 	 * Launch the application.
@@ -51,9 +41,6 @@ public class ListaUsuarios {
 				try {
 					ListaUsuarios window = new ListaUsuarios();
 					window.frame.setVisible(true);
-					if (FuncionalidadesUsuario.getInstance().getUserBean().listarElementos().size() > 0) {
-						window.cargarDatos(FuncionalidadesUsuario.getInstance().getUserBean().listarElementos());
-					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -167,11 +154,13 @@ public class ListaUsuarios {
 		
 		
 		// Tabla
-				Object[][] datosUsu = {};
+				Object[][] datosUsu = {
 
-				String[] columnasUsu  = {"Usuario", "ITR", "Datos", "Historial", "Estado"};
+				};
 
-				tablaUsu = new JTable(datosUsu , columnasUsu );
+				String[] columnasUsu  = {"Usuario", "ITR", "Estado"};
+
+				JTable tablaUsu = new JTable(datosUsu , columnasUsu );
 				JScrollPane scrollPaneUsu  = new JScrollPane(tablaUsu );
 				scrollPaneUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 				scrollPaneUsu.setBackground(Color.decode("#f3f4f6"));
@@ -202,40 +191,20 @@ public class ListaUsuarios {
 		btnModificar.setBounds(884, 410, 96, 31);
 		frame.getContentPane().add(btnModificar);
 		
-		
-		//Historial
+		// Historial
 		JButton btnHistorial = new JButton("Historial");
 		btnHistorial.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnHistorial.setForeground(Color.decode("#f0f9ff"));
 		btnHistorial.setBackground(Color.decode("#0ea5e9"));
 		btnHistorial.setBounds(131, 415, 85, 21);
 		frame.getContentPane().add(btnHistorial);
-		btnHistorial.addActionListener(e -> {
-			//	TODO crear tabla con el historial del usuario
-			System.out.println("FUNCION AUN NO IMPLEMENTADA");
-		});
-		//Datos
+
+		// Datos
 		JButton btnDatos = new JButton("Datos");
 		btnDatos.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnDatos.setForeground(Color.decode("#f0f9ff"));
 		btnDatos.setBackground(Color.decode("#0ea5e9"));
 		btnDatos.setBounds(25, 415, 85, 21);
 		frame.getContentPane().add(btnDatos);
-
 	}
-	
-	public void cargarDatos(List<Usuario> user) {
-		String[] columnasUsu  = {"Usuario", "ITR", "Estado"};
-		DefaultTableModel tableModel =  new DefaultTableModel(columnasUsu, 0);
-		user.forEach(t -> {
-			String usuario = t.getNombre()+" "+t.getApellido();
-			String itr ="";
-			if (t.getItr() != null) itr = t.getItr().getNombre().toString();
-			String estado = "ESTADO";
-			Object[] object = {usuario, itr, estado};
-			tableModel.addRow(object);
-		});
-		tablaUsu.setModel(tableModel);
-	}
-	
 }

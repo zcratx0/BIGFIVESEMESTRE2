@@ -7,11 +7,6 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import com.bigfive.entities.Usuario;
-
-import funcionalidades.FuncionalidadesUsuario;
-
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -180,16 +175,4 @@ public class DatosUsuario {
 		
 	}
 
-
-	public void cargarDatos(Usuario user) {
-		if (user.getNombre() != null) lblNombre.setText(lblNombre.getText() + ": "+ user.getNombre());
-		if (user.getApellido() != null) lblApellido.setText(lblApellido.getText()+ " " + user.getApellido());
-		if (user.getDocumento() != null) lblCedula.setText(lblCedula.getText()+ ": " + user.getDocumento());
-		if (user.getFechaNac() != null) lblFechNac.setText(user.getFechaNac().toString());
-		if (user.getMail() != null) lblEmailP.setText(lblEmailP.getText() + ": " + user.getMail());
-		if (user.getMailInstitucional() != null) lblEmailU.setText(lblEmailU.getText() + ": " + user.getMailInstitucional());
-		if (user.getTelefono() != null) lblTel.setText(lblTel.getText() + ": " + user.getTelefono());
-		if (user.getDepartamento() != null) lblDepa.setText(user.getDepartamento().getNombre());
-		if (user.getLocalidad() != null) lblLocalidad.setText(lblLocalidad.getText() + ": " +  user.getLocalidad());
-	}
 }

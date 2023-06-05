@@ -100,6 +100,7 @@ public class ListaEscolaridad {
 		btnAtras.setBounds(193, 451, 96, 32);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PrincipalAnalista.main(null);
 				frame.dispose();
 			}
 		});

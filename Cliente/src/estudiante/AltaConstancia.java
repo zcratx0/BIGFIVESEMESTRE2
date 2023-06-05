@@ -1,0 +1,143 @@
+package estudiante;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
+
+import analista.ListaAuxITR;
+import analista.ListaSoliConstancias;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.SystemColor;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class AltaConstancia {
+
+	JFrame frame = new JFrame();
+	JLabel lblTitSoliConst = new JLabel("Solicitud de Constancia");
+	JLabel lblTipo = new JLabel("Tipo");
+	JComboBox cBoxTipo = new JComboBox();
+	JLabel lblEvento = new JLabel("Evento");
+	JComboBox cBoxEvento = new JComboBox();
+	JLabel lblInfoAd = new JLabel("Información Adicional");
+	JTextArea taInfoAd = new JTextArea();
+	JButton btnGuardar = new JButton("Guardar");
+	JButton btnCancelar = new JButton("Cancelar");
+	JButton btnAdjuntar = new JButton("Adjuntar Archivo");
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AltaConstancia window = new AltaConstancia();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public AltaConstancia() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
+		frame.setBounds(100, 100, 554, 356);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
+
+		//Titulo
+		lblTitSoliConst.setForeground(Color.decode("#08ACEC"));
+		lblTitSoliConst.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
+		lblTitSoliConst.setBounds(107, 10, 308, 21);
+		frame.getContentPane().add(lblTitSoliConst);
+		
+		
+		// Tipo
+		lblTipo.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		lblTipo.setBounds(33, 60, 45, 13);
+		frame.getContentPane().add(lblTipo);
+
+
+		cBoxTipo.setBounds(128, 56, 144, 21);
+		cBoxTipo.setBackground(Color.decode("#e5e7eb"));
+		frame.getContentPane().add(cBoxTipo);
+
+		// Evento
+		lblEvento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		lblEvento.setBounds(33, 105, 45, 13);
+		frame.getContentPane().add(lblEvento);
+
+		cBoxEvento.setBounds(128, 101, 144, 21);
+		cBoxEvento.setBackground(Color.decode("#e5e7eb"));
+		frame.getContentPane().add(cBoxEvento);
+
+		// Info Adicional
+		lblInfoAd.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		lblInfoAd.setBounds(33, 151, 132, 13);
+		frame.getContentPane().add(lblInfoAd);
+
+
+		taInfoAd.setToolTipText("");
+		taInfoAd.setBackground(SystemColor.inactiveCaptionBorder);
+		taInfoAd.setBounds(55, 174, 432, 84);
+		frame.getContentPane().add(taInfoAd);
+
+		//Botones
+			//Guardar
+		btnGuardar.setBackground(Color.decode("#0284c7"));  
+		btnGuardar.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnGuardar.setForeground(Color.decode("#f0f9ff"));
+		btnGuardar.setBounds(423, 280, 90, 29);
+		frame.getContentPane().add(btnGuardar);
+		
+		
+			//Cancelar
+		btnCancelar.setBackground(Color.decode("#0284c7"));  
+		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnCancelar.setForeground(Color.decode("#f0f9ff"));
+		btnCancelar.setBounds(298, 280, 90, 29);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaConstancias.main(null);
+				frame.dispose();
+			}
+		});
+		frame.getContentPane().add(btnCancelar);
+		
+			//Adjuntar Archivo
+		btnAdjuntar.setBackground(Color.decode("#0284c7"));  
+		btnAdjuntar.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnAdjuntar.setForeground(Color.decode("#f0f9ff"));
+		btnAdjuntar.setBounds(107, 280, 132, 29);
+		frame.getContentPane().add(btnAdjuntar);
+
+		//Imagen
+		JLabel lblLogoUtec = new JLabel("");
+		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
+		lblLogoUtec.setBounds(25, 1, 107, 50);
+		frame.getContentPane().add(lblLogoUtec);
+		
+		
+	}
+}

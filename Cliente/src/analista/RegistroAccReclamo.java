@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class RegistroAccReclamo {
 
@@ -138,6 +139,9 @@ public class RegistroAccReclamo {
 		});
 		frame.getContentPane().add(btnCancelar);
 		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(165, 76, 193, 19);
+		frame.getContentPane().add(dateChooser);
+		
 	}
-
 }

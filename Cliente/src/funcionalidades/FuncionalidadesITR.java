@@ -1,33 +1,41 @@
 package funcionalidades;
 
 import javax.naming.InitialContext;
+import javax.swing.JComboBox;
 
 import com.bigfive.beans.DepartamentoBeanRemote;
+import com.bigfive.beans.ITRBeanRemote;
 
 public class FuncionalidadesITR {
 	private static FuncionalidadesITR instance = new FuncionalidadesITR();
-	private DepartamentoBeanRemote departamentoBean;
-	
+	private ITRBeanRemote itrBean;
+
 	public static FuncionalidadesITR getInstance() {
 		return instance;
 	}
 	
 	public FuncionalidadesITR() {
 		try {
-			setDepartamentoBean(() InitialContext.doLookup("ejb:/ProyectoEJB/DepartamentoBean!com.bigfive.beans.DepartamentoBeanRemote"));
-			
+			setItrBean((ITRBeanRemote) InitialContext.doLookup("ejb:/ProyectoEJB/ITRBean!com.bigfive.beans.ITRBeanRemote"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	public DepartamentoBeanRemote getDepartamentoBean() {
-		return departamentoBean;
-		
+	
+	public ITRBeanRemote getItrBean() {
+		return itrBean;
 	}
 
-	public void setDepartamentoBean(DepartamentoBeanRemote departamentoBean) {
-		this.departamentoBean = departamentoBean;
-		
+	public void setItrBean(ITRBeanRemote itrBean) {
+		this.itrBean = itrBean;
+	}
+	public void cargarComboBox(JComboBox cb) {
+		try {
+			itrBean.listarElementos().forEach(t -> {
+				cb.addItem(t);
+			});
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
 	}
 }

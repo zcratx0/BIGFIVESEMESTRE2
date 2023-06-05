@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class RegistroAccConstancias {
 
@@ -136,6 +137,10 @@ public class RegistroAccConstancias {
 			}
 		});
 		frame.getContentPane().add(btnCancelar);
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(161, 76, 181, 19);
+		frame.getContentPane().add(dateChooser);
 		
 		
 		

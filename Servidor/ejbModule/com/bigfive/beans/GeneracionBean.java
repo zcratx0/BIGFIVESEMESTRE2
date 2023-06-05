@@ -6,63 +6,59 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.bigfive.entities.Departamento;
+import com.bigfive.entities.Generacion;
 
 /**
- * Session Bean implementation class DepartamentoBean
+ * Session Bean implementation class GeneracionBean
  */
 @Stateless
-public class DepartamentoBean implements DepartamentoBeanRemote {
-	@PersistenceContext
+public class GeneracionBean implements GeneracionBeanRemote {
+    @PersistenceContext
 	EntityManager em;
     /**
      * Default constructor. 
      */
-    public DepartamentoBean() {
+    public GeneracionBean() {
         // TODO Auto-generated constructor stub
     }
-
 	@Override
-	public boolean crear(Departamento value) {
+	public boolean crear(Generacion value) {
 		try {
 			em.persist(value);
 			em.flush();
 			return true;
 		} catch (Exception e) {
-			System.err.println("ERROR AL CREAR DEPARTAMENTO");
+			System.err.println("ERROR AL CREAR GENERACION");
 			e.printStackTrace();
 		}
 		return false;
 	}
-
 	@Override
-	public boolean borrar(Departamento value) {
+	public boolean borrar(Generacion value) {
 		try {
 			em.persist(value);
 			em.flush();
 			return true;
 		} catch (Exception e) {
-			System.err.println("ERROR AL BORRAR DEPARTAMENTO");
+			System.err.println("ERROR AL BORRAR GENERACION");
 			e.printStackTrace();
 		}
 		return false;
 	}
-
 	@Override
-	public boolean modificar(Departamento value) {
+	public boolean modificar(Generacion value) {
 		try {
 			em.persist(value);
 			em.flush();
 		} catch (Exception e) {
-			System.err.println("ERROR AL MODIFICAR DEPARTAMENTO");
+			System.err.println("ERROR AL MODIFICAR GENERACION");
 			e.printStackTrace();
 		}
 		return false;
 	}
-
 	@Override
-	public List<Departamento> listarElementos() {
-		return em.createQuery("SELECT e FROM Departamento e").getResultList();
+	public List<Generacion> listarElementos() {
+		return em.createQuery("SELECT e FROM Generacion e").getResultList();
 	}
 
 }

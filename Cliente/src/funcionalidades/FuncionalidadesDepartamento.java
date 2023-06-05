@@ -1,9 +1,13 @@
 package funcionalidades;
 
+import java.util.List;
+
 import javax.naming.InitialContext;
+import javax.swing.JComboBox;
 
 import com.bigfive.beans.DepartamentoBeanRemote;
 import com.bigfive.beans.UsuarioBeanRemote;
+import com.bigfive.entities.Departamento;
 
 public class FuncionalidadesDepartamento {
 	private static FuncionalidadesDepartamento instance = new FuncionalidadesDepartamento();
@@ -31,4 +35,11 @@ public class FuncionalidadesDepartamento {
 		this.departamentoBean = departamentoBean;
 		
 	}
+	
+	public void cargarComboBox(JComboBox cb) {
+		departamentoBean.listarElementos().forEach(t -> {
+			cb.addItem(t);
+		});
+	}
+	
 }

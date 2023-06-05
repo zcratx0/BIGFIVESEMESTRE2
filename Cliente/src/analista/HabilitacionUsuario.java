@@ -97,6 +97,7 @@ public class HabilitacionUsuario {
 		btnAtras.setBounds(434, 333, 89, 29);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PrincipalAnalista.main(null);
 				frame.dispose();
 			}
 		});

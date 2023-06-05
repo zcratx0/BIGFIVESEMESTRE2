@@ -6,63 +6,59 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.bigfive.entities.Departamento;
+import com.bigfive.entities.Genero;
 
 /**
- * Session Bean implementation class DepartamentoBean
+ * Session Bean implementation class GeneroBean
  */
 @Stateless
-public class DepartamentoBean implements DepartamentoBeanRemote {
-	@PersistenceContext
+public class GeneroBean implements GeneroBeanRemote {
+    @PersistenceContext
 	EntityManager em;
     /**
      * Default constructor. 
      */
-    public DepartamentoBean() {
+    public GeneroBean() {
         // TODO Auto-generated constructor stub
     }
-
 	@Override
-	public boolean crear(Departamento value) {
+	public boolean crear(Genero value) {
 		try {
 			em.persist(value);
 			em.flush();
 			return true;
 		} catch (Exception e) {
-			System.err.println("ERROR AL CREAR DEPARTAMENTO");
+			System.err.println("ERROR AL CREAR GENERO");
 			e.printStackTrace();
 		}
 		return false;
 	}
-
 	@Override
-	public boolean borrar(Departamento value) {
+	public boolean borrar(Genero value) {
 		try {
 			em.persist(value);
 			em.flush();
 			return true;
 		} catch (Exception e) {
-			System.err.println("ERROR AL BORRAR DEPARTAMENTO");
+			System.err.println("ERROR AL BORRAR GENERO");
 			e.printStackTrace();
 		}
 		return false;
 	}
-
 	@Override
-	public boolean modificar(Departamento value) {
+	public boolean modificar(Genero value) {
 		try {
 			em.persist(value);
 			em.flush();
 		} catch (Exception e) {
-			System.err.println("ERROR AL MODIFICAR DEPARTAMENTO");
+			System.err.println("ERROR AL MODIFICAR GENERO");
 			e.printStackTrace();
 		}
 		return false;
 	}
-
 	@Override
-	public List<Departamento> listarElementos() {
-		return em.createQuery("SELECT e FROM Departamento e").getResultList();
+	public List<Genero> listarElementos() {
+		return em.createQuery("SELECT e FROM Genero e").getResultList();
 	}
 
 }
