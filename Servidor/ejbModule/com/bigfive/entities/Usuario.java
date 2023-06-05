@@ -51,6 +51,11 @@ public class Usuario implements Serializable {
 	@JoinColumn(name="ID_GENERO")
 	private Genero genero;
 
+	//uni-directional many-to-one association to Itr
+	@ManyToOne
+	@JoinColumn(name="ID_ITR")
+	private Itr itr;
+
 	public Usuario() {
 	}
 
@@ -150,13 +155,12 @@ public class Usuario implements Serializable {
 		this.genero = genero;
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [idUsuario=" + idUsuario + ", apellido=" + apellido + ", contrasenia=" + contrasenia
-				+ ", documento=" + documento + ", fechaNac=" + fechaNac + ", localidad=" + localidad + ", mail=" + mail
-				+ ", mailInstitucional=" + mailInstitucional + ", nombre=" + nombre + ", telefono=" + telefono
-				+ ", departamento=" + departamento + ", genero=" + genero + "]";
+	public Itr getItr() {
+		return this.itr;
 	}
-	
+
+	public void setItr(Itr itr) {
+		this.itr = itr;
+	}
 
 }

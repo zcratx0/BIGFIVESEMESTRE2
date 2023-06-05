@@ -3,13 +3,19 @@ package analista;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
+import analista.RegistroAccConstancias;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class ListaSoliConstancias {
 
@@ -96,31 +102,19 @@ public class ListaSoliConstancias {
 		btnLimpiarF.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		btnLimpiarF.setBounds(321, 127, 115, 21);
 		frame.getContentPane().add(btnLimpiarF);
+
+		//Tabla 
+		Object[][] datosCO = {
+			   
+			};
 		
+		String[] columnasCO = {"Usuario", "Fecha", "Estado"};
 		
-		//Usuario
-		JLabel lblUsuario = new JLabel("Usuario");
-		lblUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblUsuario.setBounds(34, 197, 45, 13);
-		frame.getContentPane().add(lblUsuario);
-		
-		//Fecha
-		JLabel lblFecha = new JLabel("Fecha");
-		lblFecha.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblFecha.setBounds(198, 197, 45, 13);
-		frame.getContentPane().add(lblFecha);
-		
-		//Estado
-		JLabel lblEstadoTit = new JLabel("Estado");
-		lblEstadoTit.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblEstadoTit.setBounds(358, 197, 45, 13);
-		frame.getContentPane().add(lblEstadoTit);
-		
-		JComboBox cBoxEstadoList = new JComboBox();
-		cBoxEstadoList.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		cBoxEstadoList.setBackground(Color.decode("#e5e7eb"));
-		cBoxEstadoList.setBounds(356, 237, 109, 21);
-		frame.getContentPane().add(cBoxEstadoList);
+		JTable tablaCO = new JTable(datosCO, columnasCO);
+		JScrollPane scrollPaneCO = new JScrollPane(tablaCO);
+		scrollPaneCO.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		scrollPaneCO.setBounds(25, 202, 482, 248);
+		frame.getContentPane().add(scrollPaneCO);
 			//Dar de Baja
 		JButton btnBaja = new JButton("Dar de Baja");
 		btnBaja.setBackground(Color.decode("#0284c7"));  
@@ -130,6 +124,11 @@ public class ListaSoliConstancias {
 		frame.getContentPane().add(btnBaja);
 			//Registrar acciones
 		JButton btnRegAcc = new JButton("Registrar Acciones");
+		btnRegAcc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistroAccConstancias.main(null);
+			}
+		});
 		btnRegAcc.setBackground(Color.decode("#0284c7")); 
 		btnRegAcc.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		btnRegAcc.setForeground(Color.decode("#f0f9ff"));

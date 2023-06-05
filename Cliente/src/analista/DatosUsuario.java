@@ -4,15 +4,33 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 
+import javax.naming.InitialContext;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import com.bigfive.beans.UsuarioBean;
+import com.bigfive.beans.UsuarioBeanRemote;
+import com.bigfive.entities.Usuario;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
 public class DatosUsuario {
 
 	private JFrame frame;
+	JLabel lblLogoUtec = new JLabel("");
+	JLabel lblNombre = new JLabel("Nombre");
+	JLabel lblApellido = new JLabel("Apellido");
+	JLabel lblCedula = new JLabel("Cédula");
+	JLabel lblFechNac = new JLabel("Fecha de Nacimiento");
+	JLabel lblEmailP = new JLabel("Email Personal");
+	JLabel lblEmailU = new JLabel("Email UTEC");
+	JLabel lblTel = new JLabel("Teléfono");
+	JLabel lblDepa = new JLabel("Departamento");
+	JLabel lblLocalidad = new JLabel("Localidad");
+	JLabel lblItr = new JLabel("ITR");
+
 
 	/**
 	 * Launch the application.
@@ -23,6 +41,9 @@ public class DatosUsuario {
 				try {
 					DatosUsuario window = new DatosUsuario();
 					window.frame.setVisible(true);
+					UsuarioBeanRemote userBean = (UsuarioBeanRemote) InitialContext.doLookup("ejb:/ProyectoEJB/UsuarioBean!com.bigfive.beans.UsuarioBeanRemote");
+					Usuario user = userBean.listarElementos().get(0);
+					window.cargarDatos(user);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,7 +70,6 @@ public class DatosUsuario {
 		frame.setResizable(false); 
 		
 		// Imagen
-		JLabel lblLogoUtec = new JLabel("");
 		lblLogoUtec.setIcon(new ImageIcon(AgregarITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 0, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
@@ -70,84 +90,74 @@ public class DatosUsuario {
 		frame.getContentPane().add(lblTipoUsu);				
 				
 		//Nombre
-		JLabel lblNombre = new JLabel("Nombre");
+		
 		lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblNombre.setBounds(39, 130, 64, 13);
+		lblNombre.setBounds(39, 130, 256, 13);
 		frame.getContentPane().add(lblNombre);
 		
 		
 		//Apellido
-		JLabel lblApellido = new JLabel("Apellido");
 		lblApellido.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblApellido.setBounds(39, 175, 80, 13);
+		lblApellido.setBounds(39, 175, 256, 13);
 		frame.getContentPane().add(lblApellido);
 		
 		
 		//Cedula
-		JLabel lblCedula = new JLabel("Cédula");
 		lblCedula.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblCedula.setBounds(39, 220, 45, 13);
+		lblCedula.setBounds(39, 220, 256, 13);
 		frame.getContentPane().add(lblCedula);
 		
 		
 		//Fecha de nacimiento
-		JLabel lblFechNac = new JLabel("Fecha de Nacimiento");
 		lblFechNac.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblFechNac.setBounds(39, 265, 156, 13);
+		lblFechNac.setBounds(39, 265, 256, 13);
 		frame.getContentPane().add(lblFechNac);
 		
 		//Email Personal
-		JLabel lblEmailP = new JLabel("Email Personal");
 		lblEmailP.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblEmailP.setBounds(39, 310, 116, 13);
+		lblEmailP.setBounds(39, 310, 256, 13);
 		frame.getContentPane().add(lblEmailP);
 		
 		//Email UTEC
-		JLabel lblEmailU = new JLabel("Email UTEC");
 		lblEmailU.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblEmailU.setBounds(39, 355, 116, 13);
+		lblEmailU.setBounds(39, 355, 256, 13);
 		frame.getContentPane().add(lblEmailU);
 		
 		
 		//Telefono
-		JLabel lblTel = new JLabel("Teléfono");
 		lblTel.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblTel.setBounds(39, 400, 93, 13);
+		lblTel.setBounds(39, 400, 256, 13);
 		frame.getContentPane().add(lblTel);
 		
 		
 		//Departamento
-		JLabel lblDepa = new JLabel("Departamento");
 		lblDepa.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblDepa.setBounds(39, 445, 93, 13);
+		lblDepa.setBounds(39, 445, 256, 13);
 		frame.getContentPane().add(lblDepa);
 		
 		
 		//Localidad
-		JLabel lblLocalidad = new JLabel("Localidad");
 		lblLocalidad.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblLocalidad.setBounds(39, 490, 93, 13);
+		lblLocalidad.setBounds(39, 490, 256, 13);
 		frame.getContentPane().add(lblLocalidad);
 		
 		
 		//ITR
-		JLabel lblItr = new JLabel("ITR");
 		lblItr.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblItr.setBounds(39, 535, 45, 13);
+		lblItr.setBounds(39, 535, 256, 13);
 		frame.getContentPane().add(lblItr);
 		
 		
 		//Estado
 		JLabel lblEstado = new JLabel("Estado");
 		lblEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblEstado.setBounds(39, 580, 45, 13);
+		lblEstado.setBounds(39, 580, 256, 13);
 		frame.getContentPane().add(lblEstado);
 		
 		JComboBox cBoxEstado = new JComboBox();
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		cBoxEstado.setBounds(195, 580, 183, 21);
+		cBoxEstado.setBounds(195, 580, 256, 21);
 		frame.getContentPane().add(cBoxEstado);
-		
 		
 		//Botones
 			//Guardar
@@ -165,6 +175,18 @@ public class DatosUsuario {
 		btnAtras.setBounds(165, 637, 93, 32);
 		frame.getContentPane().add(btnAtras);
 		
+	}
+	public void cargarDatos(Usuario user) {
+		if (user.getNombre() == null) 
+		lblNombre.setText(lblNombre.getText() + ": "+ user.getNombre());
+		lblApellido.setText(lblApellido.getText()+ " " + user.getApellido());
+		lblCedula.setText(lblCedula.getText()+ ": " + user.getDocumento());
+		//lblFechNac.setText(user.getFechaNac());
+		lblEmailP.setText(lblEmailP.getText() + ": " + user.getMail());
+		lblEmailU.setText(lblEmailU.getText() + ": " + user.getMailInstitucional());
+		lblTel.setText(lblTel.getText() + ": " + user.getTelefono());
+		//lblDepa.setText(user.getDepartamento().getNombre());
+		lblLocalidad.setText(lblLocalidad.getText() + ": " +  user.getLocalidad());
 	}
 
 }

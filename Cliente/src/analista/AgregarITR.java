@@ -16,7 +16,6 @@
 
 // frame.setResizable(false);
 package analista;
-
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -27,6 +26,8 @@ import javax.swing.JTextField;
 
 
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -119,6 +120,11 @@ public class AgregarITR {
 		btnCancelar.setBackground(Color.decode("#0284c7"));
 		btnCancelar.setBounds(310, 184, 106, 33);
 		frame.getContentPane().add(btnCancelar);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		
 		//Imagen
 		JLabel lblLogoUtec = new JLabel("");

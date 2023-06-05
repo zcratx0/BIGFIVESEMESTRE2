@@ -20,5 +20,11 @@
 		<class>com.bigfive.entities.Tipo</class>
 		<class>com.bigfive.entities.Tutor</class>
 		<class>com.bigfive.entities.Usuario</class>
+		<class>com.bigfive.entities.Accione</class>
+		<class>com.bigfive.entities.Gestion</class>
+		<class>com.bigfive.entities.RecibeConstancia</class>
+		<class>com.bigfive.entities.RecibeJustificacion</class>
+		<class>com.bigfive.entities.RecibeReclamo</class>
+		<class>com.bigfive.entities.Responsabilidade</class>
 	</persistence-unit>
 </persistence>
