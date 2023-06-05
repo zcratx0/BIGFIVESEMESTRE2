@@ -177,16 +177,15 @@ public class DatosUsuario {
 		
 	}
 	public void cargarDatos(Usuario user) {
-		if (user.getNombre() == null) 
-		lblNombre.setText(lblNombre.getText() + ": "+ user.getNombre());
-		lblApellido.setText(lblApellido.getText()+ " " + user.getApellido());
-		lblCedula.setText(lblCedula.getText()+ ": " + user.getDocumento());
-		//lblFechNac.setText(user.getFechaNac());
-		lblEmailP.setText(lblEmailP.getText() + ": " + user.getMail());
-		lblEmailU.setText(lblEmailU.getText() + ": " + user.getMailInstitucional());
-		lblTel.setText(lblTel.getText() + ": " + user.getTelefono());
-		//lblDepa.setText(user.getDepartamento().getNombre());
-		lblLocalidad.setText(lblLocalidad.getText() + ": " +  user.getLocalidad());
+		if (user.getNombre() != null) lblNombre.setText(lblNombre.getText() + ": "+ user.getNombre());
+		if (user.getApellido() != null) lblApellido.setText(lblApellido.getText()+ " " + user.getApellido());
+		if (user.getDocumento() != null) lblCedula.setText(lblCedula.getText()+ ": " + user.getDocumento());
+		if (user.getFechaNac() != null) lblFechNac.setText(user.getFechaNac().toString());
+		if (user.getMail() != null) lblEmailP.setText(lblEmailP.getText() + ": " + user.getMail());
+		if (user.getMailInstitucional() != null) lblEmailU.setText(lblEmailU.getText() + ": " + user.getMailInstitucional());
+		if (user.getTelefono() != null) lblTel.setText(lblTel.getText() + ": " + user.getTelefono());
+		if (user.getDepartamento() != null) lblDepa.setText(user.getDepartamento().getNombre());
+		if (user.getLocalidad() != null) lblLocalidad.setText(lblLocalidad.getText() + ": " +  user.getLocalidad());
 	}
 
 }
