@@ -3,19 +3,18 @@ package funcionalidades;
 import javax.naming.InitialContext;
 
 import com.bigfive.beans.DepartamentoBeanRemote;
-import com.bigfive.beans.UsuarioBeanRemote;
 
-public class FuncionalidadesDepartamento {
-	private static FuncionalidadesDepartamento instance = new FuncionalidadesDepartamento();
+public class FuncionalidadesITR {
+	private static FuncionalidadesITR instance = new FuncionalidadesITR();
 	private DepartamentoBeanRemote departamentoBean;
 	
-	public static FuncionalidadesDepartamento getInstance() {
+	public static FuncionalidadesITR getInstance() {
 		return instance;
 	}
 	
-	public FuncionalidadesDepartamento() {
+	public FuncionalidadesITR() {
 		try {
-			setDepartamentoBean((DepartamentoBeanRemote) InitialContext.doLookup("ejb:/ProyectoEJB/DepartamentoBean!com.bigfive.beans.DepartamentoBeanRemote"));
+			setDepartamentoBean(() InitialContext.doLookup("ejb:/ProyectoEJB/DepartamentoBean!com.bigfive.beans.DepartamentoBeanRemote"));
 			
 		} catch (Exception e) {
 			e.printStackTrace();

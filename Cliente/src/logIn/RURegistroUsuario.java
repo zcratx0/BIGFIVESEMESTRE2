@@ -8,15 +8,19 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.bigfive.entities.Departamento;
 import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
+import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesUsuario;
 
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.JPasswordField;
 
 public class RURegistroUsuario {
@@ -30,6 +34,7 @@ public class RURegistroUsuario {
 	private JTextField tfLoca;
 	private JTextField tfMailInst;
 	private JPasswordField pasFContra;
+	private JComboBox cBoxDepa;
 
 	/**
 	 * Launch the application.
@@ -40,6 +45,7 @@ public class RURegistroUsuario {
 				try {
 					RURegistroUsuario window = new RURegistroUsuario();
 					window.frame.setVisible(true);
+					window.cargarDepartamentos(FuncionalidadesDepartamento.getInstance().getDepartamentoBean().listarElementos());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -165,7 +171,7 @@ public class RURegistroUsuario {
 		lblDepa.setBounds(10, 344, 113, 13);
 		frame.getContentPane().add(lblDepa);
 		
-		JComboBox cBoxDepa = new JComboBox();
+		cBoxDepa = new JComboBox();
 		cBoxDepa.setBounds(142, 340, 219, 21);
 		cBoxDepa.setBackground(Color.decode("#e5e7eb"));
 		frame.getContentPane().add(cBoxDepa);
@@ -334,6 +340,10 @@ public class RURegistroUsuario {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
-			
+	}
+	public void cargarDepartamentos(List<Departamento> departamento) {
+		departamento.forEach(t -> {
+			cBoxDepa.addItem(t.getNombre());
+		});
 	}
 }

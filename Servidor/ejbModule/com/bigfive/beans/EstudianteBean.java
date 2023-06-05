@@ -39,7 +39,7 @@ public class EstudianteBean implements EstudianteBeanRemote {
 	@Override
 	public boolean borrar(Estudiante value) {
 		try {
-			em.persist(value);
+			em.remove(value);
 			em.flush();
 			return true;
 		} catch (Exception e) {
