@@ -14,11 +14,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class ListaReclamoAnalista {
+public class ListaReclamo {
 
-	private JFrame frame;
-	private JTextField tfNombre;
+	//Atributos
+	JFrame frame = new JFrame();
+	JLabel lblTitListRec = new JLabel("Lista de Reclamos");
+	JLabel lblNombre = new JLabel("Nombre");
+	JTextField tfNombre = new JTextField();
+	JLabel lblEstado = new JLabel("Estado");
+	JComboBox cBoxEstado = new JComboBox();
+	JButton btnFiltrar = new JButton("Filtrar");
+	JButton btnLimpiarF = new JButton("Limpiar Filtro");
+	JButton btnRegAcc = new JButton("Registrar Acción");
+	JButton btnAtras = new JButton("Atrás");
 
 	/**
 	 * Launch the application.
@@ -27,7 +39,7 @@ public class ListaReclamoAnalista {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListaReclamoAnalista window = new ListaReclamoAnalista();
+					ListaReclamo window = new ListaReclamo();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +51,7 @@ public class ListaReclamoAnalista {
 	/**
 	 * Create the application.
 	 */
-	public ListaReclamoAnalista() {
+	public ListaReclamo() {
 		initialize();
 	}
 
@@ -47,7 +59,6 @@ public class ListaReclamoAnalista {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb")); 
 		frame.setBounds(100, 100, 536, 519);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,7 +66,6 @@ public class ListaReclamoAnalista {
 		frame.setResizable(false);
 		
 		//Titulo
-		JLabel lblTitListRec = new JLabel("Lista de Reclamos");
 		lblTitListRec.setForeground(Color.decode("#08ACEC"));
 		lblTitListRec.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitListRec.setBounds(129, 10, 268, 13);
@@ -63,24 +73,22 @@ public class ListaReclamoAnalista {
 		
 		
 		//Nombre
-		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(26, 50, 73, 19);
 		lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		frame.getContentPane().add(lblNombre);
 		
-		tfNombre = new JTextField();
+		
 		tfNombre.setBounds(86, 50, 356, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
 		
 		
 		//Estado
-		JLabel lblEstado = new JLabel("Estado");
 		lblEstado.setBounds(26, 96, 45, 13);
 		lblEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		frame.getContentPane().add(lblEstado);
 		
-		JComboBox cBoxEstado = new JComboBox();
+		
 		cBoxEstado.setBackground(Color.decode("#e5e7eb"));
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxEstado.setBounds(86, 92, 98, 21);
@@ -88,7 +96,6 @@ public class ListaReclamoAnalista {
 		
 		
 		//Filtro
-		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setBackground(Color.decode("#0ea5e9"));
 		btnFiltrar.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		btnFiltrar.setForeground(Color.decode("#f0f9ff"));
@@ -96,56 +103,58 @@ public class ListaReclamoAnalista {
 		frame.getContentPane().add(btnFiltrar);
 		
 		//Limpiar filtro 
-		JButton btnLimpiarF = new JButton("Limpiar Filtro");
 		btnLimpiarF.setBackground(Color.decode("#0ea5e9"));
 		btnLimpiarF.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		btnLimpiarF.setForeground(Color.decode("#f0f9ff"));
 		btnLimpiarF.setBounds(309, 92, 133, 21);
 		frame.getContentPane().add(btnLimpiarF);
 		
-		
-		//Usuario
-		JLabel lblUsuario = new JLabel("Usuario");
-		lblUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblUsuario.setBounds(26, 154, 45, 13);
-		frame.getContentPane().add(lblUsuario);
-		
-		
-		//Estado
-		JLabel lblEstadoTit = new JLabel("Estado");
-		lblEstadoTit.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblEstadoTit.setBounds(218, 154, 45, 13);
-		frame.getContentPane().add(lblEstadoTit);
-		
-		//Scroll Usuario y Estado
-		JScrollPane spUsuarioEstado = new JScrollPane();
-		spUsuarioEstado.setBounds(23, 177, 256, 259);
-		frame.getContentPane().add(spUsuarioEstado);
-		
-		//Combo modificar Estado
-		JComboBox cBoxEstados = new JComboBox();
-		cBoxEstados.setBounds(289, 183, 93, 21);
-		cBoxEstados.setBackground(Color.decode("#e5e7eb"));
-		frame.getContentPane().add(cBoxEstados);
-			//Botón Guardar
-		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		btnGuardar.setForeground(Color.decode("#f0f9ff"));
-		btnGuardar.setBackground(Color.decode("#0ea5e9"));
-		btnGuardar.setBounds(409, 183, 88, 21);
-		frame.getContentPane().add(btnGuardar);
-			//Boton Registrar Accion
-		JButton btnRegAcc = new JButton("Registrar Acción");
-		btnRegAcc.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		// Tabla
+				Object[][] datosReclamo = {
+
+				};
+
+				String[] columnasRe = { "Usuario", "Estado"};
+
+				JTable tablaRe = new JTable(datosReclamo, columnasRe);
+				JScrollPane scrollPaneRe = new JScrollPane(tablaRe);
+				scrollPaneRe.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+				scrollPaneRe.setBackground(Color.decode("#f3f4f6"));
+				scrollPaneRe.setBounds(26, 157, 482, 255);
+				frame.getContentPane().add(scrollPaneRe);
+			
+		//Botones
+				//Registrar Accion
+		btnRegAcc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistroAccReclamo.main(null);
+				frame.dispose();
+			}
+		});
+		btnRegAcc.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnRegAcc.setForeground(Color.decode("#f0f9ff"));
 		btnRegAcc.setBackground(Color.decode("#0284c7"));   
 		btnRegAcc.setBounds(345, 445, 152, 27);
 		frame.getContentPane().add(btnRegAcc);
+		
+				//Atras
+		btnAtras.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnAtras.setForeground(Color.decode("#f0f9ff"));
+		btnAtras.setBackground(Color.decode("#0284c7"));   
+		btnAtras.setBounds(224,445, 85, 27);
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		frame.getContentPane().add(btnAtras);
 		
 		//Imagen
 		JLabel lblLogoUtec = new JLabel("");
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
+		
+		
 	}
 }

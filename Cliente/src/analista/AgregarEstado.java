@@ -9,11 +9,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AgregarEstado {
-
-	private JFrame frame;
-	private JTextField tfNombre;
+	//Atributos
+	JFrame frame = new JFrame();
+	JLabel lblTitAgreEstado = new JLabel("Estado");
+	JLabel lblNombre = new JLabel("Nombre");
+	JTextField tfNombre = new JTextField();
+	JButton btnGuardar = new JButton("Guardar");
+	JButton btnCancelar = new JButton("Cancelar");
 
 	/**
 	 * Launch the application.
@@ -42,7 +48,6 @@ public class AgregarEstado {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setBounds(100, 100, 368, 222);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,19 +62,17 @@ public class AgregarEstado {
 		
 		
 		//Titulo Agregar Estado
-		JLabel lblTitAgreEstado = new JLabel("Estado");
 		lblTitAgreEstado.setForeground(Color.decode("#08ACEC"));
 		lblTitAgreEstado.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitAgreEstado.setBounds(97, 10, 227, 24);
 		frame.getContentPane().add(lblTitAgreEstado);
 		
 		//Nombre
-		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblNombre.setBounds(25, 87, 45, 13);
 		frame.getContentPane().add(lblNombre);
 		
-		tfNombre = new JTextField();
+		
 		tfNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		tfNombre.setBounds(96, 84, 215, 19);
 		frame.getContentPane().add(tfNombre);
@@ -78,19 +81,24 @@ public class AgregarEstado {
 		
 		//Botones
 			//Guardar
-		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnGuardar.setForeground(Color.decode("#f0f9ff"));
 		btnGuardar.setBackground(Color.decode("#0284c7"));
 		btnGuardar.setBounds(226, 140, 85, 21);
 		frame.getContentPane().add(btnGuardar);
-		
+				
 			//Cancelar
-		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
 		btnCancelar.setBackground(Color.decode("#0284c7"));
 		btnCancelar.setBounds(120, 140, 85, 21);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaAuxEstados.main(null);
+				frame.dispose();
+			}
+		});
+
 		frame.getContentPane().add(btnCancelar);
 		
 		

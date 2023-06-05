@@ -14,10 +14,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class ListaAuxITR {
 
-	private JFrame frame;
+	//Atributo
+	JFrame frame = new JFrame();
+	JLabel lblTitListITR = new JLabel("Lista de ITR");
+	JButton btnModificar = new JButton("Modificar");
+	JButton btnEliminar = new JButton("Eliminar");
+	JButton btnAgregar = new JButton("Agregar");
+	JButton btnAtras = new JButton("Atrás");
 
 	/**
 	 * Launch the application.
@@ -46,65 +53,86 @@ public class ListaAuxITR {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb")); 
-		frame.setBounds(100, 100, 401, 490);
+		frame.setBounds(100, 100, 465, 507);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
 		//Titulo 
-		JLabel lblTitListITR = new JLabel("Lista de ITR");
 		lblTitListITR.setForeground(Color.decode("#08ACEC"));  
 		lblTitListITR.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitListITR.setBounds(116, 10, 142, 25);
 		frame.getContentPane().add(lblTitListITR);
-			//ITR
-		JLabel lblITR = new JLabel("ITR");
-		lblITR.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblITR.setBounds(44, 61, 80, 13);
-		frame.getContentPane().add(lblITR);
-			//NOMBRE
-		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblNombre.setBounds(216, 61, 95, 13);
-		frame.getContentPane().add(lblNombre);
 		
+		
+		// Tabla
+		Object[][] datosItr = {
+
+		};
+
+		String[] columnasItr  = { "ITR", "Nombre"};
+
+		JTable tablaItr = new JTable(datosItr , columnasItr );
+		JScrollPane scrollPaneItr  = new JScrollPane(tablaItr );
+		scrollPaneItr.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		scrollPaneItr.setBackground(Color.decode("#f3f4f6"));
+		scrollPaneItr.setBounds(35, 61, 388, 285);
+		frame.getContentPane().add(scrollPaneItr);
 		
 		//Boton 
 			//Modificar
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.setBounds(25, 383, 95, 35);
-		btnModificar.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AgregarITR.main(null);
+				frame.dispose();
+			}
+		});
+		btnModificar.setBounds(241, 406, 95, 25);
+		btnModificar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnModificar.setForeground(Color.decode("#f0f9ff"));
 		btnModificar.setBackground(Color.decode("#0284c7"));  
 		frame.getContentPane().add(btnModificar);
 		
 			//Eliminar
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setBounds(145, 383, 95, 35);
-		btnEliminar.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		btnEliminar.setBounds(10, 406, 85, 25);
+		btnEliminar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnEliminar.setForeground(Color.decode("#f0f9ff"));
 		btnEliminar.setBackground(Color.decode("#0284c7"));  
 		frame.getContentPane().add(btnEliminar);
 		
 			//Agregar
-		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AgregarITR.main(null);
+				frame.dispose();
 			}
 		});
-		btnAgregar.setBounds(269, 383, 95, 35);
-		btnAgregar.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		btnAgregar.setBounds(346, 406, 95, 25);
+		btnAgregar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnAgregar.setForeground(Color.decode("#f0f9ff"));
 		btnAgregar.setBackground(Color.decode("#0284c7"));  
 		frame.getContentPane().add(btnAgregar);
 		
+		
+			//Atras
+		btnAtras.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnAtras.setForeground(Color.decode("#f0f9ff"));
+		btnAtras.setBackground(Color.decode("#0284c7"));  
+		btnAtras.setBounds(105, 406, 85, 25);
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		frame.getContentPane().add(btnAtras);
 		
 		//Imagen
 		JLabel lblLogoUtec = new JLabel("");
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
+		
+		
 	}
 }

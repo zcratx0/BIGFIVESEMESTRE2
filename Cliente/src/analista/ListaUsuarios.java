@@ -7,13 +7,41 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import com.bigfive.entities.Usuario;
+
+import funcionalidades.FuncionalidadesUsuario;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.awt.event.ActionEvent;
 
 public class ListaUsuarios {
 
-	private JFrame frame;
-
+	//Atributos
+	JFrame frame = new JFrame();
+	JLabel lblTitListUsua = new JLabel("Lista de Usuarios");
+	JLabel lblGeneracion = new JLabel("Generación");
+	JComboBox cBoxGeneracion = new JComboBox();
+	JLabel lblTipoUsu = new JLabel("Tipo de usuario");
+	JLabel lblItrFil = new JLabel("ITR");
+	JComboBox cBoxItr = new JComboBox();
+	JLabel lblEstadoFil = new JLabel("Estado");
+	JComboBox cBoxEstado = new JComboBox();
+	JButton btnFiltrar = new JButton("Filtrar");
+	JButton btnLimpiarF = new JButton("Limpiar Filtro");
+	JButton btnAtras = new JButton("Atrás");
+	JButton btnModificar = new JButton("Modificar");
+	
+	Object[][] datosUsu;
+	JTable tablaUsu;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -23,6 +51,9 @@ public class ListaUsuarios {
 				try {
 					ListaUsuarios window = new ListaUsuarios();
 					window.frame.setVisible(true);
+					if (FuncionalidadesUsuario.getInstance().getUserBean().listarElementos().size() > 0) {
+						window.cargarDatos(FuncionalidadesUsuario.getInstance().getUserBean().listarElementos());
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,7 +72,6 @@ public class ListaUsuarios {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb")); 
 		frame.setBounds(100, 100, 1031, 506);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +86,6 @@ public class ListaUsuarios {
 		
 		
 		//Titulo Lista de Usuarios
-		JLabel lblTitListUsua = new JLabel("Lista de Usuarios");
 		lblTitListUsua.setForeground(Color.decode("#08ACEC"));  
 		lblTitListUsua.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitListUsua.setBounds(343, 10, 259, 31);
@@ -65,18 +94,16 @@ public class ListaUsuarios {
 		//*Filtro
 		
 		// Generacion
-		JLabel lblGeneracion = new JLabel("Generación");
 		lblGeneracion.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblGeneracion.setBounds(565, 88, 73, 13);
 		// frame.getContentPane().add(lblGeneracion);
 
-		JComboBox cBoxGeneracion = new JComboBox();
+
 		cBoxGeneracion.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxGeneracion.setBounds(630, 84, 107, 21);
 		// frame.getContentPane().add(cBoxGeneracion);
 		
 		//Tipo de usuario
-		JLabel lblTipoUsu = new JLabel("Tipo de usuario");
 		lblTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblTipoUsu.setBounds(10, 88, 96, 13);
 		frame.getContentPane().add(lblTipoUsu);
@@ -103,23 +130,21 @@ public class ListaUsuarios {
 		frame.getContentPane().add(cBoxTipoUsu);
 		
 		//ITR
-		JLabel lblItrFil = new JLabel("ITR");
 		lblItrFil.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblItrFil.setBounds(241, 88, 45, 13);
 		frame.getContentPane().add(lblItrFil);
 		
-		JComboBox cBoxItr = new JComboBox();
+		
 		cBoxItr.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxItr.setBounds(264, 84, 107, 21);
 		frame.getContentPane().add(cBoxItr);
 		
 		//Estado
-		JLabel lblEstadoFil = new JLabel("Estado");
 		lblEstadoFil.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblEstadoFil.setBounds(396, 88, 45, 13);
 		frame.getContentPane().add(lblEstadoFil);
 		
-		JComboBox cBoxEstado = new JComboBox();
+
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxEstado.setBounds(435, 84, 107, 21);
 		frame.getContentPane().add(cBoxEstado);
@@ -128,14 +153,12 @@ public class ListaUsuarios {
 		
 		//Botones
 			//Filtrar
-		JButton btnFiltrar = new JButton("Filtrar");
 		btnFiltrar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnFiltrar.setForeground(Color.decode("#f0f9ff"));
 		btnFiltrar.setBackground(Color.decode("#0ea5e9"));
 		btnFiltrar.setBounds(773, 84, 85, 21);
 		frame.getContentPane().add(btnFiltrar);
 			//Limpiar Filtro
-		JButton btnLimpiarF = new JButton("Limpiar Filtro");
 		btnLimpiarF.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnLimpiarF.setForeground(Color.decode("#f0f9ff"));
 		btnLimpiarF.setBackground(Color.decode("#0ea5e9"));
@@ -143,63 +166,76 @@ public class ListaUsuarios {
 		frame.getContentPane().add(btnLimpiarF);
 		
 		
-		//*Tabla
-		//Usuario
-		JLabel lblUsuario = new JLabel("Usuario");
-		lblUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblUsuario.setBounds(37, 150, 45, 13);
-		frame.getContentPane().add(lblUsuario);
+		// Tabla
+				Object[][] datosUsu = {};
+
+				String[] columnasUsu  = {"Usuario", "ITR", "Datos", "Historial", "Estado"};
+
+				tablaUsu = new JTable(datosUsu , columnasUsu );
+				JScrollPane scrollPaneUsu  = new JScrollPane(tablaUsu );
+				scrollPaneUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+				scrollPaneUsu.setBackground(Color.decode("#f3f4f6"));
+				scrollPaneUsu.setBounds(25, 140, 955, 248);
+				frame.getContentPane().add(scrollPaneUsu);
 		
-		//ITR
-		JLabel lblItr = new JLabel("ITR");
-		lblItr.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblItr.setBounds(191, 150, 45, 13);
-		frame.getContentPane().add(lblItr);
-		
-		//Datos
-		JLabel lblDatos = new JLabel("Datos");
-		lblDatos.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblDatos.setBounds(374, 150, 45, 13);
-		frame.getContentPane().add(lblDatos);
-		
-		//Historial
-		JLabel lblHistorial = new JLabel("Historial");
-		lblHistorial.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblHistorial.setBounds(523, 150, 66, 13);
-		frame.getContentPane().add(lblHistorial);
-		
-		//Estado
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblEstado.setBounds(664, 150, 45, 13);
-		frame.getContentPane().add(lblEstado);
-		
-		//Botones
-			//Guardar
-		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.setFont(new Font("Tahona", Font.BOLD, 10));
-		btnGuardar.setForeground(Color.decode("#f0f9ff"));
-		btnGuardar.setBackground(Color.decode("#0ea5e9"));
-		btnGuardar.setBounds(827, 180, 85, 21);
-		frame.getContentPane().add(btnGuardar);
-			//Eliminar
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setFont(new Font("Tahona", Font.BOLD, 10));
-		btnEliminar.setForeground(Color.decode("#f0f9ff"));
-		btnEliminar.setBackground(Color.decode("#0ea5e9"));
-		btnEliminar.setBounds(922, 180, 85, 21);
-		frame.getContentPane().add(btnEliminar);
-		
-		//btn Atras
-		JButton btnAtras = new JButton("Atrás");
+		//botones
+			//Atras
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		btnAtras.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnAtras.setForeground(Color.decode("#f0f9ff"));
 		btnAtras.setBackground(Color.decode("#0284c7"));
-		btnAtras.setBounds(895, 412, 96, 31);
+		btnAtras.setBounds(754, 410, 96, 31);
 		frame.getContentPane().add(btnAtras);
+			//Modificar
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DatosUsuario.main(null);
+			}
+		});
+		btnModificar.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnModificar.setForeground(Color.decode("#f0f9ff"));
+		btnModificar.setBackground(Color.decode("#0284c7"));
+		btnModificar.setBounds(884, 410, 96, 31);
+		frame.getContentPane().add(btnModificar);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(630, 180, 152, 21);
-		frame.getContentPane().add(comboBox);
+		
+		//Historial
+		JButton btnHistorial = new JButton("Historial");
+		btnHistorial.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnHistorial.setForeground(Color.decode("#f0f9ff"));
+		btnHistorial.setBackground(Color.decode("#0ea5e9"));
+		btnHistorial.setBounds(131, 415, 85, 21);
+		frame.getContentPane().add(btnHistorial);
+		btnHistorial.addActionListener(e -> {
+			//	TODO crear tabla con el historial del usuario
+			System.out.println("FUNCION AUN NO IMPLEMENTADA");
+		});
+		//Datos
+		JButton btnDatos = new JButton("Datos");
+		btnDatos.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnDatos.setForeground(Color.decode("#f0f9ff"));
+		btnDatos.setBackground(Color.decode("#0ea5e9"));
+		btnDatos.setBounds(25, 415, 85, 21);
+		frame.getContentPane().add(btnDatos);
+
 	}
+	
+	public void cargarDatos(List<Usuario> user) {
+		String[] columnasUsu  = {"Usuario", "ITR", "Estado"};
+		DefaultTableModel tableModel =  new DefaultTableModel(columnasUsu, 0);
+		user.forEach(t -> {
+			String usuario = t.getNombre()+" "+t.getApellido();
+			String itr ="";
+			if (t.getItr() != null) itr = t.getItr().getNombre().toString();
+			String estado = "ESTADO";
+			Object[] object = {usuario, itr, estado};
+			tableModel.addRow(object);
+		});
+		tablaUsu.setModel(tableModel);
+	}
+	
 }

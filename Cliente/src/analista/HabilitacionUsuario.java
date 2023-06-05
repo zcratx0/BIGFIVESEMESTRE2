@@ -8,13 +8,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class HabilitacionUsuario {
 
-	private JFrame frame;
+	//Atributos
+	JFrame frame = new JFrame();
+	JLabel lblTitHabUsu = new JLabel("Habilitación de Usuarios");
+	JLabel lblVerMas = new JLabel("Ver Más");
+	JButton btnAtras = new JButton("Atrás");
+	JButton btnListUsu = new JButton("Lista de Usuarios");
 
 	/**
 	 * Launch the application.
@@ -43,7 +51,6 @@ public class HabilitacionUsuario {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(100, 100, 753, 423);
@@ -58,71 +65,54 @@ public class HabilitacionUsuario {
 		
 		
 		//Titulo Habilitación de Usuarios
-		JLabel lblTitHabUsu = new JLabel("Habilitación de Usuarios");
 		lblTitHabUsu.setForeground(Color.decode("#08ACEC"));
 		lblTitHabUsu.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitHabUsu.setBounds(201, 10, 411, 29);
 		frame.getContentPane().add(lblTitHabUsu);
-		
-		
-		//Tipo de Usuarios 
-		JLabel lblTipoUsu = new JLabel("Tipo de Usuario");
-		lblTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));
-		lblTipoUsu.setBounds(43, 73, 139, 20);
-		frame.getContentPane().add(lblTipoUsu);
-		
-		
-		//ITR
-		JLabel lblItr = new JLabel("ITR");
-		lblItr.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));
-		lblItr.setBounds(218, 77, 45, 13);
-		frame.getContentPane().add(lblItr);
-		
-		
-		//Generación
-		JLabel lblGeneracion = new JLabel("Generación");
-		lblGeneracion.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));
-		lblGeneracion.setBounds(322, 75, 89, 16);
-		frame.getContentPane().add(lblGeneracion);
-		
-		//Estado
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));
-		lblEstado.setBounds(472, 77, 107, 13);
-		frame.getContentPane().add(lblEstado);
-		
-		//Información
-		JLabel lblInformacion = new JLabel("Información");
-		lblInformacion.setFont(new Font("Bookman Old Style", Font.PLAIN, 13));
-		lblInformacion.setBounds(589, 77, 97, 13);
-		frame.getContentPane().add(lblInformacion);
-		
-		JLabel lblVerMas = new JLabel("Ver Más");
+	
+		//Ver mas
 		lblVerMas.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblVerMas.setBounds(554, 10, 65, 13);
-		frame.getContentPane().add(lblVerMas);
 		
-		//El panel
-		JPanel panel = new JPanel();
-		panel.setBounds(43, 119, 654, 161);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
-		
+		// Tabla
+				Object[][] datosEst = {
+
+				};
+
+				String[] columnasEst  = {"Tipo de Usuarios", "ITR", "Generación", "Estado", "Información" };
+
+				JTable tablaEst = new JTable(datosEst , columnasEst );
+				JScrollPane scrollPaneEst  = new JScrollPane(tablaEst );
+				scrollPaneEst.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+				scrollPaneEst.setBackground(Color.decode("#f3f4f6"));
+				scrollPaneEst.setBounds(34, 77, 667, 236);
+				frame.getContentPane().add(scrollPaneEst);
+
 		
 		//Botones
 			//Atras
-		JButton btnAtras = new JButton("Atrás");
 		btnAtras.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnAtras.setForeground(Color.decode("#f0f9ff"));
 		btnAtras.setBackground(Color.decode("#0284c7"));
-		btnAtras.setBounds(406, 333, 89, 29);
+		btnAtras.setBounds(434, 333, 89, 29);
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		frame.getContentPane().add(btnAtras);
-			//Cancelar
-		JButton btnListUsu = new JButton("Lista de Usuarios");
+		
+			//Lista de Usuarios
+		btnListUsu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaUsuarios.main(null);
+				frame.dispose();
+			}
+		});
 		btnListUsu.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnListUsu.setForeground(Color.decode("#f0f9ff"));
 		btnListUsu.setBackground(Color.decode("#0284c7"));
-		btnListUsu.setBounds(547, 333, 139, 29);
+		btnListUsu.setBounds(562, 333, 139, 29);
 		frame.getContentPane().add(btnListUsu);
 	}
 }

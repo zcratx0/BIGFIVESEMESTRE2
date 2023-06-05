@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import analista.RegistroAccConstancias;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,8 +17,18 @@ import javax.swing.JTextField;
 
 public class ListaSoliConstancias {
 
-	private JFrame frame;
-	private JTextField tfNombre;
+	//Atributos
+	JFrame frame = new JFrame();
+	JLabel lblTitSoliConst = new JLabel("Solicitudes de Constancias");
+	JTextField tfNombre = new JTextField();
+	JLabel lblNombre = new JLabel("Nombre");
+	JLabel lblEstadoFil = new JLabel("Estado");
+	JComboBox cBoxEstado = new JComboBox();
+	JButton btnFiltro = new JButton("Filtrar");
+	JButton btnLimpiarF = new JButton("Limpiar Filtro");
+	JButton btnBaja = new JButton("Dar de Baja");
+	JButton btnRegAcc = new JButton("Registrar Acciones");
+	JButton btnAtras = new JButton("Atrás");
 
 	/**
 	 * Launch the application.
@@ -49,7 +57,6 @@ public class ListaSoliConstancias {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setBounds(100, 100, 531, 572);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,30 +65,27 @@ public class ListaSoliConstancias {
 		
 		
 		//Titulo
-		JLabel lblTitSoliConst = new JLabel("Solicitudes de Constancias");
 		lblTitSoliConst.setForeground(Color.decode("#08ACEC")); 
 		lblTitSoliConst.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitSoliConst.setBounds(111, 23, 354, 21);
 		frame.getContentPane().add(lblTitSoliConst);
 		
 		//Nombre
-		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblNombre.setBounds(34, 85, 45, 13);
 		frame.getContentPane().add(lblNombre);
 		
-		tfNombre = new JTextField();
+	
 		tfNombre.setBounds(114, 82, 322, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
 		
 		//Estado
-		JLabel lblEstadoFil = new JLabel("Estado");
 		lblEstadoFil.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblEstadoFil.setBounds(34, 131, 45, 13);
 		frame.getContentPane().add(lblEstadoFil);
 		
-		JComboBox cBoxEstado = new JComboBox();
+	
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxEstado.setBackground(Color.decode("#e5e7eb"));
 		cBoxEstado.setBounds(114, 127, 102, 21);
@@ -89,57 +93,69 @@ public class ListaSoliConstancias {
 		
 		//Filtros
 			//Filtrar
-		JButton btnFiltro = new JButton("Filtrar");
-		btnFiltro.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		btnFiltro.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnFiltro.setBackground(Color.decode("#0ea5e9"));
 		btnFiltro.setForeground(Color.decode("#f0f9ff"));
 		btnFiltro.setBounds(226, 127, 85, 21);
 		frame.getContentPane().add(btnFiltro);
 			//Limpiar Filtro
-		JButton btnLimpiarF = new JButton("Limpiar Filtro");
 		btnLimpiarF.setBackground(Color.decode("#0ea5e9"));
 		btnLimpiarF.setForeground(Color.decode("#f0f9ff"));
-		btnLimpiarF.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		btnLimpiarF.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnLimpiarF.setBounds(321, 127, 115, 21);
 		frame.getContentPane().add(btnLimpiarF);
 
-		//Tabla 
-		Object[][] datosCO = {
-			   
-			};
-		
-		String[] columnasCO = {"Usuario", "Fecha", "Estado"};
-		
-		JTable tablaCO = new JTable(datosCO, columnasCO);
-		JScrollPane scrollPaneCO = new JScrollPane(tablaCO);
-		scrollPaneCO.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		scrollPaneCO.setBounds(25, 202, 482, 248);
-		frame.getContentPane().add(scrollPaneCO);
-			//Dar de Baja
-		JButton btnBaja = new JButton("Dar de Baja");
+		// Tabla
+		Object[][] datosSoliCons = {
+
+		};
+
+		String[] columnasSC = { "Usuario", "Fecha", "Estado" };
+
+		JTable tablaSC = new JTable(datosSoliCons, columnasSC);
+		JScrollPane scrollPaneSC = new JScrollPane(tablaSC);
+		scrollPaneSC.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		scrollPaneSC.setBackground(Color.decode("#f3f4f6"));
+		scrollPaneSC.setBounds(25, 195, 464, 255);
+		frame.getContentPane().add(scrollPaneSC);
+
+		// Dar de Baja
 		btnBaja.setBackground(Color.decode("#0284c7"));  
-		btnBaja.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		btnBaja.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnBaja.setForeground(Color.decode("#f0f9ff"));
-		btnBaja.setBounds(131, 485, 112, 21);
+		btnBaja.setBounds(25, 485, 112, 21);
 		frame.getContentPane().add(btnBaja);
 			//Registrar acciones
-		JButton btnRegAcc = new JButton("Registrar Acciones");
 		btnRegAcc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegistroAccConstancias.main(null);
+				frame.dispose();
 			}
 		});
 		btnRegAcc.setBackground(Color.decode("#0284c7")); 
-		btnRegAcc.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		btnRegAcc.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnRegAcc.setForeground(Color.decode("#f0f9ff"));
-		btnRegAcc.setBounds(321, 485, 144, 21);
+		btnRegAcc.setBounds(345, 485, 144, 21);
 		frame.getContentPane().add(btnRegAcc);
+		
+			//Atras
+		btnAtras.setBackground(Color.decode("#0284c7"));  
+		btnAtras.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnAtras.setForeground(Color.decode("#f0f9ff"));
+		btnAtras.setBounds(239, 485, 85, 21);
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
+		frame.getContentPane().add(btnAtras);
+		
 		
 		// Imagen
 		JLabel lblLogoUtec = new JLabel("");
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
-		
 	}
+	
 }
