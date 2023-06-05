@@ -13,6 +13,8 @@ import com.bigfive.beans.UsuarioBean;
 import com.bigfive.beans.UsuarioBeanRemote;
 import com.bigfive.entities.Usuario;
 
+import funcionalidades.FuncionalidadesUsuario;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
@@ -41,8 +43,8 @@ public class DatosUsuario {
 				try {
 					DatosUsuario window = new DatosUsuario();
 					window.frame.setVisible(true);
-					UsuarioBeanRemote userBean = (UsuarioBeanRemote) InitialContext.doLookup("ejb:/ProyectoEJB/UsuarioBean!com.bigfive.beans.UsuarioBeanRemote");
-					Usuario user = userBean.listarElementos().get(0);
+					FuncionalidadesUsuario userBean = FuncionalidadesUsuario.getInstance();
+					Usuario user = userBean.getUserBean().listarElementos().get(0);
 					window.cargarDatos(user);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -8,7 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.bigfive.entities.Usuario;
+
 import analista.ListaAuxITR;
+import funcionalidades.FuncionalidadesUsuario;
 
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
@@ -242,7 +245,24 @@ public class RURegistroUsuario {
 		btnRegistro.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		btnRegistro.setForeground(Color.decode("#f0f9ff"));
 		btnRegistro.setBounds(249, 680, 112, 40);
-		
+		btnRegistro.addActionListener(e -> {
+			System.out.println("USUARIO CREADO!");
+			Usuario user = new Usuario();
+			user.setNombre(tfNombre.getText());
+			user.setApellido(tfApellido.getText());
+			user.setDocumento(tfCedula.getText());
+			user.setMail(tfMailPer.getText());
+			user.setMailInstitucional(tfMailInst.getText());
+			user.setTelefono(tfTel.getText());
+			user.setLocalidad(tfLoca.getText());
+			user.setContrasenia(new String(pasFContra.getPassword()));
+			if (FuncionalidadesUsuario.getInstance().getUserBean().crear(user)) {
+				System.out.println("USUARIO CREADO");
+			} else { 
+				System.out.println("Hubo un error al crear el usuario");
+			}
+			System.out.println(user.toString());
+		});
 		
 		// Boton Cancelar
 		JButton btnCancelar = new JButton("Cancelar");
