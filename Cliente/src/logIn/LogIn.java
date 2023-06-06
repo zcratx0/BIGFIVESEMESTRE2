@@ -108,7 +108,7 @@ public class LogIn {
 		btnIngresar.setForeground(Color.decode("#f0f9ff"));
 		btnIngresar.setBounds(337, 243, 92, 29);
 		btnIngresar.addActionListener(e -> {
-			FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword()));
+			System.out.println(FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword())));
 		});
 		frame.getContentPane().add(btnIngresar);
 			//Registrarse

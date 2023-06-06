@@ -65,6 +65,17 @@ public class UsuarioBean implements UsuarioBeanRemote {
 	public List<Usuario> listarElementos() {
 		return em.createQuery("SELECT u FROM Usuario u").getResultList();
 	}
+
+	@Override
+	public boolean loginUsuario(String name, String password) {
+		Usuario x = null;
+		x =  (Usuario) em.createQuery("SELECT u FROM Usuario u WHERE SUBSTRING(u.mailInstitucional, 1, LOCATE('@', u.mailInstitucional) - 1) LIKE CONCAT('%', :name, '%') AND u.contrasenia = :password")
+        .setParameter("name", name)
+        .setParameter("password", password)
+        .getSingleResult();
+		System.out.println(x);
+		return x != null;
+	}
     
 
 }

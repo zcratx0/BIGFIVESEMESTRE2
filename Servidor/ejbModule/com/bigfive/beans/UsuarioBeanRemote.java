@@ -6,5 +6,5 @@ import com.bigfive.entities.Usuario;
 
 @Remote
 public interface UsuarioBeanRemote extends ICrud<Usuario> {
-	
+	public boolean loginUsuario(String name, String password);
 }

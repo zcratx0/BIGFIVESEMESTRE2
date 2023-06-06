@@ -32,7 +32,6 @@ public class FuncionalidadesUsuario {
 	
 	
 	public boolean login(String user, String password) {
-		userBean.listarElementos().
-		return false;
+		return userBean.loginUsuario(user, password);
 	}
 }
