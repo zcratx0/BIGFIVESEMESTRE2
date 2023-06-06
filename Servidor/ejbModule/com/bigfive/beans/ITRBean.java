@@ -27,6 +27,7 @@ public class ITRBean implements ITRBeanRemote {
 		try {
 			em.persist(value);
 			em.flush();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,6 +39,7 @@ public class ITRBean implements ITRBeanRemote {
 		try {
 			em.remove(value);
 			em.flush();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,9 +51,10 @@ public class ITRBean implements ITRBeanRemote {
 		try {
 			em.merge(value);
 			em.flush();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-		} {}
+		}
 		return false;
 	}
 

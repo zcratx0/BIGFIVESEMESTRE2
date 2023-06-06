@@ -53,4 +53,10 @@ public class Itr implements Serializable {
 		this.departamento = departamento;
 	}
 
+	@Override
+	public String toString() {
+		return this.nombre+"-"+this.departamento;
+	}
+	
+
 }

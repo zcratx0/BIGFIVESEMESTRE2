@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import funcionalidades.FuncionalidadesUsuario;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -106,6 +107,9 @@ public class LogIn {
 		btnIngresar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnIngresar.setForeground(Color.decode("#f0f9ff"));
 		btnIngresar.setBounds(337, 243, 92, 29);
+		btnIngresar.addActionListener(e -> {
+			FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword()));
+		});
 		frame.getContentPane().add(btnIngresar);
 			//Registrarse
 		JButton btnRegistro = new JButton("Registrarse");
@@ -118,9 +122,7 @@ public class LogIn {
 		btnRegistro.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnRegistro.setForeground(Color.decode("#f0f9ff"));
 		btnRegistro.setBounds(191, 243, 118, 29);
-		frame.getContentPane().add(btnRegistro);
-
-		
+		frame.getContentPane().add(btnRegistro);	
 		
 	}
 }

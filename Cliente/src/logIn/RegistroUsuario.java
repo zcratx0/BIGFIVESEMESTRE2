@@ -5,12 +5,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.bigfive.entities.Usuario;
+import com.bigfive.entities.Analista;
 
 import analista.ListaAuxITR;
+import funcionalidades.FuncionalidadesAnalista;
 import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesITR;
 import funcionalidades.FuncionalidadesUsuario;
@@ -34,7 +37,7 @@ public class RegistroUsuario {
 	private JTextField tfLoca;
 	private JTextField tfMailInst;
 	private JPasswordField pasFContra;
-
+	private JComboBox cBoxTipoUsu;
 	/**
 	 * Launch the application.
 	 */
@@ -260,11 +263,23 @@ public class RegistroUsuario {
 			user.setTelefono(tfTel.getText());
 			user.setLocalidad(tfLoca.getText());
 			user.setContrasenia(new String(pasFContra.getPassword()));
+			boolean resultado = false;
+			
 			if (FuncionalidadesUsuario.getInstance().getUserBean().crear(user)) {
-				System.out.println("USUARIO CREADO");
-			} else { 
-				System.out.println("Hubo un error al crear el usuario");
+				if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("analista")) {
+					Analista analista = new Analista();
+					analista.setUsuario(user);
+					analista.setAnalista("Que era esto");
+					resultado = FuncionalidadesAnalista.getInstance().getBean().crear(analista);
+				}
+					
 			}
+			
+			
+			if (resultado)JOptionPane.showMessageDialog(frame, "USUARIO REGISTRADO");
+			else {
+				JOptionPane.showMessageDialog(frame, "ERROR AL REGISTRAR EL USUARIO");
+			}			
 			System.out.println(user.toString());
 		});
 		
@@ -289,7 +304,7 @@ public class RegistroUsuario {
 		frame.getContentPane().add(lblTipoUsu);
 			
 			//Combo Box
-		JComboBox cBoxTipoUsu = new JComboBox(new String[]{"Seleccione Tipo","Analista", "Estudiante", "Tutor"});
+		cBoxTipoUsu = new JComboBox(new String[]{"Seleccione Tipo","Analista", "Estudiante", "Tutor"});
 		
 		//TODO CAMBIAR AÑO POR ANIO
 		
@@ -349,4 +364,7 @@ public class RegistroUsuario {
 		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
 		
 	}
+	
+	
+	
 }

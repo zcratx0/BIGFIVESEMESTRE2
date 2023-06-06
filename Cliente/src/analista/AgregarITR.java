@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 
@@ -20,6 +22,7 @@ import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -35,7 +38,7 @@ public class AgregarITR {
 	JComboBox<Departamento> cbDepa = new JComboBox<Departamento>();
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
-
+	private Itr itr;
 	/**
 	 * Launch the application.
 	 */
@@ -43,7 +46,7 @@ public class AgregarITR {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AgregarITR window = new AgregarITR();
+					AgregarITR window = new AgregarITR(0);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,14 +58,48 @@ public class AgregarITR {
 	/**
 	 * Create the application.
 	 */
-	public AgregarITR() {
-		initialize();
+	public static void crear(Itr itr) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					int type = 0;
+					AgregarITR window = new AgregarITR(type);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public static void modificar(Itr itr) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					int type = 1;
+					AgregarITR window = new AgregarITR(type);
+					window.setItr(itr);
+					if (itr.getNombre() != null )window.getTfNombre().setText(itr.getNombre().toString());;
+					
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	
+	
+	
+	public AgregarITR(int type) {
+		initialize(type);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(int type) {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setBounds(100, 100, 469, 281);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,13 +139,18 @@ public class AgregarITR {
 		btnConfirmar.setBounds(311, 184, 105, 33);
 		frame.getContentPane().add(btnConfirmar);
 		btnConfirmar.addActionListener(e -> {
-			Itr itr = new Itr();
-			itr.setDepartamento((Departamento) cbDepa.getSelectedItem());
-			itr.setNombre(tfNombre.getText());
-			if (FuncionalidadesITR.getInstance().getItrBean().crear(itr)) {
+			this.itr.setDepartamento((Departamento) cbDepa.getSelectedItem());
+			this.itr.setNombre(tfNombre.getText());
+			System.out.println(this.itr.getNombre() + "-" +this.itr.getDepartamento());			
+			boolean resultado = false;
+			if (type == 0) resultado = FuncionalidadesITR.getInstance().getItrBean().crear(itr);
+			if (type == 1) resultado = FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
+			if (resultado) {
 				System.out.println("ITR CREADO");
+				JOptionPane.showMessageDialog(frame, "ITR Agregado\n"+this.itr.getNombre() + " - " +this.itr.getDepartamento());
 			} else {
-				System.out.println("ERROR AL CREAR ITR");
+				System.out.println("ERROR AL CREAR ITR" + itr.toString());
+				JOptionPane.showMessageDialog(frame, "HUBO UN ERROR AL AGREGAR EL ITR");
 			}
 		});
 		
@@ -134,6 +176,80 @@ public class AgregarITR {
 		
 		//	FUNCIONALIDADES
 		FuncionalidadesDepartamento.getInstance().cargarComboBox(cbDepa);
+	}
+
+	public Itr getItr() {
+		return itr;
+		
+	}
+
+	public void setItr(Itr itr) {
+		this.itr = itr;
+		
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public JLabel getLblAgregarITR() {
+		return lblAgregarITR;
+	}
+
+	public void setLblAgregarITR(JLabel lblAgregarITR) {
+		this.lblAgregarITR = lblAgregarITR;
+	}
+
+	public JLabel getLblNombre() {
+		return lblNombre;
+	}
+
+	public void setLblNombre(JLabel lblNombre) {
+		this.lblNombre = lblNombre;
+	}
+
+	public JTextField getTfNombre() {
+		return tfNombre;
+	}
+
+	public void setTfNombre(JTextField tfNombre) {
+		this.tfNombre = tfNombre;
+	}
+
+	public JLabel getLblDepa() {
+		return lblDepa;
+	}
+
+	public void setLblDepa(JLabel lblDepa) {
+		this.lblDepa = lblDepa;
+	}
+
+	public JComboBox<Departamento> getCbDepa() {
+		return cbDepa;
+	}
+
+	public void setCbDepa(JComboBox<Departamento> cbDepa) {
+		this.cbDepa = cbDepa;
+	}
+
+	public JButton getBtnConfirmar() {
+		return btnConfirmar;
+	}
+
+	public void setBtnConfirmar(JButton btnConfirmar) {
+		this.btnConfirmar = btnConfirmar;
+	}
+
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+
+	public void setBtnCancelar(JButton btnCancelar) {
+		this.btnCancelar = btnCancelar;
 	}
 
 }

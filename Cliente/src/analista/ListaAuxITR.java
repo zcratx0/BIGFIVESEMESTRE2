@@ -17,10 +17,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.bigfive.entities.Itr;
+
 import funcionalidades.FuncionalidadesITR;
 
 public class ListaAuxITR {
-
+	
 	//Atributo
 	JFrame frame = new JFrame();
 	JLabel lblTitListITR = new JLabel("Lista de ITR");
@@ -28,6 +30,7 @@ public class ListaAuxITR {
 	JButton btnEliminar = new JButton("Eliminar");
 	JButton btnAgregar = new JButton("Agregar");
 	JButton btnAtras = new JButton("Atrás");
+	JTable tablaItr;
 
 	/**
 	 * Launch the application.
@@ -45,6 +48,7 @@ public class ListaAuxITR {
 		});
 	}
 
+	
 	/**
 	 * Create the application.
 	 */
@@ -76,7 +80,7 @@ public class ListaAuxITR {
 
 		String[] columnasItr  = { "ITR", "Nombre"};
 
-		JTable tablaItr = new JTable(datosItr , columnasItr );
+		tablaItr = new JTable(datosItr , columnasItr );
 		JScrollPane scrollPaneItr  = new JScrollPane(tablaItr );
 		scrollPaneItr.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		scrollPaneItr.setBackground(Color.decode("#f3f4f6"));
@@ -87,8 +91,10 @@ public class ListaAuxITR {
 			//Modificar
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AgregarITR.main(null);
-				frame.dispose();
+				if (tablaItr.getSelectedRow() > -1) {
+					AgregarITR.modificar((Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0));
+					frame.dispose();
+				};
 			}
 		});
 		btnModificar.setBounds(241, 406, 95, 25);
@@ -146,9 +152,10 @@ public class ListaAuxITR {
 		tableModel.addColumn("ITR");
 		tableModel.addColumn("NOMBRE");
 		FuncionalidadesITR.getInstance().getItrBean().listarElementos().forEach(t -> {
-			Object[] tabla = {t.getNombre(), t.getDepartamento()};
-			tableModel.addColumn(tableModel);
+			Object[] tabla = {(Itr) t, t.getDepartamento()};
+			tableModel.addRow(tabla);
 		});
+		tablaItr.setModel(tableModel);
 	}
 	
 	

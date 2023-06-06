@@ -28,6 +28,11 @@ public class FuncionalidadesUsuario {
 
 	public void setUserBean(UsuarioBeanRemote userBean) {
 		this.userBean = userBean;
+	}
+	
+	
+	public boolean login(String user, String password) {
 		
+		return false;
 	}
 }
