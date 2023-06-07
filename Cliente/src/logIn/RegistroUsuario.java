@@ -327,16 +327,29 @@ public class RegistroUsuario {
 			user.setLocalidad(tfLoca.getText());
 			user.setContrasenia(new String(pasFContra.getPassword()));
 			boolean resultado = false;
-			
-			if (FuncionalidadesUsuario.getInstance().getUserBean().crear(user)) {
+			Long x = FuncionalidadesUsuario.getInstance().getUserBean().createWithId(user);
+			if (x!= null) {
+				System.out.println(x);
+				System.out.println("CREANDO - ANALISTA");
+				user.setIdUsuario(x);
+				System.out.println(user.getIdUsuario());
 				if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("analista")) {
 					Analista analista = new Analista();
 					analista.setUsuario(user);
 					analista.setAnalista("Que era esto");
 					resultado = FuncionalidadesAnalista.getInstance().getBean().crear(analista);
-					//validaciones.Mensajes.MostrarExito("Su solicitud ha quedado guardado. Serà revisada antes de quedar activo el usuario.");
+					System.out.println("CREADO - ANALISTA");
+				} else if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("estudiante")) {
+					Estudiante estudiante = new Estudiante();
+					estudiante.setUsuario(user);
+				} else if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("tutor")) {
+					Tutor tutor = new Tutor();
+					tutor.setUsuario(user);
 				}
+				
 					
+			} else {
+				System.out.println("RED ALERT");
 			}
 			
 			

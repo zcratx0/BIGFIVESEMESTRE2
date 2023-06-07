@@ -125,4 +125,18 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		return estado;
 	}
 
+
+	@Override
+	public Long createWithId(Usuario usuario) {
+		try {
+			em.persist(usuario);
+			em.flush();
+			System.out.println("CREANDO USUARIO");
+			return (Long) usuario.getIdUsuario();
+		} catch (Exception e) {
+			System.err.println("ERROR AL CREAR USUARIO " + usuario.toString());
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
