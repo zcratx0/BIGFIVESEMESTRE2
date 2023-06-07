@@ -69,7 +69,7 @@ public class ListaReclamoEstu {
 		lblListaReclamo.setBounds(123, 10, 161, 28);
 		frame.getContentPane().add(lblListaReclamo);
 		frame.setBounds(100, 100, 489, 512);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//Filtro Estado
 		lblEstado.setBackground(Color.decode("#EEFCFF"));

@@ -78,7 +78,7 @@ public class AltaReclamo {
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setBounds(100, 100, 515, 552);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		

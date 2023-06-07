@@ -49,7 +49,7 @@ public class SolicitudConstancia {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
 		frame.setBounds(100, 100, 554, 356);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 

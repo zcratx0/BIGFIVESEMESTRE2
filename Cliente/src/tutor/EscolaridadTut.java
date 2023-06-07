@@ -53,7 +53,7 @@ public class EscolaridadTut {
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		// Titulo Escolariad

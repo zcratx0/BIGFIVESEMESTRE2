@@ -30,6 +30,8 @@ public class DatosUsuario {
 	JFrame frame = new JFrame();
 	JLabel lblTitDatos = new JLabel("Datos de Usuario");
 	JLabel lblTipoUsu = new JLabel("Tipo de Usuario");
+	JTextField tfTipoUsuario = new JTextField();
+	
 	JLabel lblNombre = new JLabel("Nombre");
 	JTextField tfNombre = new JTextField();
 	
@@ -57,13 +59,17 @@ public class DatosUsuario {
 
 	JLabel lblItr = new JLabel("ITR");
 	JComboBox<Itr> cBoxItr = new JComboBox<Itr>();
+	
+	JLabel lblGenero = new JLabel("Género");
+	JComboBox cBoxGenero = new JComboBox();
 
 	JLabel lblEstado = new JLabel("Estado");
 	JComboBox cBoxEstado = new JComboBox();
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnAtras = new JButton("Atrás");
 	Usuario user = null;
-	
+	private final JTextField tfFechaNac = new JTextField();
+
 	
 
 	/**
@@ -108,7 +114,7 @@ public class DatosUsuario {
 	 */
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
-		frame.setBounds(100, 100, 431+50, 730);
+		frame.setBounds(100, 100, 431+50, 760);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false); 
@@ -129,8 +135,13 @@ public class DatosUsuario {
 		
 		// Tipo de usuario
 		lblTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
-		lblTipoUsu.setBounds(39, 85, 265, 13);
-		frame.getContentPane().add(lblTipoUsu);				
+		lblTipoUsu.setBounds(39, 85, 205, 17);
+		frame.getContentPane().add(lblTipoUsu);
+		
+		tfTipoUsuario.setBounds(195, 82, 260, 20);
+		frame.getContentPane().add(tfTipoUsuario);
+		tfTipoUsuario.setColumns(10);
+		
 				
 		//Nombre
 		lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
@@ -170,6 +181,10 @@ public class DatosUsuario {
 		lblFechNac.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblFechNac.setBounds(39, 265, 265, 13);
 		frame.getContentPane().add(lblFechNac);
+		
+		tfFechaNac.setBounds(195, 262, 260, 20);
+		tfFechaNac.setColumns(10);
+		frame.getContentPane().add(tfFechaNac);
 		
 		//Email Personal
 		lblEmailP.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
@@ -231,12 +246,20 @@ public class DatosUsuario {
 		
 		//Estado
 		lblEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
-		lblEstado.setBounds(39, 580, 265, 13);
+		lblEstado.setBounds(39, 624, 265, 13);
 		frame.getContentPane().add(lblEstado);
 		
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
-		cBoxEstado.setBounds(195, 580, 265, 21);
+		cBoxEstado.setBounds(195, 620, 265, 21);
 		frame.getContentPane().add(cBoxEstado);
+		
+		//Genero
+		lblGenero.setBounds(39, 583, 46, 14);
+		lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
+		frame.getContentPane().add(lblGenero);
+		
+		cBoxGenero.setBounds(195, 579, 265, 22);
+		frame.getContentPane().add(cBoxGenero);
 		
 		
 		//Botones
@@ -244,7 +267,7 @@ public class DatosUsuario {
 		btnGuardar.setFont(new Font("Tahona", Font.BOLD, textSize));
 		btnGuardar.setForeground(Color.decode("#f0f9ff"));
 		btnGuardar.setBackground(Color.decode("#0284c7"));
-		btnGuardar.setBounds(298, 637, 93, 32);
+		btnGuardar.setBounds(303, 678, 93, 32);
 		btnGuardar.setEnabled(false);
 		frame.getContentPane().add(btnGuardar);
 			//Atras
@@ -257,12 +280,16 @@ public class DatosUsuario {
 		btnAtras.setFont(new Font("Tahona", Font.BOLD, textSize));
 		btnAtras.setForeground(Color.decode("#f0f9ff"));
 		btnAtras.setBackground(Color.decode("#0284c7"));
-		btnAtras.setBounds(165, 637, 93, 32);
+		btnAtras.setBounds(169, 678, 93, 32);
 		frame.getContentPane().add(btnAtras);
 		
 		//	FUNCIONALIDAD
 		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
 		FuncionalidadesITR.getInstance().cargarComboBox(cBoxItr);
+		
+		
+		
+		
 
 		
 		
@@ -295,5 +322,4 @@ public class DatosUsuario {
 		this.user.setItr((Itr) cBoxItr.getSelectedItem());
 		FuncionalidadesUsuario.getInstance().getUserBean().modificar(this.user);
 	}
-
 }

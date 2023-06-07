@@ -110,7 +110,7 @@ public class PerfilEstudiantes {
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
 		frame.setBounds(100, 30, 417, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
@@ -130,7 +130,12 @@ public class PerfilEstudiantes {
 		tfNombre.setBounds(142, 49, 219, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
-		tfNombre.setInputVerifier(new ValidacionMaxyMin(0,32));
+		tfNombre.setInputVerifier(new ValidacionMaxyMin(02,32));
+		tfNombre.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		}); 
 		
 		
 		//Apellido
@@ -145,12 +150,17 @@ public class PerfilEstudiantes {
 		frame.getContentPane().add(tfApellido);
 		tfApellido.setColumns(10);
 		tfApellido.setInputVerifier(new ValidacionMaxyMin(2,32));
-		
+		tfApellido.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		}); 
 		
 		//Cedula
 		lblCI.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblCI.setBounds(10, 139, 80, 13);
 		frame.getContentPane().add(lblCI);
+		tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
 		
 		tfDocumento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		tfDocumento.setBounds(142, 136, 219, 19);
@@ -161,7 +171,8 @@ public class PerfilEstudiantes {
 				ValidarInputs.ValidarSoloNumeros(e);;
 			}
 		});
-		
+		//TODO Revisar porque esto se pude romper!!
+		tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
 		
 		
 		//Fecha de Nacimiento 
@@ -195,6 +206,7 @@ public class PerfilEstudiantes {
 		tfTel.setBounds(142, 258, 219, 19);
 		frame.getContentPane().add(tfTel);
 		tfTel.setColumns(10);
+		tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
 		
 		
 		//Localidad
@@ -211,6 +223,7 @@ public class PerfilEstudiantes {
 				ValidarInputs.ValidarSoloLetras(e);
 			}
 		}); 
+		tfLoca.setInputVerifier(new ValidacionMaxyMin(2,24));
 		
 		
 		//Departamento

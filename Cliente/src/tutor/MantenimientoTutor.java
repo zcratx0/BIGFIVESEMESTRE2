@@ -47,7 +47,7 @@ public class MantenimientoTutor {
 		frame = new JFrame();
 		frame.setBounds(300, 100, 712, 587);
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 

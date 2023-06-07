@@ -58,7 +58,7 @@ public class ListaConstancias {
 	 */
 	private void initialize() {
 		frame.setBounds(100, 100, 590, 439);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setResizable(false);

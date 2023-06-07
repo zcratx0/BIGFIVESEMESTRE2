@@ -124,7 +124,7 @@ private void initialize() {
 	tfNombre.setBounds(142, 49, 219, 19);
 	frame.getContentPane().add(tfNombre);
 	tfNombre.setColumns(10);
-	tfNombre.setInputVerifier(new ValidacionMaxyMin(0,32));
+	tfNombre.setInputVerifier(new ValidacionMaxyMin(2,32));
 	tfNombre.addKeyListener(new KeyAdapter() {
 		public void keyTyped(KeyEvent e) {
 			ValidarInputs.ValidarSoloLetras(e);
@@ -164,6 +164,8 @@ private void initialize() {
 			ValidarInputs.ValidarSoloNumeros(e);;
 		}
 	});
+	//TODO Revisar porque esto se pude romper!!
+			tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
 	
 	
 	
@@ -196,6 +198,7 @@ private void initialize() {
 	tfTel.setBounds(142, 258, 219, 19);
 	frame.getContentPane().add(tfTel);
 	tfTel.setColumns(10);
+	tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
 	
 	
 	//Localidad
@@ -212,6 +215,8 @@ private void initialize() {
 			ValidarInputs.ValidarSoloLetras(e);
 		}
 	}); 
+	tfLoca.setInputVerifier(new ValidacionMaxyMin(2,24));
+	
 	
 	//Departamento
 	lblDepa.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));

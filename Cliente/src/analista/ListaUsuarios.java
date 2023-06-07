@@ -236,6 +236,11 @@ public class ListaUsuarios {
 		btnDatos.setForeground(Color.decode("#f0f9ff"));
 		btnDatos.setBackground(Color.decode("#0ea5e9"));
 		btnDatos.setBounds(25, 415, 85, 21);
+		btnDatos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DatosUsuario.main(columnasUsu);
+			}
+		});
 		frame.getContentPane().add(btnDatos);
 		
 		

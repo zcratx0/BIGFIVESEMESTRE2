@@ -101,7 +101,12 @@ public class RegistroUsuario {
 		tfNombre.setBounds(142, 49, 219, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
-		tfNombre.setInputVerifier(new ValidacionMaxyMin(0,32));
+		tfNombre.setInputVerifier(new ValidacionMaxyMin(2,32));
+		tfNombre.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		}); 
 		
 		
 		
@@ -118,6 +123,11 @@ public class RegistroUsuario {
 		frame.getContentPane().add(tfApellido);
 		tfApellido.setColumns(10);
 		tfApellido.setInputVerifier(new ValidacionMaxyMin(2,32));
+		tfApellido.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		}); 
 		
 		
 		//Cedula
@@ -136,6 +146,8 @@ public class RegistroUsuario {
 				ValidarInputs.ValidarSoloNumeros(e);;
 			}
 		});
+		//TODO Revisar porque esto se pude romper!!
+		tfCedula.setInputVerifier(new ValidacionMaxyMin(8,8));
 		
 		
 		
@@ -187,6 +199,7 @@ public class RegistroUsuario {
 		tfTel.setBounds(142, 258, 219, 19);
 		frame.getContentPane().add(tfTel);
 		tfTel.setColumns(10);
+		tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
 		
 		
 		//Localidad
@@ -205,6 +218,7 @@ public class RegistroUsuario {
 				ValidarInputs.ValidarSoloLetras(e);
 			}
 		}); 
+		tfLoca.setInputVerifier(new ValidacionMaxyMin(2,24));
 		
 		
 		//Departamento
