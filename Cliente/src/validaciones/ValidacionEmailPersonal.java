@@ -16,6 +16,9 @@ import javax.swing.JTextField;
 		public boolean verify(JComponent input) {
 			JTextField textField = (JTextField) input;
 			String text = textField.getText().trim();
+			 if (text.isEmpty()) {
+		            return true;
+		        }
 			Matcher matcher = pattern.matcher(text);
 			if (!matcher.matches()) {
 				JOptionPane.showMessageDialog(input,

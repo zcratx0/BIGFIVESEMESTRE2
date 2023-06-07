@@ -16,14 +16,17 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Usuario;
+
 import analista.ListaAuxITR;
+import funcionalidades.FuncionalidadesDepartamento;
+import funcionalidades.FuncionalidadesITR;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
-import validaciones.ValidacionNombreyApellido;
+import validaciones.ValidacionMaxyMin;
 import validaciones.ValidarInputs;
-
-import com.toedter.calendar.JDateChooser;
 
 public class PerfilEstudiantes {
 
@@ -36,7 +39,7 @@ public class PerfilEstudiantes {
 	JTextField tfApellido = new JTextField();
 	JLabel lblCI = new JLabel("Cédula");
 	JLabel lblFecNac = new JLabel("Fecha de Nacimiento");
-	JTextField tfCedula = new JTextField();
+	JTextField tfDocumento = new JTextField();
 	JTextField tfMailPer = new JTextField();
 	JLabel lblMailP = new JLabel("Email Personal");
 	JLabel lblTel = new JLabel("Teléfono");
@@ -50,12 +53,14 @@ public class PerfilEstudiantes {
 	JPasswordField pasFContra = new JPasswordField();
 	JLabel lblITR = new JLabel("ITR");
 	JComboBox cBoxITR = new JComboBox();
-	JLabel lblAnioIng = new JLabel("Año de Ingreso");
+	JLabel lblGeneracion = new JLabel("Generacion");
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
 	JTextField tfTel = new JTextField();
-	JTextField tfFechNac = new JTextField();
-	private final JTextField tfAnioIng = new JTextField();
+	JTextField tfFechaNac = new JTextField();
+	private final JTextField tfGeneracion = new JTextField();
+	private final JLabel lblGenero = new JLabel("Género");
+	private final JComboBox cBoxGenero = new JComboBox();
 
 	
 	
@@ -68,6 +73,20 @@ public class PerfilEstudiantes {
 			public void run() {
 				try {
 					PerfilEstudiantes window = new PerfilEstudiantes();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public static void mostrarPerfilEstudiante(Estudiante estudiante) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PerfilEstudiantes window = new PerfilEstudiantes();
+					window.cargarDatosEstudiantes(estudiante);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -90,7 +109,7 @@ public class PerfilEstudiantes {
 	 */
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
-		frame.setBounds(100, 30, 417, 650);
+		frame.setBounds(100, 30, 417, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
@@ -111,7 +130,7 @@ public class PerfilEstudiantes {
 		tfNombre.setBounds(142, 49, 219, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
-		tfNombre.setInputVerifier(new ValidacionNombreyApellido(2,32));
+		tfNombre.setInputVerifier(new ValidacionMaxyMin(0,32));
 		
 		
 		//Apellido
@@ -125,7 +144,7 @@ public class PerfilEstudiantes {
 		tfApellido.setBounds(142, 89, 219, 19);
 		frame.getContentPane().add(tfApellido);
 		tfApellido.setColumns(10);
-		tfApellido.setInputVerifier(new ValidacionNombreyApellido(2,32));
+		tfApellido.setInputVerifier(new ValidacionMaxyMin(2,32));
 		
 		
 		//Cedula
@@ -133,11 +152,11 @@ public class PerfilEstudiantes {
 		lblCI.setBounds(10, 139, 80, 13);
 		frame.getContentPane().add(lblCI);
 		
-		tfCedula.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		tfCedula.setBounds(142, 136, 219, 19);
-		frame.getContentPane().add(tfCedula);
-		tfCedula.setColumns(10);
-		tfCedula.addKeyListener(new KeyAdapter () {
+		tfDocumento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		tfDocumento.setBounds(142, 136, 219, 19);
+		frame.getContentPane().add(tfDocumento);
+		tfDocumento.setColumns(10);
+		tfDocumento.addKeyListener(new KeyAdapter () {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloNumeros(e);;
 			}
@@ -150,9 +169,9 @@ public class PerfilEstudiantes {
 		lblFecNac.setBounds(10, 181, 146, 13);
 		frame.getContentPane().add(lblFecNac);
 		
-		tfFechNac.setBounds(142, 178, 219, 19);
-		tfFechNac.setColumns(10);
-		frame.getContentPane().add(tfFechNac);
+		tfFechaNac.setBounds(142, 178, 219, 19);
+		tfFechaNac.setColumns(10);
+		frame.getContentPane().add(tfFechaNac);
 		
 		
 		//Email Personal
@@ -237,19 +256,27 @@ public class PerfilEstudiantes {
 		
 		//Año de ingreso - Est
 		
-		lblAnioIng.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblAnioIng.setBounds(10, 516, 132, 13);
-		frame.getContentPane().add(lblAnioIng);
+		lblGeneracion.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		lblGeneracion.setBounds(10, 516, 132, 13);
+		frame.getContentPane().add(lblGeneracion);
 		
-		tfAnioIng.setBounds(142, 513, 219, 19);
-		tfAnioIng.setColumns(10);
-		frame.getContentPane().add(tfAnioIng);
+		tfGeneracion.setBounds(142, 513, 219, 19);
+		tfGeneracion.setColumns(10);
+		frame.getContentPane().add(tfGeneracion);
+		
+		//Genero
+		lblGenero.setBounds(10, 559, 45, 13);
+		lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		frame.getContentPane().add(lblGenero);
+		
+		cBoxGenero.setBounds(142, 555, 219, 21);
+		frame.getContentPane().add(cBoxGenero);
 		
 		//Boton Registro
 		btnConfirmar.setBackground(Color.decode("#0284c7")); 
 		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnConfirmar.setForeground(Color.decode("#f0f9ff"));
-		btnConfirmar.setBounds(249, 563, 112, 40);
+		btnConfirmar.setBounds(249, 613, 112, 40);
 		frame.getContentPane().add(btnConfirmar);
 		
 		
@@ -257,14 +284,13 @@ public class PerfilEstudiantes {
 		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalEstudiante.main(null);
 				frame.dispose();
 			}
 		});
 		btnCancelar.setBackground(Color.decode("#0284c7"));
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
-		btnCancelar.setBounds(114, 563, 112, 40);
+		btnCancelar.setBounds(119, 613, 112, 40);
         frame.getContentPane().add(btnCancelar);
 
 			
@@ -277,8 +303,25 @@ public class PerfilEstudiantes {
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
-		
-		
-		
+
+	}
+	
+	public void cargarDatosEstudiantes(Estudiante estudiante) {
+		Usuario usuario = estudiante.getUsuario();
+		//Carga el combobox de departamento e itr con los valores
+		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
+		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
+		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
+		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
+		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
+		if (usuario.getFechaNac() != null) tfFechaNac.setText(usuario.getFechaNac().toString());
+		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
+		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
+		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
+		if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento());
+		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
+		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
+		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
+		if (estudiante.getGeneracion() != null) tfGeneracion.setText(estudiante.getGeneracion().getGeneracion());
 	}
 }

@@ -59,7 +59,7 @@ public class ListaSoliConstancias {
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setBounds(100, 100, 531, 572);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
@@ -145,7 +145,7 @@ public class ListaSoliConstancias {
 		btnAtras.setBounds(239, 485, 85, 21);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalAnalista.main(null);
+				//PrincipalAnalista.main(null);
 				frame.dispose();
 			}
 		});

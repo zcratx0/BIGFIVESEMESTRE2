@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JTextField;
 
 public class RegistroAccReclamo {
 
@@ -28,6 +29,7 @@ public class RegistroAccReclamo {
 	JTextArea tAreaAgregarCom = new JTextArea();
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
+	JTextField tfFechHora = new JTextField();
 
 	/**
 	 * Launch the application.
@@ -60,7 +62,7 @@ public class RegistroAccReclamo {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(100, 100, 467, 342);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		
 		// Imagen
@@ -84,11 +86,14 @@ public class RegistroAccReclamo {
 		frame.getContentPane().add(lblTitReclamo);
 		
 		
-		//Fehca y hora
+		//Fecha y hora
 		lblFechaHora.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblFechaHora.setBounds(41, 76, 91, 13);
 		frame.getContentPane().add(lblFechaHora);
 		
+		tfFechHora.setBounds(188, 73, 211, 19);
+		frame.getContentPane().add(tfFechHora);
+		tfFechHora.setColumns(10);
 		
 		//Analista
 		lblAnalista.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -103,7 +108,7 @@ public class RegistroAccReclamo {
 		
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxEstado.setBackground(Color.decode("#e5e7eb"));
-		cBoxEstado.setBounds(188, 148, 99, 21);
+		cBoxEstado.setBounds(188, 148, 211, 21);
 		frame.getContentPane().add(cBoxEstado);
 		
 		//Agregar Comentario
@@ -138,10 +143,6 @@ public class RegistroAccReclamo {
 			}
 		});
 		frame.getContentPane().add(btnCancelar);
-		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(165, 76, 193, 19);
-		frame.getContentPane().add(dateChooser);
 		
 	}
 }

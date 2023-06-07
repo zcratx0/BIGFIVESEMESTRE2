@@ -61,7 +61,7 @@ public class ListaReclamo {
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb")); 
 		frame.setBounds(100, 100, 536, 519);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
@@ -144,7 +144,7 @@ public class ListaReclamo {
 		btnAtras.setBounds(224,445, 85, 27);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalAnalista.main(null);
+				//PrincipalAnalista.main(null);
 				frame.dispose();
 			}
 		});

@@ -8,7 +8,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Usuario;
+
 import analista.AgregarITR;
+import analista.PerfilAnalista;
+import analista.PrincipalAnalista;
+import funcionalidades.FuncionalidadesDepartamento;
+import funcionalidades.FuncionalidadesITR;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,6 +30,11 @@ public class PrincipalEstudiante {
 	JButton btnPerfil = new JButton("Perfil");
 	JButton btnEscolaridad = new JButton("Escolaridad");
 	JButton btnReclamos = new JButton("Reclamos");
+	JLabel lblPerfil = new JLabel("");
+	private final JLabel lblNomUsuario = new JLabel("");
+	private final JLabel lblTitEstudiante = new JLabel("Estudiante");
+	
+	private Estudiante usuarioEstudiante= null;
 	
 
 	/**
@@ -39,7 +52,28 @@ public class PrincipalEstudiante {
 			}
 		});
 	}
-
+	public static void mostrarEstudiante(Estudiante estudiante) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PrincipalEstudiante window = new PrincipalEstudiante();
+					//definimos el usuario con la variable usuario 
+					window.usuarioEstudiante = estudiante;
+					if(estudiante != null) {
+						if(estudiante.getUsuario() !=null) {
+							if(estudiante.getUsuario().getMailInstitucional() != null) {
+								window.lblNomUsuario.setText(estudiante.getUsuario().getMailInstitucional().split("@")[0]);
+							}
+						}
+					}
+					window.lblNomUsuario.setText(estudiante.getUsuario().getMailInstitucional().split("@")[0]);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	/**
 	 * Create the application.
 	 */
@@ -61,19 +95,35 @@ public class PrincipalEstudiante {
 		// Imagen
 		
 		lblLogoUtec.setIcon(new ImageIcon(AgregarITR.class.getResource("/img/LogoUTEC30x30.png")));
-		lblLogoUtec.setBounds(25, 0, 107, 50);
+		lblLogoUtec.setBounds(25, 0, 50, 50);
 		frame.getContentPane().add(lblLogoUtec);
+
+		// Imagen Perfil
+
+		lblPerfil.setIcon(new ImageIcon(AgregarITR.class.getResource("/img/Perfil.png")));
+		lblPerfil.setBounds(414, 0, 56, 50);
+		frame.getContentPane().add(lblPerfil);
 		
+		//Titulo Estudiante
+		lblTitEstudiante.setBounds(76, 14, 180, 28);
+		lblTitEstudiante.setForeground(Color.decode("#08ACEC"));
+		lblTitEstudiante.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
+		frame.getContentPane().add(lblTitEstudiante);
+		
+		//Nombre de usuario
+		lblNomUsuario.setBounds(456, 22, 187, 13);
+		frame.getContentPane().add(lblNomUsuario);
+
 		//Botones
 			//Perfil
 		btnPerfil.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnPerfil.setForeground(Color.decode("#f0f9ff"));
 		btnPerfil.setBackground(Color.decode("#3b82f6"));
-		btnPerfil.setBounds(80, 10, 107, 40);
+		btnPerfil.setBounds(80, 65, 107, 40);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PerfilEstudiantes.main(null);
-				frame.dispose();
+				if (usuarioEstudiante != null) PerfilEstudiantes.mostrarPerfilEstudiante(usuarioEstudiante);
+				else {PerfilEstudiantes.main(null);}
 			}
 		});
 		frame.getContentPane().add(btnPerfil);
@@ -88,14 +138,14 @@ public class PrincipalEstudiante {
 		btnEscolaridad.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnEscolaridad.setForeground(Color.decode("#f0f9ff"));
 		btnEscolaridad.setBackground(Color.decode("#3b82f6"));
-		btnEscolaridad.setBounds(220, 10, 107, 40);
+		btnEscolaridad.setBounds(220, 65, 107, 40);
 		frame.getContentPane().add(btnEscolaridad);
 		
 			//Reclamos
 		btnReclamos.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnReclamos.setForeground(Color.decode("#f0f9ff"));
 		btnReclamos.setBackground(Color.decode("#3b82f6"));
-		btnReclamos.setBounds(360, 10, 107, 40);
+		btnReclamos.setBounds(360, 65, 107, 40);
 		btnReclamos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaReclamoEstu.main(null);
@@ -108,7 +158,7 @@ public class PrincipalEstudiante {
 		btnConstancia.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnConstancia.setForeground(Color.decode("#f0f9ff"));
 		btnConstancia.setBackground(Color.decode("#3b82f6"));
-		btnConstancia.setBounds(500, 10, 107, 40);
+		btnConstancia.setBounds(500, 65, 107, 40);
 		btnConstancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaConstancias.main(null);
@@ -116,6 +166,8 @@ public class PrincipalEstudiante {
 			}
 		});
 		frame.getContentPane().add(btnConstancia);
+		
+		
 	}
-
+	
 }

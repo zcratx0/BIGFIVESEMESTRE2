@@ -52,7 +52,7 @@ public class ListaEscolaridad {
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
 		frame.setBounds(100, 100, 517, 530);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
@@ -100,7 +100,7 @@ public class ListaEscolaridad {
 		btnAtras.setBounds(193, 451, 96, 32);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalAnalista.main(null);
+				//PrincipalAnalista.main(null);
 				frame.dispose();
 			}
 		});

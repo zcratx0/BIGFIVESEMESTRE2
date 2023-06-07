@@ -1,21 +1,31 @@
 package logIn;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Font;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import funcionalidades.FuncionalidadesUsuario;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Tutor;
+import com.bigfive.entities.Usuario;
+
+import analista.PrincipalAnalista;
+import estudiante.PrincipalEstudiante;
+import funcionalidades.FuncionalidadesUsuario;
+import tutor.PrincipalTutor;
+import validaciones.Mensajes;
 
 public class LogIn {
 
@@ -94,6 +104,22 @@ public class LogIn {
 		lblImgContrasenia.setIcon(new ImageIcon(LogIn.class.getResource("/img/Password.png")));
 		lblImgContrasenia.setBounds(173, 131, 45, 48);
 		frame.getContentPane().add(lblImgContrasenia);
+		lblOlvidContra.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lblOlvidContra.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				Mantenimiento.main(null);
+				
+			}
+			
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblOlvidContra.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				
+			}
+		});
+		
 		
 		//Olvidaste tu contraseña
 		lblOlvidContra.setFont(new Font("Bookman Old Style", Font.PLAIN, 10)); 
@@ -108,14 +134,51 @@ public class LogIn {
 		btnIngresar.setForeground(Color.decode("#f0f9ff"));
 		btnIngresar.setBounds(337, 243, 92, 29);
 		btnIngresar.addActionListener(e -> {
-			System.out.println(FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword())));
+			//Preguntar si existe la base de datos
+			
+			try {
+				System.out.println(FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword())));
+				//Tipo = tipo de usuario - 0=Analista - 1=Tutor - 2=Estudiante
+				int tipo = 0;
+				//usuario de prueba 
+				Usuario usuario = new Usuario();
+				usuario.setNombre("Nombre de prueba");
+				usuario.setApellido("Apellido de prueba");
+				usuario.setMailInstitucional("florencia.certorio@estudiantes.utec.uy");
+				
+				Estudiante estudiante = new Estudiante();
+				//estudiante.setUsuario(usuario);
+				
+				Tutor tutor = new Tutor();
+				//tutor.setUsuario(usuario);
+				//Evlua que tipo de usuario ingresa
+				if (tipo == 0) {
+					PrincipalAnalista.mostrarAnalista(usuario);
+					frame.dispose();
+				} else if (tipo == 1) {
+					PrincipalTutor.mostrarTutor(tutor);
+					frame.dispose();
+				} else if (tipo == 2) {
+					PrincipalEstudiante.mostrarEstudiante(estudiante);
+					frame.dispose();
+				}
+				else {
+					Mensajes.MostrarError("Usuario no habilitado");
+				}
+			} catch(Exception e1) {
+				Mensajes.MostrarError("Usuario o Contraseña incorrecta");
+			}
+			
 		});
 		frame.getContentPane().add(btnIngresar);
+		
+		
 			//Registrarse
 		JButton btnRegistro = new JButton("Registrarse");
 		btnRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegistroUsuario.main(null);
+				
 			}
 		});
 		btnRegistro.setBackground(Color.decode("#0284c7"));

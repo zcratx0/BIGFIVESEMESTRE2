@@ -54,7 +54,7 @@ public class HabilitacionUsuario {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(100, 100, 753, 423);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		
 		// Imagen
@@ -97,7 +97,7 @@ public class HabilitacionUsuario {
 		btnAtras.setBounds(434, 333, 89, 29);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalAnalista.main(null);
+				//PrincipalAnalista.main(null);
 				frame.dispose();
 			}
 		});

@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JTextField;
 
 public class RegistroAccConstancias {
 
@@ -29,6 +30,7 @@ public class RegistroAccConstancias {
 	JTextArea tAreaAgregarCom = new JTextArea();
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
+	JTextField tfFechHora = new JTextField();
 
 	/**
 	 * Launch the application.
@@ -60,7 +62,7 @@ public class RegistroAccConstancias {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(100, 100, 467, 342);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		
 		// Imagen
@@ -83,10 +85,14 @@ public class RegistroAccConstancias {
 		frame.getContentPane().add(lblTitConstancia);
 		
 		
-		//Fehca y hora
+		//Fecha y hora
 		lblFechaHora.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblFechaHora.setBounds(41, 76, 91, 13);
 		frame.getContentPane().add(lblFechaHora);
+		
+		tfFechHora.setBounds(188, 73, 198, 19);
+		tfFechHora.setColumns(10);
+		frame.getContentPane().add(tfFechHora);
 		
 		
 		//Analista
@@ -103,7 +109,7 @@ public class RegistroAccConstancias {
 		
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxEstado.setBackground(Color.decode("#e5e7eb"));
-		cBoxEstado.setBounds(188, 148, 99, 21);
+		cBoxEstado.setBounds(188, 148, 198, 21);
 		frame.getContentPane().add(cBoxEstado);
 		
 		//Agregar Comentario
@@ -138,9 +144,7 @@ public class RegistroAccConstancias {
 		});
 		frame.getContentPane().add(btnCancelar);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(161, 76, 181, 19);
-		frame.getContentPane().add(dateChooser);
+		
 		
 		
 		

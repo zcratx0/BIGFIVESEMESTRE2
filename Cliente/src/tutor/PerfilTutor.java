@@ -1,4 +1,4 @@
-package Tutor;
+package tutor;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -16,14 +16,19 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.toedter.calendar.JDateChooser;
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Tutor;
+import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
-import estudiante.PrincipalEstudiante;
+import estudiante.PerfilEstudiantes;
+import funcionalidades.FuncionalidadesArea;
+import funcionalidades.FuncionalidadesDepartamento;
+import funcionalidades.FuncionalidadesITR;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
-import validaciones.ValidacionNombreyApellido;
+import validaciones.ValidacionMaxyMin;
 import validaciones.ValidarInputs;
 
 public class PerfilTutor {
@@ -36,7 +41,7 @@ public class PerfilTutor {
 	JTextField tfApellido = new JTextField();
 	JLabel lblCI = new JLabel("Cédula");
 	JLabel lblFecNac = new JLabel("Fecha de Nacimiento");
-	JTextField tfCedula = new JTextField();
+	JTextField tfDocumento = new JTextField();
 	JTextField tfMailPer = new JTextField();
 	JLabel lblMailP = new JLabel("Email Personal");
 	JLabel lblTel = new JLabel("Teléfono");
@@ -57,6 +62,9 @@ public class PerfilTutor {
 	JComboBox cBoxArea = new JComboBox();
 	JLabel lblRol = new JLabel("Rol");
 	JComboBox cBoxRol = new JComboBox();
+	private final JTextField tfFechaNac = new JTextField();
+	private final JLabel lblGenero = new JLabel("Género");
+	private final JComboBox cBoxGenero = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -66,6 +74,8 @@ public class PerfilTutor {
 			public void run() {
 				try {
 					PerfilTutor window = new PerfilTutor();
+					window.cargarDatosTutor(null);
+
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -74,10 +84,25 @@ public class PerfilTutor {
 		});
 	}
 
+	public static void mostrarPerfilTutor(Tutor tutor) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PerfilTutor window = new PerfilTutor();
+					window.cargarDatosTutor(tutor);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	/**
 	 * Create the application.
 	 */
 	public PerfilTutor() {
+		tfFechaNac.setBounds(142, 178, 219, 19);
+		tfFechaNac.setColumns(10);
 		initialize();
 	}
 
@@ -107,7 +132,7 @@ public class PerfilTutor {
 		tfNombre.setBounds(142, 49, 219, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
-		tfNombre.setInputVerifier(new ValidacionNombreyApellido(2,32));
+		tfNombre.setInputVerifier(new ValidacionMaxyMin(0,32));
 		
 		
 		//Apellido
@@ -121,7 +146,7 @@ public class PerfilTutor {
 		tfApellido.setBounds(142, 89, 219, 19);
 		frame.getContentPane().add(tfApellido);
 		tfApellido.setColumns(10);
-		tfApellido.setInputVerifier(new ValidacionNombreyApellido(2,32));
+		tfApellido.setInputVerifier(new ValidacionMaxyMin(2,32));
 		
 		
 		//Cedula
@@ -129,11 +154,11 @@ public class PerfilTutor {
 		lblCI.setBounds(10, 139, 80, 13);
 		frame.getContentPane().add(lblCI);
 		
-		tfCedula.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		tfCedula.setBounds(142, 136, 219, 19);
-		frame.getContentPane().add(tfCedula);
-		tfCedula.setColumns(10);
-		tfCedula.addKeyListener(new KeyAdapter () {
+		tfDocumento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		tfDocumento.setBounds(142, 136, 219, 19);
+		frame.getContentPane().add(tfDocumento);
+		tfDocumento.setColumns(10);
+		tfDocumento.addKeyListener(new KeyAdapter () {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloNumeros(e);;
 			}
@@ -250,7 +275,7 @@ public class PerfilTutor {
 		btnConfirmar.setBackground(Color.decode("#0284c7")); 
 		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnConfirmar.setForeground(Color.decode("#f0f9ff"));
-		btnConfirmar.setBounds(281, 638, 112, 40);
+		btnConfirmar.setBounds(281, 663, 112, 40);
 		frame.getContentPane().add(btnConfirmar);
 		
 		
@@ -258,14 +283,14 @@ public class PerfilTutor {
 		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalTutor.main(null);
+				//PrincipalTutor.main(null);
 				frame.dispose();
 			}
 		});
 		btnCancelar.setBackground(Color.decode("#0284c7"));
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
-		btnCancelar.setBounds(143, 638, 112, 40);
+		btnCancelar.setBounds(145, 663, 112, 40);
         frame.getContentPane().add(btnCancelar);
 
 			
@@ -278,6 +303,43 @@ public class PerfilTutor {
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
+		frame.getContentPane().add(tfFechaNac);
+		lblGenero.setBounds(10, 616, 45, 13);
+		
+		frame.getContentPane().add(lblGenero);
+		cBoxGenero.setBounds(142, 612, 219, 21);
+		
+		frame.getContentPane().add(cBoxGenero);
+		
 		
 	}
+	public void cargarDatosTutor(Tutor tutor) {
+		Usuario usuario = null;
+		
+		//Carga el combobox de departamento e itr con los valores
+		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
+		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
+		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
+		//FuncionalidadesRol.getInstance().cargarComboBox(cBoxRol);
+		if (tutor != null) {
+		if (tutor.getUsuario() != null) usuario =  tutor.getUsuario(); 
+		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
+		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
+		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
+		if (usuario.getFechaNac() != null) tfFechaNac.setText(usuario.getFechaNac().toString());
+		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
+		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
+		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
+		if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento());
+		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
+		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
+		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
+		if (tutor.getArea() != null) cBoxArea.setSelectedItem(tutor.getArea());
+		//if (tutor.getRol() != null) cBoxRol.setSelectedItem(tutor.getRol());
+
+		}
+	}
 }
+
+
+

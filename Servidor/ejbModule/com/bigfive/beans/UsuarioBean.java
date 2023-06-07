@@ -6,6 +6,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.bigfive.entities.Analista;
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
 
 /**
@@ -76,6 +79,50 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		System.out.println(x);
 		return x != null;
 	}
-    
+	@Override
+	public int detectarUsuario(Usuario usuario) {
+		//Retorna "0" para analista, "1" para tutor, "2" para estudiante y "-1" para error  
+		Analista analista = null;
+		Tutor tutor = null;
+		Estudiante estudiante = null;
+		
+		analista = (Analista) em.createQuery("SELECT a FROM Analista a WHERE a.usuario = :user")
+			    .setParameter("user", usuario)
+			    .getSingleResult();
+		
+		if (analista != null) {
+			return 0;
+		} else {
+			tutor = (Tutor) em.createQuery("SELECT t FROM Tutor t WHERE t.usuario = :user")
+				    .setParameter("user", usuario)
+				    .getSingleResult();
+			if(tutor != null) {
+				return 1;
+			} else {
+				estudiante = (Estudiante) em.createQuery("SELECT e FROM Estudiante e WHERE e.usuario = :user")
+					    .setParameter("user", usuario)
+					    .getSingleResult();
+				if(estudiante != null) {
+					return 2;
+				} else {
+					return -1;
+				}
+				
+			}
+			
+		}
+	}
+
+	@Override
+	public int getEstadoUsuario(Usuario usuario) {
+		// Obtiene el estado del Usuario
+
+		int estado;
+
+		estado = (int) em.createQuery("SELECT u.estado FROM Usuario u WHERE u.estado = :user")
+				.setParameter("user", usuario).getSingleResult();
+
+		return estado;
+	}
 
 }

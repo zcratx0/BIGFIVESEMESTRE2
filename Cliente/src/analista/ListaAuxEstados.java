@@ -57,7 +57,7 @@ public class ListaAuxEstados {
 		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 10));
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setBounds(100, 100, 561, 431);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		

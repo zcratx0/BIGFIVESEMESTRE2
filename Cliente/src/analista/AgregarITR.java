@@ -102,7 +102,7 @@ public class AgregarITR {
 	private void initialize(int type) {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
 		frame.setBounds(100, 100, 469, 281);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false); //TODO bloquear tamaño. Agregar a los demás
 		

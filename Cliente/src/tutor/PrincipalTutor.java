@@ -1,4 +1,4 @@
-package Tutor;
+package tutor;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -11,12 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Tutor;
+
 import analista.AgregarITR;
-import estudiante.DescargarEscolaridad;
-import estudiante.ListaConstancias;
-import estudiante.ListaReclamoEstu;
-import estudiante.PerfilEstudiantes;
-import javax.swing.JSeparator;
+import estudiante.PrincipalEstudiante;
 
 public class PrincipalTutor {
 
@@ -28,8 +27,9 @@ public class PrincipalTutor {
 		JButton btnPerfil = new JButton("Perfil");
 		JButton btnEscolaridad = new JButton("Escolaridad");
 		JButton btnReclamos = new JButton("Reclamos");
-		private final JLabel lblUsuario = new JLabel("Nombre Usuario");
+		private final JLabel lblNombreUsuario = new JLabel("");
 		private final JLabel lblTitTutor = new JLabel("Tutor");
+		private Tutor usuarioTutor = null;
 
 	/**
 	 * Launch the application.
@@ -39,6 +39,29 @@ public class PrincipalTutor {
 			public void run() {
 				try {
 					PrincipalTutor window = new PrincipalTutor();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public static void mostrarTutor(Tutor tutor) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PrincipalTutor window = new PrincipalTutor();
+					//definimos el usuario con la variable usuario 
+					window.usuarioTutor = tutor;
+					if(tutor != null) {
+						if(tutor.getUsuario() != null) {
+							if(tutor.getUsuario().getMailInstitucional() != null) {
+								window.lblNombreUsuario.setText(tutor.getUsuario().getMailInstitucional().split("@")[0]);
+							}
+						}
+					}
+					
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +96,7 @@ public class PrincipalTutor {
 		// Imagen Perfil
 
 		lblPerfil.setIcon(new ImageIcon(AgregarITR.class.getResource("/img/Perfil.png")));
-		lblPerfil.setBounds(431, 0, 56, 50);
+		lblPerfil.setBounds(413, 0, 56, 50);
 		frame.getContentPane().add(lblPerfil);
 
 		// Titulo Tutor
@@ -84,9 +107,9 @@ public class PrincipalTutor {
 		
 		
 		// Nombre Usuario
-		lblUsuario.setBounds(485, 22, 122, 13);
-		lblUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		frame.getContentPane().add(lblUsuario);
+		lblNombreUsuario.setBounds(460, 20, 183, 15);
+		lblNombreUsuario.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		frame.getContentPane().add(lblNombreUsuario);
 
 
 		// Botones
@@ -97,8 +120,9 @@ public class PrincipalTutor {
 		btnPerfil.setBounds(76, 65, 107, 40);
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PerfilTutor.main(null);
-				frame.dispose();
+				if (usuarioTutor != null) PerfilTutor.mostrarPerfilTutor(usuarioTutor);
+				else {PerfilTutor.main(null);}
+				//frame.dispose();
 			}
 		});
 		frame.getContentPane().add(btnPerfil);

@@ -30,7 +30,7 @@ import funcionalidades.FuncionalidadesUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
-import validaciones.ValidacionNombreyApellido;
+import validaciones.ValidacionMaxyMin;
 import validaciones.ValidarInputs;
 
 public class RegistroUsuario {
@@ -77,8 +77,8 @@ public class RegistroUsuario {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
-		frame.setBounds(100, 30, 417, 770);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 30, 417, 800);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
@@ -101,7 +101,8 @@ public class RegistroUsuario {
 		tfNombre.setBounds(142, 49, 219, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
-		tfNombre.setInputVerifier(new ValidacionNombreyApellido(2,32));
+		tfNombre.setInputVerifier(new ValidacionMaxyMin(0,32));
+		
 		
 		
 		//Apellido
@@ -116,7 +117,7 @@ public class RegistroUsuario {
 		tfApellido.setBounds(142, 89, 219, 19);
 		frame.getContentPane().add(tfApellido);
 		tfApellido.setColumns(10);
-		tfApellido.setInputVerifier(new ValidacionNombreyApellido(2,32));
+		tfApellido.setInputVerifier(new ValidacionMaxyMin(2,32));
 		
 		
 		//Cedula
@@ -256,13 +257,23 @@ public class RegistroUsuario {
 		cBoxITR.setBounds(142, 472, 219, 21);
 		frame.getContentPane().add(cBoxITR);
 		
+		// Genero
+		JLabel lblGenero = new JLabel("Género");
+		lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		lblGenero.setBounds(10, 518, 45, 13);
+		frame.getContentPane().add(lblGenero);
+
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(142, 520, 219, 21);
+		frame.getContentPane().add(comboBox);
+		
 		//Año de ingreso - Est
 		JLabel lblAnioIng = new JLabel("Año de Ingreso");
 		lblAnioIng.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblAnioIng.setBounds(10, 568, 132, 13);
+		lblAnioIng.setBounds(10, 609, 132, 13);
 		
 		JTextField tfAnioIng = new JTextField();
-		tfAnioIng.setBounds(142, 568, 219, 19);
+		tfAnioIng.setBounds(142, 606, 219, 19);
 		tfAnioIng.setColumns(10);
 		tfAnioIng.addKeyListener(new KeyAdapter () {
 			public void keyTyped(KeyEvent e) {
@@ -276,26 +287,26 @@ public class RegistroUsuario {
 		//Area - Tutor
 		JLabel lblArea = new JLabel("Área");
 		lblArea.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblArea.setBounds(10, 568, 45, 13);
+		lblArea.setBounds(10, 609, 45, 13);
 		
 		
 		JComboBox cBoxArea = new JComboBox();
 		cBoxArea.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxArea.setBackground(Color.decode("#e5e7eb"));
-		cBoxArea.setBounds(142, 564, 219, 21);
+		cBoxArea.setBounds(142, 605, 219, 21);
 		
 		
 		
 		//Rol - Tutor
 		JLabel lblRol = new JLabel("Rol");
 		lblRol.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblRol.setBounds(10, 609, 45, 13);
+		lblRol.setBounds(10, 654, 45, 13);
 		
 		
 		JComboBox cBoxRol = new JComboBox();
 		cBoxRol.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxRol.setBackground(Color.decode("#e5e7eb"));
-		cBoxRol.setBounds(142, 605, 219, 21);
+		cBoxRol.setBounds(142, 650, 219, 21);
 		
 		
 		//Boton Registro
@@ -303,7 +314,7 @@ public class RegistroUsuario {
 		btnRegistro.setBackground(Color.decode("#0284c7")); 
 		btnRegistro.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnRegistro.setForeground(Color.decode("#f0f9ff"));
-		btnRegistro.setBounds(249, 680, 112, 40);
+		btnRegistro.setBounds(261, 695, 112, 40);
 		btnRegistro.addActionListener(e -> {
 			System.out.println("USUARIO CREADO!");
 			Usuario user = new Usuario();
@@ -323,6 +334,7 @@ public class RegistroUsuario {
 					analista.setUsuario(user);
 					analista.setAnalista("Que era esto");
 					resultado = FuncionalidadesAnalista.getInstance().getBean().crear(analista);
+					//validaciones.Mensajes.MostrarExito("Su solicitud ha quedado guardado. Serà revisada antes de quedar activo el usuario.");
 				}
 					
 			}
@@ -341,18 +353,19 @@ public class RegistroUsuario {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
 			}
 		});
 		btnCancelar.setBackground(Color.decode("#0284c7"));
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
-		btnCancelar.setBounds(100, 680, 112, 40);
+		btnCancelar.setBounds(98, 695, 112, 40);
         frame.getContentPane().add(btnCancelar);
 		
 		//Tipo de Usuario
 		JLabel lblTipoUsu = new JLabel("Tipo de Usuario");
 		lblTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblTipoUsu.setBounds(10, 518, 97, 13);
+		lblTipoUsu.setBounds(10, 565, 97, 13);
 		frame.getContentPane().add(lblTipoUsu);
 			
 			//Combo Box
@@ -360,7 +373,7 @@ public class RegistroUsuario {
 		
 		//TODO CAMBIAR AÑO POR ANIO
 		
-		cBoxTipoUsu.setBounds(142, 514, 219, 21);
+		cBoxTipoUsu.setBounds(142, 561, 219, 21);
 		cBoxTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxTipoUsu.addActionListener(e -> {
 	        String selected = cBoxTipoUsu.getSelectedItem().toString();
@@ -418,7 +431,6 @@ public class RegistroUsuario {
 		
 		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
 		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
-		
 		
 		
 	}

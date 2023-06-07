@@ -205,6 +205,7 @@ public class ListaUsuarios {
 		btnAtras.setBackground(Color.decode("#0284c7"));
 		btnAtras.setBounds(754, 410, 96, 31);
 		frame.getContentPane().add(btnAtras);
+		btnModificar.setToolTipText("Seleccionar usuario a modificar");
 			//Modificar
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -218,8 +219,8 @@ public class ListaUsuarios {
 		btnModificar.setForeground(Color.decode("#f0f9ff"));
 		btnModificar.setBackground(Color.decode("#0284c7"));
 		btnModificar.setBounds(884, 410, 96, 31);
-		frame.getContentPane().add(btnModificar);
 		btnModificar.setEnabled(false);
+		frame.getContentPane().add(btnModificar);
 		
 		// Historial
 		JButton btnHistorial = new JButton("Historial");

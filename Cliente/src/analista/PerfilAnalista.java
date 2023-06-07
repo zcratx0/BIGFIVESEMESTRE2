@@ -16,21 +16,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
-import estudiante.PerfilEstudiantes;
-import estudiante.PrincipalEstudiante;
+import com.bigfive.entities.Usuario;
+
+import funcionalidades.FuncionalidadesDepartamento;
+import funcionalidades.FuncionalidadesITR;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
-import validaciones.ValidacionNombreyApellido;
+import validaciones.ValidacionMaxyMin;
 import validaciones.ValidarInputs;
 
-import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JYearChooser;
-import com.toedter.calendar.JDateChooser;
-
-public class PerfilAnalista extends JFrame {
+public class PerfilAnalista extends JPanel {
 	//Atributo
 JFrame frame = new JFrame();
 JLabel lblTitPerfil = new JLabel("Perfil");
@@ -40,7 +37,7 @@ JLabel lblApellido = new JLabel("Apellidos");
 JTextField tfApellido = new JTextField();
 JLabel lblCI = new JLabel("Cédula");
 JLabel lblFecNac = new JLabel("Fecha de Nacimiento");
-JTextField tfCedula = new JTextField();
+JTextField tfDocumento = new JTextField();
 JTextField tfMailPer = new JTextField();
 JLabel lblMailP = new JLabel("Email Personal");
 JLabel lblTel = new JLabel("Teléfono");
@@ -57,7 +54,9 @@ JComboBox cBoxITR = new JComboBox();
 JButton btnConfirmar = new JButton("Confirmar");
 JButton btnCancelar = new JButton("Cancelar");
 JTextField tfTel = new JTextField();
-private final JTextField tfFechNac = new JTextField();
+private final JTextField tfFechaNac = new JTextField();
+private final JLabel lblGenero = new JLabel("Genero");
+JComboBox cBoxGenero = new JComboBox();
 
 
 
@@ -78,6 +77,19 @@ public static void main(String[] args) {
 	});
 }
 
+public static void mostrarPerfilAnalista(Usuario usuario) {
+	EventQueue.invokeLater(new Runnable() {
+		public void run() {
+			try {
+				PerfilAnalista window = new PerfilAnalista();
+				window.cargarDatosAnalista(usuario);
+				window.frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	});
+}
 /**
  * Create the application.
  */
@@ -92,7 +104,7 @@ public PerfilAnalista() {
 private void initialize() {
 	frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
 	frame.setBounds(100, 30, 417, 650);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	frame.getContentPane().setLayout(null);
 	frame.setResizable(false);
 	
@@ -112,7 +124,12 @@ private void initialize() {
 	tfNombre.setBounds(142, 49, 219, 19);
 	frame.getContentPane().add(tfNombre);
 	tfNombre.setColumns(10);
-	tfNombre.setInputVerifier(new ValidacionNombreyApellido(2,32));
+	tfNombre.setInputVerifier(new ValidacionMaxyMin(0,32));
+	tfNombre.addKeyListener(new KeyAdapter() {
+		public void keyTyped(KeyEvent e) {
+			ValidarInputs.ValidarSoloLetras(e);
+		}
+	}); 
 	
 	
 	//Apellido
@@ -126,18 +143,23 @@ private void initialize() {
 	tfApellido.setBounds(142, 89, 219, 19);
 	frame.getContentPane().add(tfApellido);
 	tfApellido.setColumns(10);
-	tfApellido.setInputVerifier(new ValidacionNombreyApellido(2,32));
+	tfApellido.setInputVerifier(new ValidacionMaxyMin(2,32));
+	tfApellido.addKeyListener(new KeyAdapter() {
+		public void keyTyped(KeyEvent e) {
+			ValidarInputs.ValidarSoloLetras(e);
+		}
+	}); 
 	
 	//Cedula
 	lblCI.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblCI.setBounds(10, 139, 80, 13);
 	frame.getContentPane().add(lblCI);
 	
-	tfCedula.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-	tfCedula.setBounds(142, 136, 219, 19);
-	frame.getContentPane().add(tfCedula);
-	tfCedula.setColumns(10);
-	tfCedula.addKeyListener(new KeyAdapter () {
+	tfDocumento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+	tfDocumento.setBounds(142, 136, 219, 19);
+	frame.getContentPane().add(tfDocumento);
+	tfDocumento.setColumns(10);
+	tfDocumento.addKeyListener(new KeyAdapter () {
 		public void keyTyped(KeyEvent e) {
 			ValidarInputs.ValidarSoloNumeros(e);;
 		}
@@ -150,9 +172,9 @@ private void initialize() {
 	lblFecNac.setBounds(10, 181, 146, 13);
 	frame.getContentPane().add(lblFecNac);
 	
-	tfFechNac.setBounds(142, 178, 219, 19);
-	tfFechNac.setColumns(10);
-	frame.getContentPane().add(tfFechNac);
+	tfFechaNac.setBounds(142, 178, 219, 19);
+	tfFechaNac.setColumns(10);
+	frame.getContentPane().add(tfFechaNac);
 	
 	//Email Personal
 	lblMailP.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -234,7 +256,14 @@ private void initialize() {
 	cBoxITR.setBounds(142, 472, 219, 21);
 	frame.getContentPane().add(cBoxITR);
 	
-	//Año de ingreso - Est
+	//Genero
+	lblGenero.setBounds(10, 515, 65, 13);
+	lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+	frame.getContentPane().add(lblGenero);
+	
+	cBoxGenero.setBounds(142, 511, 219, 21);
+	frame.getContentPane().add(cBoxGenero);
+	
 
 	
 	//Boton Registro
@@ -249,7 +278,7 @@ private void initialize() {
 	
 	btnCancelar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			PrincipalAnalista.main(null);
+			//PrincipalAnalista.main(null);
 			frame.dispose();
 		}
 	});
@@ -270,5 +299,22 @@ private void initialize() {
 	frame.getContentPane().add(lblLogoUtec);
 	
 	
+	
 }
+	public void cargarDatosAnalista(Usuario usuario) {
+		//Carga el combobox de departamento e itr con los valores
+		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
+		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
+		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
+		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
+		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
+		if (usuario.getFechaNac() != null) tfFechaNac.setText(usuario.getFechaNac().toString());
+		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
+		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
+		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
+		if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento());
+		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
+		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
+		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
+	}
 }

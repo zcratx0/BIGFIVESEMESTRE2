@@ -1,4 +1,4 @@
-package logIn;
+package analista;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Mantenimiento {
+public class MantenimientoAnalista {
 
 	private JFrame frame;
 
@@ -24,7 +24,7 @@ public class Mantenimiento {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Mantenimiento window = new Mantenimiento();
+					MantenimientoAnalista window = new MantenimientoAnalista();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +36,7 @@ public class Mantenimiento {
 	/**
 	 * Create the application.
 	 */
-	public Mantenimiento() {
+	public MantenimientoAnalista() {
 		initialize();
 	}
 
@@ -64,11 +64,12 @@ public class Mantenimiento {
 		lblTitMan.setBounds(158, 0, 390, 62);
 		frame.getContentPane().add(lblTitMan);
 
-		//Boton Atras
-		JButton btnPrincipal = new JButton("Volver a LogIn");
+		//Boton Ventana principal
+		JButton btnPrincipal = new JButton("Atras");
 		btnPrincipal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
+				
 			}
 		});
 		btnPrincipal.setFont(new Font("Tahoma", Font.BOLD, 10));

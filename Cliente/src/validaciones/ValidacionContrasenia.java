@@ -22,6 +22,10 @@ import javax.swing.JPasswordField;
 		public boolean verify(JComponent input) {
 			JPasswordField JPassword = (JPasswordField) input;
 			String text = JPassword.getText().trim();
+			
+			if (text.isEmpty()) {
+	            return true;
+	        }
 			if (text.length() < minLength) {
 				JOptionPane.showMessageDialog(input, "La contraseña debe tener al menos " + minLength + " caracteres.");
 				return false;

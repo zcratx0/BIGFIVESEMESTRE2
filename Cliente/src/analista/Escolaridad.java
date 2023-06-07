@@ -52,7 +52,7 @@ public class Escolaridad {
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		//Titulo Escolariad
@@ -62,12 +62,18 @@ public class Escolaridad {
 		frame.getContentPane().add(lblEsco);
 		
 		
+		
 		//Boton
 			//Descargar
 		btnDes.setBackground(Color.decode("#0284c7"));   
 		btnDes.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnDes.setForeground(Color.decode("#f0f9ff"));
 		btnDes.setBounds(197, 230, 100, 23);
+		btnDes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MantenimientoAnalista.main(null);
+			}
+		});
 		frame.getContentPane().add(btnDes);
 		
 			//Imprimir

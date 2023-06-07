@@ -1,4 +1,4 @@
-package Tutor;
+package tutor;
 
 import java.awt.Color;
 import java.awt.EventQueue;
