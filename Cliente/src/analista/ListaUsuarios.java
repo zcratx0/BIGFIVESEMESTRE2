@@ -196,6 +196,7 @@ public class ListaUsuarios {
 			//Atras
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				HabilitacionUsuario.main(null);
 				frame.dispose();
 			}
 		});

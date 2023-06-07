@@ -2,29 +2,36 @@ package logIn;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
-import com.bigfive.entities.Usuario;
 import com.bigfive.entities.Analista;
+import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
 import funcionalidades.FuncionalidadesAnalista;
 import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesITR;
 import funcionalidades.FuncionalidadesUsuario;
-
-import javax.swing.JComboBox;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.Font;
-import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import validaciones.ValidacionContrasenia;
+import validaciones.ValidacionEmailInsti;
+import validaciones.ValidacionEmailPersonal;
+import validaciones.ValidacionNombreyApellido;
+import validaciones.ValidarInputs;
 
 public class RegistroUsuario {
 
@@ -38,6 +45,9 @@ public class RegistroUsuario {
 	private JTextField tfMailInst;
 	private JPasswordField pasFContra;
 	private JComboBox cBoxTipoUsu;
+	private JTextField tfFech;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -91,6 +101,7 @@ public class RegistroUsuario {
 		tfNombre.setBounds(142, 49, 219, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
+		tfNombre.setInputVerifier(new ValidacionNombreyApellido(2,32));
 		
 		
 		//Apellido
@@ -105,6 +116,7 @@ public class RegistroUsuario {
 		tfApellido.setBounds(142, 89, 219, 19);
 		frame.getContentPane().add(tfApellido);
 		tfApellido.setColumns(10);
+		tfApellido.setInputVerifier(new ValidacionNombreyApellido(2,32));
 		
 		
 		//Cedula
@@ -118,6 +130,12 @@ public class RegistroUsuario {
 		tfCedula.setBounds(142, 136, 219, 19);
 		frame.getContentPane().add(tfCedula);
 		tfCedula.setColumns(10);
+		tfCedula.addKeyListener(new KeyAdapter () {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloNumeros(e);;
+			}
+		});
+		
 		
 		
 		//Fecha de Nacimiento 
@@ -126,6 +144,22 @@ public class RegistroUsuario {
 		lblFecNac.setBounds(10, 181, 146, 13);
 		frame.getContentPane().add(lblFecNac);
 		
+		tfFech = new JTextField();
+		tfFech.setBounds(142, 178, 219, 19);
+		frame.getContentPane().add(tfFech);
+		tfFech.setColumns(10);
+		tfFech.addKeyListener(new KeyAdapter () {
+			public void keyTyped(KeyEvent e) {
+				//ValidarInputs.ValidarFechas(e);
+				 //ValidarTipos.ValidarFecha("Fecha", tfFech);
+				
+			}
+		});
+		tfFech.addFocusListener(new FocusAdapter() {
+		    public void focusLost(FocusEvent e) {
+		        //ValidarTipos.ValidarFecha("Fecha", tfFech);
+		    }
+		});
 		
 		//Email Personal
 		JLabel lblMailP = new JLabel("Email Personal");
@@ -138,6 +172,7 @@ public class RegistroUsuario {
 		tfMailPer.setBounds(142, 213, 219, 19);
 		frame.getContentPane().add(tfMailPer);
 		tfMailPer.setColumns(10);
+		tfMailPer.setInputVerifier(new ValidacionEmailPersonal());
 		
 		
 		//Telefono
@@ -164,6 +199,11 @@ public class RegistroUsuario {
 		tfLoca.setBounds(142, 299, 219, 19);
 		frame.getContentPane().add(tfLoca);
 		tfLoca.setColumns(10);
+		tfLoca.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		}); 
 		
 		
 		//Departamento
@@ -189,6 +229,7 @@ public class RegistroUsuario {
 		tfMailInst.setBounds(142, 382, 219, 19);
 		frame.getContentPane().add(tfMailInst);
 		tfMailInst.setColumns(10);
+		tfMailInst.setInputVerifier(new ValidacionEmailInsti());
 		
 		
 		//Contraseña
@@ -200,6 +241,7 @@ public class RegistroUsuario {
 		pasFContra = new JPasswordField();
 		pasFContra.setBounds(142, 427, 219, 19);
 		frame.getContentPane().add(pasFContra);
+		pasFContra.setInputVerifier(new ValidacionContrasenia (8));
 		
 		
 		//ITR
@@ -218,6 +260,16 @@ public class RegistroUsuario {
 		JLabel lblAnioIng = new JLabel("Año de Ingreso");
 		lblAnioIng.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblAnioIng.setBounds(10, 568, 132, 13);
+		
+		JTextField tfAnioIng = new JTextField();
+		tfAnioIng.setBounds(142, 568, 219, 19);
+		tfAnioIng.setColumns(10);
+		tfAnioIng.addKeyListener(new KeyAdapter () {
+			public void keyTyped(KeyEvent e) {
+				//ValidarInputs.ValidarFechas(e);
+				//ValidarTipos.ValidarFecha("Fecha", tfAnioIng.getText());
+			}
+		});
 		
 		
 		
@@ -314,6 +366,7 @@ public class RegistroUsuario {
 	        String selected = cBoxTipoUsu.getSelectedItem().toString();
 	        //estos son los nuevos datos que pediremos, no estan separados por eso hice un if
 	        frame.getContentPane().remove(lblAnioIng);
+	        frame.getContentPane().remove(tfAnioIng);
 	        frame.getContentPane().remove(btnRegistro);
 	        frame.getContentPane().remove(lblArea);
 	        frame.getContentPane().remove(cBoxArea);
@@ -322,6 +375,7 @@ public class RegistroUsuario {
 	        // en estudiantes agrego el label y combo correspondiente
 	        if (selected.equals("Estudiante")) {
 	            frame.getContentPane().add(lblAnioIng);
+	            frame.getContentPane().add(tfAnioIng);
 	            frame.getContentPane().add(btnRegistro);
 		        frame.getContentPane().remove(lblArea);
 		        frame.getContentPane().remove(cBoxArea);
@@ -335,6 +389,7 @@ public class RegistroUsuario {
 	            frame.getContentPane().add(cBoxRol);
 	            frame.getContentPane().add(btnRegistro);
 	            frame.getContentPane().remove(lblAnioIng);
+	            frame.getContentPane().remove(tfAnioIng);
 
 	            // en analista solo boton registar ya que no pide ningun dato mas.
 	        } else if(selected.equals("Analista")) {
@@ -344,6 +399,7 @@ public class RegistroUsuario {
 	 	        frame.getContentPane().remove(cBoxArea);
 	 	        frame.getContentPane().remove(lblRol);
 	 	        frame.getContentPane().remove(cBoxRol);
+	 	       frame.getContentPane().remove(tfAnioIng);
 	        }
 	        //se utilizan después de agregar o quitar algunos componentes de la ventana,
 	        // para que Swing pueda actualizar su diseño y mostrar los cambios correctamente.
@@ -363,8 +419,7 @@ public class RegistroUsuario {
 		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
 		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
 		
+		
+		
 	}
-	
-	
-	
 }

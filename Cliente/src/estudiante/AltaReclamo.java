@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 
 import analista.ListaAuxITR;
 import analista.ListaReclamo;
+import validaciones.ValidarInputs;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -17,6 +18,8 @@ import java.awt.SystemColor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
 public class AltaReclamo {
@@ -41,6 +44,7 @@ public class AltaReclamo {
 	JTextField tfCredito = new JTextField();
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
+	private final JTextField tfFech = new JTextField();
 	
 
 
@@ -64,6 +68,7 @@ public class AltaReclamo {
 	 * Create the application.
 	 */
 	public AltaReclamo() {
+		
 		initialize();
 	}
 
@@ -133,6 +138,11 @@ public class AltaReclamo {
 		tfSemestre.setBounds(200, 262, 227, 19);
 		frame.getContentPane().add(tfSemestre);
 		tfSemestre.setColumns(10);
+		tfSemestre.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloNumeros(e);
+			}
+		}); 
 		
 		
 		//Fecha
@@ -140,6 +150,9 @@ public class AltaReclamo {
 		lblFecha.setBounds(40, 300, 45, 13);
 		frame.getContentPane().add(lblFecha);
 		
+		tfFech.setBounds(200, 297, 227, 19);
+		tfFech.setColumns(10);
+		frame.getContentPane().add(tfFech);
 		
 		//Docente
 		lblDocente.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -149,6 +162,11 @@ public class AltaReclamo {
 		tfDocente.setBounds(200, 342, 227, 19);
 		frame.getContentPane().add(tfDocente);
 		tfDocente.setColumns(10);
+		tfDocente.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		}); 
 		
 		
 		//Crédito
@@ -159,6 +177,12 @@ public class AltaReclamo {
 		tfCredito.setBounds(200, 382, 227, 19);
 		frame.getContentPane().add(tfCredito);
 		tfCredito.setColumns(10);
+		tfCredito.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloNumeros(e);
+			}
+		}); 
+		
 		
 		//Botón Confirmar
 		btnConfirmar.addActionListener(new ActionListener() {
@@ -190,5 +214,6 @@ public class AltaReclamo {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
+		
 	}
 }

@@ -1,1 +1,4 @@
 /bin/
+/src/jdni.properties
+.classpath
+.project

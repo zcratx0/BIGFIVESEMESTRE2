@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +20,12 @@ import javax.swing.border.EmptyBorder;
 
 import estudiante.PerfilEstudiantes;
 import estudiante.PrincipalEstudiante;
+import validaciones.ValidacionContrasenia;
+import validaciones.ValidacionEmailInsti;
+import validaciones.ValidacionEmailPersonal;
+import validaciones.ValidacionNombreyApellido;
+import validaciones.ValidarInputs;
+
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JYearChooser;
 import com.toedter.calendar.JDateChooser;
@@ -49,6 +57,7 @@ JComboBox cBoxITR = new JComboBox();
 JButton btnConfirmar = new JButton("Confirmar");
 JButton btnCancelar = new JButton("Cancelar");
 JTextField tfTel = new JTextField();
+private final JTextField tfFechNac = new JTextField();
 
 
 
@@ -73,6 +82,7 @@ public static void main(String[] args) {
  * Create the application.
  */
 public PerfilAnalista() {
+	
 	initialize();
 }
 
@@ -102,6 +112,7 @@ private void initialize() {
 	tfNombre.setBounds(142, 49, 219, 19);
 	frame.getContentPane().add(tfNombre);
 	tfNombre.setColumns(10);
+	tfNombre.setInputVerifier(new ValidacionNombreyApellido(2,32));
 	
 	
 	//Apellido
@@ -115,7 +126,7 @@ private void initialize() {
 	tfApellido.setBounds(142, 89, 219, 19);
 	frame.getContentPane().add(tfApellido);
 	tfApellido.setColumns(10);
-	
+	tfApellido.setInputVerifier(new ValidacionNombreyApellido(2,32));
 	
 	//Cedula
 	lblCI.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -126,6 +137,12 @@ private void initialize() {
 	tfCedula.setBounds(142, 136, 219, 19);
 	frame.getContentPane().add(tfCedula);
 	tfCedula.setColumns(10);
+	tfCedula.addKeyListener(new KeyAdapter () {
+		public void keyTyped(KeyEvent e) {
+			ValidarInputs.ValidarSoloNumeros(e);;
+		}
+	});
+	
 	
 	
 	//Fecha de Nacimiento 
@@ -133,6 +150,9 @@ private void initialize() {
 	lblFecNac.setBounds(10, 181, 146, 13);
 	frame.getContentPane().add(lblFecNac);
 	
+	tfFechNac.setBounds(142, 178, 219, 19);
+	tfFechNac.setColumns(10);
+	frame.getContentPane().add(tfFechNac);
 	
 	//Email Personal
 	lblMailP.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -143,7 +163,7 @@ private void initialize() {
 	tfMailPer.setBounds(142, 213, 219, 19);
 	frame.getContentPane().add(tfMailPer);
 	tfMailPer.setColumns(10);
-	
+	tfMailPer.setInputVerifier(new ValidacionEmailPersonal());
 	
 	//Telefono
 	lblTel.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -165,7 +185,11 @@ private void initialize() {
 	tfLoca.setBounds(142, 299, 219, 19);
 	frame.getContentPane().add(tfLoca);
 	tfLoca.setColumns(10);
-	
+	tfLoca.addKeyListener(new KeyAdapter() {
+		public void keyTyped(KeyEvent e) {
+			ValidarInputs.ValidarSoloLetras(e);
+		}
+	}); 
 	
 	//Departamento
 	lblDepa.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -186,6 +210,7 @@ private void initialize() {
 	tfMailInst.setBounds(142, 382, 219, 19);
 	frame.getContentPane().add(tfMailInst);
 	tfMailInst.setColumns(10);
+	tfMailInst.setInputVerifier(new ValidacionEmailInsti());
 	
 	
 	//Contraseña
@@ -194,7 +219,9 @@ private void initialize() {
 	frame.getContentPane().add(lblContra);
 	
 	pasFContra.setBounds(142, 427, 219, 19);
+	pasFContra.setInputVerifier(new ValidacionContrasenia (8));
 	frame.getContentPane().add(pasFContra);
+
 	
 	
 	//ITR
@@ -242,8 +269,6 @@ private void initialize() {
 	lblLogoUtec.setBounds(25, 1, 107, 50);
 	frame.getContentPane().add(lblLogoUtec);
 	
-	JDateChooser dateChooser = new JDateChooser();
-	dateChooser.setBounds(142, 181, 219, 19);
-	frame.getContentPane().add(dateChooser);
+	
 }
 }

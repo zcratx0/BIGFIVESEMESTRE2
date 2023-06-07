@@ -1,4 +1,4 @@
-package estudiante;
+package Tutor;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -16,18 +16,18 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.toedter.calendar.JDateChooser;
+
 import analista.ListaAuxITR;
+import estudiante.PrincipalEstudiante;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
 import validaciones.ValidacionNombreyApellido;
 import validaciones.ValidarInputs;
 
-import com.toedter.calendar.JDateChooser;
+public class PerfilTutor {
 
-public class PerfilEstudiantes {
-
-		//Atributo
 	JFrame frame = new JFrame();
 	JLabel lblTitPerfil = new JLabel("Perfil");
 	JLabel lblNombre = new JLabel("Nombres");
@@ -50,15 +50,13 @@ public class PerfilEstudiantes {
 	JPasswordField pasFContra = new JPasswordField();
 	JLabel lblITR = new JLabel("ITR");
 	JComboBox cBoxITR = new JComboBox();
-	JLabel lblAnioIng = new JLabel("Año de Ingreso");
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
 	JTextField tfTel = new JTextField();
-	JTextField tfFechNac = new JTextField();
-	private final JTextField tfAnioIng = new JTextField();
-
-	
-	
+	JLabel lblArea = new JLabel("Área");
+	JComboBox cBoxArea = new JComboBox();
+	JLabel lblRol = new JLabel("Rol");
+	JComboBox cBoxRol = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -67,7 +65,7 @@ public class PerfilEstudiantes {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PerfilEstudiantes window = new PerfilEstudiantes();
+					PerfilTutor window = new PerfilTutor();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,9 +77,7 @@ public class PerfilEstudiantes {
 	/**
 	 * Create the application.
 	 */
-	public PerfilEstudiantes() {
-		
-		
+	public PerfilTutor() {
 		initialize();
 	}
 
@@ -90,7 +86,7 @@ public class PerfilEstudiantes {
 	 */
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
-		frame.setBounds(100, 30, 417, 650);
+		frame.setBounds(100, 30, 417, 750);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
@@ -149,10 +145,6 @@ public class PerfilEstudiantes {
 		lblFecNac.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblFecNac.setBounds(10, 181, 146, 13);
 		frame.getContentPane().add(lblFecNac);
-		
-		tfFechNac.setBounds(142, 178, 219, 19);
-		tfFechNac.setColumns(10);
-		frame.getContentPane().add(tfFechNac);
 		
 		
 		//Email Personal
@@ -235,21 +227,30 @@ public class PerfilEstudiantes {
 		cBoxITR.setBounds(142, 472, 219, 21);
 		frame.getContentPane().add(cBoxITR);
 		
-		//Año de ingreso - Est
+		//Area
+		lblArea.setBounds(10, 522, 45, 13);
+		lblArea.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		frame.getContentPane().add(lblArea);
+	
+		cBoxArea.setBounds(142, 518, 219, 21);
+		cBoxArea.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		frame.getContentPane().add(cBoxArea);
 		
-		lblAnioIng.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblAnioIng.setBounds(10, 516, 132, 13);
-		frame.getContentPane().add(lblAnioIng);
 		
-		tfAnioIng.setBounds(142, 513, 219, 19);
-		tfAnioIng.setColumns(10);
-		frame.getContentPane().add(tfAnioIng);
-		
+		//Rol
+		lblRol.setBounds(10, 574, 45, 13);
+		lblRol.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		frame.getContentPane().add(lblRol);
+	
+		cBoxRol.setBounds(142, 570, 219, 21);
+		cBoxRol.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		frame.getContentPane().add(cBoxRol);
+	
 		//Boton Registro
 		btnConfirmar.setBackground(Color.decode("#0284c7")); 
 		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnConfirmar.setForeground(Color.decode("#f0f9ff"));
-		btnConfirmar.setBounds(249, 563, 112, 40);
+		btnConfirmar.setBounds(281, 638, 112, 40);
 		frame.getContentPane().add(btnConfirmar);
 		
 		
@@ -257,14 +258,14 @@ public class PerfilEstudiantes {
 		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalEstudiante.main(null);
+				PrincipalTutor.main(null);
 				frame.dispose();
 			}
 		});
 		btnCancelar.setBackground(Color.decode("#0284c7"));
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
-		btnCancelar.setBounds(114, 563, 112, 40);
+		btnCancelar.setBounds(143, 638, 112, 40);
         frame.getContentPane().add(btnCancelar);
 
 			
@@ -276,8 +277,6 @@ public class PerfilEstudiantes {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
-		
-		
 		
 		
 	}
