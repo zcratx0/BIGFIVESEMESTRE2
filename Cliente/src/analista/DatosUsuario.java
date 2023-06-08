@@ -69,6 +69,7 @@ public class DatosUsuario {
 	JButton btnAtras = new JButton("Atrás");
 	Usuario user = null;
 	private final JTextField tfFechaNac = new JTextField();
+	ListaUsuarios listaUsuarios = null;
 
 	
 
@@ -87,13 +88,16 @@ public class DatosUsuario {
 			}
 		});
 	}
+	
 
-	public static void loadDatosUsuario(Usuario user) {
+	public static void loadDatosUsuario(Usuario user, ListaUsuarios listaUsuarios) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					DatosUsuario window = new DatosUsuario();
 					window.frame.setVisible(true);
+
+					window.listaUsuarios = listaUsuarios; 
 					window.cargarDatos(user);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -252,6 +256,9 @@ public class DatosUsuario {
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		cBoxEstado.setBounds(195, 620, 265, 21);
 		frame.getContentPane().add(cBoxEstado);
+		cBoxEstado.addItem("SIN VALOR");
+		cBoxEstado.addItem("ACTIVADO");
+		cBoxEstado.addItem("ELIMINADO");
 		
 		//Genero
 		lblGenero.setBounds(39, 583, 46, 14);
@@ -269,11 +276,13 @@ public class DatosUsuario {
 		btnGuardar.setBackground(Color.decode("#0284c7"));
 		btnGuardar.setBounds(303, 678, 93, 32);
 		btnGuardar.setEnabled(false);
+		btnGuardar.addActionListener(e -> {
+			if (user != null) actualizarDatos();
+		});
 		frame.getContentPane().add(btnGuardar);
 			//Atras
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (user != null) actualizarDatos();
 				frame.dispose();
 			}
 		});
@@ -309,6 +318,7 @@ public class DatosUsuario {
 		if (user.getDepartamento() != null) cBoxDepa.setSelectedItem(user.getDepartamento());
 		if (user.getLocalidad() != null) tfLocalidad.setText(user.getLocalidad());
 		if (user.getItr() != null) cBoxItr.setSelectedItem(user.getItr());
+		if (user.getEstado() >-1 ) cBoxEstado.setSelectedIndex(user.getEstado());
 		btnGuardar.setEnabled(true);
 	}
 	public void actualizarDatos() {
@@ -322,8 +332,13 @@ public class DatosUsuario {
 		this.user.setDepartamento((Departamento)cBoxDepa.getSelectedItem());
 		this.user.setItr((Itr) cBoxItr.getSelectedItem());
 		*/
+		String value = (String)cBoxEstado.getSelectedItem();
+		if ( value.equalsIgnoreCase("SIN VALOR")) user.setEstado(0);
+		if ( value.equalsIgnoreCase("ACTIVADO")) user.setEstado(1);
+		if ( value.equalsIgnoreCase("ELIMINADO")) user.setEstado(2);
 		System.out.println("MODIFICANDO USUARIO");
 		System.out.println(cBoxEstado.getSelectedItem());
 		FuncionalidadesUsuario.getInstance().getUserBean().modificar(this.user);
+		if (listaUsuarios != null) listaUsuarios.cargarTabla();
 	}
 }

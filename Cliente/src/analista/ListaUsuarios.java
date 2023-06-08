@@ -42,6 +42,7 @@ public class ListaUsuarios {
 	JButton btnAtras = new JButton("Atrás");
 	JButton btnModificar = new JButton("Modificar");
 	JTable tablaUsu;
+	ListaUsuarios listaUsuarios;
 	/**
 	 * Launch the application.
 	 */
@@ -69,6 +70,7 @@ public class ListaUsuarios {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		listaUsuarios = this;
 		frame.getContentPane().setBackground(Color.decode("#f9fafb")); 
 		frame.setBounds(100, 100, 1031, 506);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -196,7 +198,7 @@ public class ListaUsuarios {
 			//Atras
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HabilitacionUsuario.main(null);
+				HabilitacionUsuario.mostrar();
 				frame.dispose();
 			}
 		});
@@ -211,7 +213,7 @@ public class ListaUsuarios {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaUsu.getSelectedRow() > -1) {
 					System.out.println((Usuario) tablaUsu.getValueAt(0, tablaUsu.getSelectedRow()));
-					DatosUsuario.loadDatosUsuario((Usuario) tablaUsu.getValueAt(0, tablaUsu.getSelectedRow()));
+					DatosUsuario.loadDatosUsuario((Usuario) tablaUsu.getValueAt(0, tablaUsu.getSelectedRow()), listaUsuarios);
 				}
 			}
 		});
@@ -256,7 +258,11 @@ public class ListaUsuarios {
 		tableModel.addColumn("ITR");
 		tableModel.addColumn("ESTADO");
 		FuncionalidadesUsuario.getInstance().getUserBean().listarElementos().forEach(t -> {
-			Object[] row = {t, t.getItr(), "ESTADO"};
+			String valor = "";
+			if ( t.getEstado() == 0) valor = "SIN VALOR";
+			else if ( t.getEstado() == 1)valor = "ACTIVADO";
+			else if ( t.getEstado() == 2) valor = "ELIMINADO";
+			Object[] row = {t, t.getItr(), valor};
 			tableModel.addRow(row);
 		});
 		tablaUsu.setModel(tableModel);
