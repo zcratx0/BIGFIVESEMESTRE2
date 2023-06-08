@@ -27,7 +27,7 @@ public class Usuario implements Serializable {
 
 	private String documento;
 
-	private BigDecimal estado;
+	private int estado;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA_NACIMIENTO")
@@ -94,11 +94,11 @@ public class Usuario implements Serializable {
 		this.documento = documento;
 	}
 
-	public BigDecimal getEstado() {
+	public int getEstado() {
 		return this.estado;
 	}
 
-	public void setEstado(BigDecimal estado) {
+	public void setEstado(int estado) {
 		this.estado = estado;
 	}
 

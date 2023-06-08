@@ -312,6 +312,7 @@ public class DatosUsuario {
 		btnGuardar.setEnabled(true);
 	}
 	public void actualizarDatos() {
+		/*
 		this.user.setNombre(tfNombre.getText());
 		this.user.setApellido(tfApellido.getText());
 		this.user.setDocumento(tfCedula.getText());
@@ -320,6 +321,9 @@ public class DatosUsuario {
 		this.user.setTelefono(tfTel.getText());
 		this.user.setDepartamento((Departamento)cBoxDepa.getSelectedItem());
 		this.user.setItr((Itr) cBoxItr.getSelectedItem());
+		*/
+		System.out.println("MODIFICANDO USUARIO");
+		System.out.println(cBoxEstado.getSelectedItem());
 		FuncionalidadesUsuario.getInstance().getUserBean().modificar(this.user);
 	}
 }

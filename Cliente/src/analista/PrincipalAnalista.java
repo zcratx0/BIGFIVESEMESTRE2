@@ -187,7 +187,7 @@ public class PrincipalAnalista {//Atributos
 		// usuarios 
 		btnUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HabilitacionUsuario.main(null);
+				HabilitacionUsuario.mostrar();
 				//frame.dispose();
 			}
 		});
