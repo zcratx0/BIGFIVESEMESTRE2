@@ -302,7 +302,7 @@ public class DatosUsuario {
 		if (user.getNombre() != null) tfNombre.setText(user.getNombre());
 		if (user.getApellido() != null) tfApellido.setText(user.getApellido());
 		if (user.getDocumento() != null) tfCedula.setText(user.getDocumento());
-		if (user.getFechaNac() != null) lblFechNac.setText(user.getFechaNac().toString());
+		if (user.getFechaNacimiento() != null) lblFechNac.setText(user.getFechaNacimiento().toString());
 		if (user.getMail() != null) tfEmailP.setText(user.getMail());
 		if (user.getMailInstitucional() != null) tfEmailU.setText(user.getMailInstitucional());
 		if (user.getTelefono() != null) tfTel.setText(user.getTelefono());

@@ -24,6 +24,7 @@
 		<class>com.bigfive.entities.RecibeJustificacion</class>
 		<class>com.bigfive.entities.RecibeReclamo</class>
 		<class>com.bigfive.entities.Responsabilidade</class>
+		<class>com.bigfive.entities.Rol</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
 			<property name="hibernate.hbm2ddl.auto" value="none"/>

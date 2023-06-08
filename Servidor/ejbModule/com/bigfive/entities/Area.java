@@ -42,7 +42,7 @@ public class Area implements Serializable {
 
 	@Override
 	public String toString() {
-		return idArea + "- "+area ;
+		return idArea+"-" + area;
 	}
-
+	
 }

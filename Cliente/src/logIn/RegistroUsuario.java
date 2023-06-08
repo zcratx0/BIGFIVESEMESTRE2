@@ -20,12 +20,19 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.bigfive.entities.Analista;
+import com.bigfive.entities.Area;
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Rol;
+import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
 import funcionalidades.FuncionalidadesAnalista;
+import funcionalidades.FuncionalidadesArea;
 import funcionalidades.FuncionalidadesDepartamento;
+import funcionalidades.FuncionalidadesEstudiante;
 import funcionalidades.FuncionalidadesITR;
+import funcionalidades.FuncionalidadesRol;
 import funcionalidades.FuncionalidadesUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
@@ -344,21 +351,29 @@ public class RegistroUsuario {
 			Long x = FuncionalidadesUsuario.getInstance().getUserBean().createWithId(user);
 			if (x!= null) {
 				System.out.println(x);
-				System.out.println("CREANDO - ANALISTA");
 				user.setIdUsuario(x);
 				System.out.println(user.getIdUsuario());
 				if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("analista")) {
 					Analista analista = new Analista();
 					analista.setUsuario(user);
-					analista.setAnalista("Que era esto");
 					resultado = FuncionalidadesAnalista.getInstance().getBean().crear(analista);
 					System.out.println("CREADO - ANALISTA");
 				} else if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("estudiante")) {
 					Estudiante estudiante = new Estudiante();
 					estudiante.setUsuario(user);
+					estudiante.setGeneracion(tfAnioIng.getText());
+					resultado = FuncionalidadesEstudiante.getInstance().getBean().crear(estudiante);
+					System.out.print("CREADO - ESTUDIANTE");
 				} else if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("tutor")) {
 					Tutor tutor = new Tutor();
+					Area area = (Area) cBoxArea.getSelectedItem();
+					Rol rol = (Rol) cBoxRol.getSelectedItem();
+					
 					tutor.setUsuario(user);
+					tutor.setArea(area);
+					tutor.setRol(rol);
+					tutor.setTipo(null);
+					
 				}
 				
 					
@@ -422,6 +437,7 @@ public class RegistroUsuario {
 		        frame.getContentPane().remove(lblRol);
 		        frame.getContentPane().remove(cBoxRol);
 	            // en tutor agrego ek label y combo correspondiente
+		        btnRegistro.setEnabled(true);
 	        } else if (selected.equals("Tutor")) {
 	            frame.getContentPane().add(lblArea);
 	            frame.getContentPane().add(cBoxArea);
@@ -430,7 +446,8 @@ public class RegistroUsuario {
 	            frame.getContentPane().add(btnRegistro);
 	            frame.getContentPane().remove(lblAnioIng);
 	            frame.getContentPane().remove(tfAnioIng);
-
+	            //	BLOQUEO BOTON PARA TUTOR
+	            btnRegistro.setEnabled(false);
 	            // en analista solo boton registar ya que no pide ningun dato mas.
 	        } else if(selected.equals("Analista")) {
 	        	frame.getContentPane().add(btnRegistro);
@@ -440,6 +457,7 @@ public class RegistroUsuario {
 	 	        frame.getContentPane().remove(lblRol);
 	 	        frame.getContentPane().remove(cBoxRol);
 	 	       frame.getContentPane().remove(tfAnioIng);
+	 	      btnRegistro.setEnabled(true);
 	        }
 	        //se utilizan después de agregar o quitar algunos componentes de la ventana,
 	        // para que Swing pueda actualizar su diseño y mostrar los cambios correctamente.
@@ -458,7 +476,8 @@ public class RegistroUsuario {
 		
 		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
 		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
-		
+		FuncionalidadesRol.getInstance().cargarComboBox(cBoxRol);
+		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
 		
 	}
 }

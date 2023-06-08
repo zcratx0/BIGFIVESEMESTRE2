@@ -137,28 +137,22 @@ public class LogIn {
 			//Preguntar si existe la base de datos
 			
 			try {
-				System.out.println(FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword())));
 				//Tipo = tipo de usuario - 0=Analista - 1=Tutor - 2=Estudiante
 				int tipo = 0;
-				//usuario de prueba 
-				Usuario usuario = new Usuario();
-				usuario.setNombre("Nombre de prueba");
-				usuario.setApellido("Apellido de prueba");
-				usuario.setMailInstitucional("florencia.certorio@estudiantes.utec.uy");
+				//	CONSEGUIMOS EL USUARIO
+				Usuario usuario = FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword()));
+				tipo = FuncionalidadesUsuario.getInstance().getTipo(usuario);
 				
-				Estudiante estudiante = new Estudiante();
-				//estudiante.setUsuario(usuario);
-				
-				Tutor tutor = new Tutor();
-				//tutor.setUsuario(usuario);
 				//Evlua que tipo de usuario ingresa
 				if (tipo == 0) {
 					PrincipalAnalista.mostrarAnalista(usuario);
 					frame.dispose();
 				} else if (tipo == 1) {
+					Tutor tutor = FuncionalidadesUsuario.getInstance().getUserBean().getTutor(usuario);
 					PrincipalTutor.mostrarTutor(tutor);
 					frame.dispose();
 				} else if (tipo == 2) {
+					Estudiante estudiante = FuncionalidadesUsuario.getInstance().getUserBean().getEstudiante(usuario);
 					PrincipalEstudiante.mostrarEstudiante(estudiante);
 					frame.dispose();
 				}

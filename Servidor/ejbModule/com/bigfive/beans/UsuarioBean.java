@@ -18,12 +18,13 @@ import com.bigfive.entities.Usuario;
 public class UsuarioBean implements UsuarioBeanRemote {
 	@PersistenceContext
 	EntityManager em;
-    /**
-     * Default constructor. 
-     */
-    public UsuarioBean() {
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * Default constructor.
+	 */
+	public UsuarioBean() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public boolean crear(Usuario usuario) {
@@ -70,47 +71,38 @@ public class UsuarioBean implements UsuarioBeanRemote {
 	}
 
 	@Override
-	public boolean loginUsuario(String name, String password) {
+	public Usuario loginUsuario(String name, String password) {
 		Usuario x = null;
-		x =  (Usuario) em.createQuery("SELECT u FROM Usuario u WHERE SUBSTRING(u.mailInstitucional, 1, LOCATE('@', u.mailInstitucional) - 1) LIKE CONCAT('%', :name, '%') AND u.contrasenia = :password")
-        .setParameter("name", name)
-        .setParameter("password", password)
-        .getSingleResult();
+		x = (Usuario) em.createQuery(
+				"SELECT u FROM Usuario u WHERE SUBSTRING(u.mailInstitucional, 1, LOCATE('@', u.mailInstitucional) - 1) LIKE CONCAT('%', :name, '%') AND u.contrasenia = :password")
+				.setParameter("name", name).setParameter("password", password).getSingleResult();
 		System.out.println(x);
-		return x != null;
+		return x;
 	}
+
 	@Override
-	public int detectarUsuario(Usuario usuario) {
-		//Retorna "0" para analista, "1" para tutor, "2" para estudiante y "-1" para error  
+	public int detectarUsuario(Long usuario) {
+		// Retorna "0" para analista, "1" para tutor, "2" para estudiante y "-1" para error
 		Analista analista = null;
-		Tutor tutor = null;
-		Estudiante estudiante = null;
-		
-		analista = (Analista) em.createQuery("SELECT a FROM Analista a WHERE a.usuario = :user")
-			    .setParameter("user", usuario)
-			    .getSingleResult();
-		
-		if (analista != null) {
-			return 0;
-		} else {
-			tutor = (Tutor) em.createQuery("SELECT t FROM Tutor t WHERE t.usuario = :user")
-				    .setParameter("user", usuario)
-				    .getSingleResult();
-			if(tutor != null) {
-				return 1;
-			} else {
-				estudiante = (Estudiante) em.createQuery("SELECT e FROM Estudiante e WHERE e.usuario = :user")
-					    .setParameter("user", usuario)
-					    .getSingleResult();
-				if(estudiante != null) {
-					return 2;
-				} else {
+		try {
+			analista = (Analista) em.createQuery("SELECT a FROM Analista a WHERE a.usuario.id = :user").setParameter("user", usuario).getSingleResult();
+			if (analista != null) {return 0;}
+		} catch (Exception e) {
+			try {
+				Tutor tutor = null;
+				tutor = (Tutor) em.createQuery("SELECT t FROM Tutor t WHERE t.usuario.id = :user").setParameter("user", usuario).getSingleResult();
+				if (tutor != null) {return 1;}
+			} catch (Exception e1) {
+				try {
+					Estudiante estudiante = null;
+					estudiante = (Estudiante) em.createQuery("SELECT e FROM Estudiante e WHERE e.usuario.id = :user").setParameter("user", usuario).getSingleResult();
+					if (estudiante != null) {return 2;}
+				} catch (Exception e2) {
 					return -1;
 				}
-				
 			}
-			
 		}
+		return -1;		
 	}
 
 	@Override
@@ -125,7 +117,6 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		return estado;
 	}
 
-
 	@Override
 	public Long createWithId(Usuario usuario) {
 		try {
@@ -139,4 +130,19 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		}
 		return null;
 	}
+	
+	@Override
+	public Analista getAnalista(Usuario usuario) {
+		return (Analista) em.createQuery("SELECT a FROM Analista a WHERE a.usuario.id = :user").setParameter("user", usuario.getIdUsuario()).getSingleResult();
+	}
+	@Override
+	public Estudiante getEstudiante(Usuario usuario) {
+		return (Estudiante) em.createQuery("SELECT e FROM Estudiante e WHERE e.usuario.id = :user").setParameter("user", usuario.getIdUsuario()).getSingleResult();
+	}
+	@Override
+	public Tutor getTutor(Usuario usuario) {
+		return (Tutor) em.createQuery("SELECT t FROM Tutor t WHERE t.usuario.id = :user").setParameter("user", usuario.getIdUsuario()).getSingleResult();
+	}
+	
+	
 }

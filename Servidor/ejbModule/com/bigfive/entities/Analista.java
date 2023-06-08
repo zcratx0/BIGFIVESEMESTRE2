@@ -19,8 +19,6 @@ public class Analista implements Serializable {
 	@Column(name="ID_ANALISTA")
 	private long idAnalista;
 
-	private String analista;
-
 	//uni-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="ID_USUARIO")
@@ -37,14 +35,6 @@ public class Analista implements Serializable {
 		this.idAnalista = idAnalista;
 	}
 
-	public String getAnalista() {
-		return this.analista;
-	}
-
-	public void setAnalista(String analista) {
-		this.analista = analista;
-	}
-
 	public Usuario getUsuario() {
 		return this.usuario;
 	}
@@ -52,5 +42,5 @@ public class Analista implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
+	
 }

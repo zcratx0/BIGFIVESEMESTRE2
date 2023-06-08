@@ -34,6 +34,11 @@ public class Tutor implements Serializable {
 	@JoinColumn(name="ID_USUARIO")
 	private Usuario usuario;
 
+	//uni-directional many-to-one association to Rol
+	@ManyToOne
+	@JoinColumn(name="ID_ROL")
+	private Rol rol;
+
 	public Tutor() {
 	}
 
@@ -67,6 +72,14 @@ public class Tutor implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Rol getRol() {
+		return this.rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
 	}
 
 }

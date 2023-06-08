@@ -25,15 +25,10 @@ public class Evento implements Serializable {
 	private Date fechaHoraFinal;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_HORA_INICIO")
-	private Date fechaHoraInicio;
+	@Column(name="FECHA_HORA_INCIO")
+	private Date fechaHoraIncio;
 
-	private String titulo;
-
-	//uni-directional many-to-one association to Tutor
-	@ManyToOne
-	@JoinColumn(name="ID_TUTOR")
-	private Tutor tutor;
+	private String título;
 
 	public Evento() {
 	}
@@ -54,28 +49,20 @@ public class Evento implements Serializable {
 		this.fechaHoraFinal = fechaHoraFinal;
 	}
 
-	public Date getFechaHoraInicio() {
-		return this.fechaHoraInicio;
+	public Date getFechaHoraIncio() {
+		return this.fechaHoraIncio;
 	}
 
-	public void setFechaHoraInicio(Date fechaHoraInicio) {
-		this.fechaHoraInicio = fechaHoraInicio;
+	public void setFechaHoraIncio(Date fechaHoraIncio) {
+		this.fechaHoraIncio = fechaHoraIncio;
 	}
 
-	public String getTitulo() {
-		return this.titulo;
+	public String getTítulo() {
+		return this.título;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public Tutor getTutor() {
-		return this.tutor;
-	}
-
-	public void setTutor(Tutor tutor) {
-		this.tutor = tutor;
+	public void setTítulo(String título) {
+		this.título = título;
 	}
 
 }

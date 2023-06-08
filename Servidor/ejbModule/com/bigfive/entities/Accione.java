@@ -20,6 +20,8 @@ public class Accione implements Serializable {
 	@Column(name="ID_ACCIONES")
 	private long idAcciones;
 
+	private String comentario;
+
 	@Column(name="NOMBRE_ACCION")
 	private String nombreAccion;
 
@@ -32,6 +34,14 @@ public class Accione implements Serializable {
 
 	public void setIdAcciones(long idAcciones) {
 		this.idAcciones = idAcciones;
+	}
+
+	public String getComentario() {
+		return this.comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
 	}
 
 	public String getNombreAccion() {

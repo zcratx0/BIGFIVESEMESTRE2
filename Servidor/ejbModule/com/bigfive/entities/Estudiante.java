@@ -19,10 +19,7 @@ public class Estudiante implements Serializable {
 	@Column(name="ID_ESTUDIANTE")
 	private long idEstudiante;
 
-	//uni-directional many-to-one association to Generacion
-	@ManyToOne
-	@JoinColumn(name="ID_GENERACION")
-	private Generacion generacion;
+	private String generacion;
 
 	//uni-directional many-to-one association to Usuario
 	@ManyToOne
@@ -40,11 +37,11 @@ public class Estudiante implements Serializable {
 		this.idEstudiante = idEstudiante;
 	}
 
-	public Generacion getGeneracion() {
+	public String getGeneracion() {
 		return this.generacion;
 	}
 
-	public void setGeneracion(Generacion generacion) {
+	public void setGeneracion(String generacion) {
 		this.generacion = generacion;
 	}
 

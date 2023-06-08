@@ -2,6 +2,7 @@ package com.bigfive.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -26,9 +27,11 @@ public class Usuario implements Serializable {
 
 	private String documento;
 
+	private BigDecimal estado;
+
 	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_NAC")
-	private Date fechaNac;
+	@Column(name="FECHA_NACIMIENTO")
+	private Date fechaNacimiento;
 
 	private String localidad;
 
@@ -91,12 +94,20 @@ public class Usuario implements Serializable {
 		this.documento = documento;
 	}
 
-	public Date getFechaNac() {
-		return this.fechaNac;
+	public BigDecimal getEstado() {
+		return this.estado;
 	}
 
-	public void setFechaNac(Date fechaNac) {
-		this.fechaNac = fechaNac;
+	public void setEstado(BigDecimal estado) {
+		this.estado = estado;
+	}
+
+	public Date getFechaNacimiento() {
+		return this.fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public String getLocalidad() {
@@ -161,11 +172,6 @@ public class Usuario implements Serializable {
 
 	public void setItr(Itr itr) {
 		this.itr = itr;
-	}
-
-	@Override
-	public String toString() {
-		return documento + " - " + nombre + " " + apellido;
 	}
 
 }

@@ -15,10 +15,10 @@ public class RecibeJustificacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="RECIBE_JUSTIFICACION_IDRECIBE_GENERATOR", sequenceName="SEQ_ID_RECIBE ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RECIBE_JUSTIFICACION_IDRECIBE_GENERATOR")
-	@Column(name="ID_RECIBE")
-	private long idRecibe;
+	@SequenceGenerator(name="RECIBE_JUSTIFICACION_IDRECIBEJU_GENERATOR", sequenceName="SEQ_ID_RECIBE ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RECIBE_JUSTIFICACION_IDRECIBEJU_GENERATOR")
+	@Column(name="ID_RECIBEJU")
+	private long idRecibeju;
 
 	//uni-directional many-to-one association to Accione
 	@ManyToOne
@@ -33,12 +33,12 @@ public class RecibeJustificacion implements Serializable {
 	public RecibeJustificacion() {
 	}
 
-	public long getIdRecibe() {
-		return this.idRecibe;
+	public long getIdRecibeju() {
+		return this.idRecibeju;
 	}
 
-	public void setIdRecibe(long idRecibe) {
-		this.idRecibe = idRecibe;
+	public void setIdRecibeju(long idRecibeju) {
+		this.idRecibeju = idRecibeju;
 	}
 
 	public Accione getAccione() {

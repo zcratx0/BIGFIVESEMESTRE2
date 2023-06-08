@@ -2,6 +2,7 @@ package com.bigfive.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 /**
@@ -18,6 +19,8 @@ public class Itr implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ITR_IDITR_GENERATOR")
 	@Column(name="ID_ITR")
 	private long idItr;
+
+	private BigDecimal estado;
 
 	private String nombre;
 
@@ -37,6 +40,14 @@ public class Itr implements Serializable {
 		this.idItr = idItr;
 	}
 
+	public BigDecimal getEstado() {
+		return this.estado;
+	}
+
+	public void setEstado(BigDecimal estado) {
+		this.estado = estado;
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -52,11 +63,5 @@ public class Itr implements Serializable {
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
 	}
-
-	@Override
-	public String toString() {
-		return this.nombre+"-"+this.departamento;
-	}
-	
 
 }

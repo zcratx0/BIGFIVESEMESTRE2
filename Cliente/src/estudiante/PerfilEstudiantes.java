@@ -327,7 +327,7 @@ public class PerfilEstudiantes {
 		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
 		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
 		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
-		if (usuario.getFechaNac() != null) tfFechaNac.setText(usuario.getFechaNac().toString());
+		if (usuario.getFechaNacimiento() != null) tfFechaNac.setText(usuario.getFechaNacimiento().toString());
 		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
 		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
 		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
@@ -335,6 +335,6 @@ public class PerfilEstudiantes {
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
 		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
-		if (estudiante.getGeneracion() != null) tfGeneracion.setText(estudiante.getGeneracion().getGeneracion());
+		if (estudiante.getGeneracion() != null) tfGeneracion.setText(estudiante.getGeneracion());
 	}
 }
