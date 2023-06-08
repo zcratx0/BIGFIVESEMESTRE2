@@ -10,7 +10,10 @@ import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -28,6 +31,7 @@ public class ListaAuxITR {
 	JLabel lblTitListITR = new JLabel("Lista de ITR");
 	JButton btnModificar = new JButton("Modificar");
 	JButton btnEliminar = new JButton("Eliminar");
+	JButton btnHabilitar = new JButton("Habilitar");
 	JButton btnAgregar = new JButton("Agregar");
 	JButton btnAtras = new JButton("Atrás");
 	JTable tablaItr;
@@ -107,8 +111,27 @@ public class ListaAuxITR {
 		btnEliminar.setBounds(10, 406, 85, 25);
 		btnEliminar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnEliminar.setForeground(Color.decode("#f0f9ff"));
-		btnEliminar.setBackground(Color.decode("#0284c7"));  
+		btnEliminar.setBackground(Color.decode("#0284c7"));
+		btnEliminar.addActionListener(e -> {
+			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
+			itr.setEstado((BigDecimal.ZERO));
+			FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
+			cargarTabla();
+		});
 		frame.getContentPane().add(btnEliminar);
+			// HABILITAR
+		btnHabilitar.setBounds(10, 436, 85, 25);
+		btnHabilitar.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnHabilitar.setForeground(Color.decode("#f0f9ff"));
+		btnHabilitar.setBackground(Color.decode("#0284c7"));
+		btnHabilitar.addActionListener(e -> {
+			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
+			itr.setEstado((BigDecimal.ONE));
+			FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
+			cargarTabla();
+		});
+		frame.getContentPane().add(btnHabilitar);
+		
 		
 			//Agregar
 		btnAgregar.addActionListener(new ActionListener() {
@@ -151,8 +174,16 @@ public class ListaAuxITR {
 		DefaultTableModel tableModel = new DefaultTableModel();
 		tableModel.addColumn("ITR");
 		tableModel.addColumn("NOMBRE");
+		tableModel.addColumn("ESTADO");
+		
+		JComboBox cbEstado = new JComboBox<>();
+		cbEstado.addItem("DESACTIVADO");
+		cbEstado.addItem("ACTIVADO");
 		FuncionalidadesITR.getInstance().getItrBean().listarElementos().forEach(t -> {
-			Object[] tabla = {(Itr) t, t.getDepartamento()};
+			String value = "";
+			if (t.getEstado().intValue() == 1) {value = "ACTIVADO";}
+			else {value = "DESACTIVADO";}
+			Object[] tabla = {(Itr) t, t.getDepartamento(), value};
 			tableModel.addRow(tabla);
 		});
 		tablaItr.setModel(tableModel);

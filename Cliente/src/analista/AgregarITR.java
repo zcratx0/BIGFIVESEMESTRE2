@@ -25,6 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
 
 public class AgregarITR {
@@ -38,7 +39,7 @@ public class AgregarITR {
 	JComboBox<Departamento> cbDepa = new JComboBox<Departamento>();
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
-	private Itr itr;
+	private Itr itr = new Itr();
 	/**
 	 * Launch the application.
 	 */
@@ -79,8 +80,8 @@ public class AgregarITR {
 					int type = 1;
 					AgregarITR window = new AgregarITR(type);
 					window.setItr(itr);
-					if (itr.getNombre() != null )window.getTfNombre().setText(itr.getNombre().toString());;
-					
+					if (itr.getNombre() != null )window.getTfNombre().setText(itr.getNombre().toString());
+					window.cbDepa.setSelectedIndex((int)itr.getDepartamento().getIdDepartamento());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -143,8 +144,11 @@ public class AgregarITR {
 			this.itr.setNombre(tfNombre.getText());
 			System.out.println(this.itr.getNombre() + "-" +this.itr.getDepartamento());			
 			boolean resultado = false;
-			if (type == 0) resultado = FuncionalidadesITR.getInstance().getItrBean().crear(itr);
-			if (type == 1) resultado = FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
+			if (type == 0) {
+				this.itr.setEstado(BigDecimal.ONE);
+				resultado = FuncionalidadesITR.getInstance().getItrBean().crear(itr);
+				}
+			else if (type == 1) resultado = FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
 			if (resultado) {
 				System.out.println("ITR CREADO");
 				JOptionPane.showMessageDialog(frame, "ITR Agregado\n"+this.itr.getNombre() + " - " +this.itr.getDepartamento());
