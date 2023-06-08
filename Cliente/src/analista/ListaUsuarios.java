@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -16,7 +17,9 @@ import javax.swing.table.TableRowSorter;
 
 import com.bigfive.entities.Usuario;
 
+import funcionalidades.FuncionalidadesAnalista;
 import funcionalidades.FuncionalidadesDepartamento;
+import funcionalidades.FuncionalidadesEstudiante;
 import funcionalidades.FuncionalidadesITR;
 import funcionalidades.FuncionalidadesUsuario;
 
@@ -31,7 +34,7 @@ public class ListaUsuarios {
 	JFrame frame = new JFrame();
 	JLabel lblTitListUsua = new JLabel("Lista de Usuarios");
 	JLabel lblGeneracion = new JLabel("Generación");
-	JComboBox cBoxGeneracion = new JComboBox();
+	JTextField tfGeneracion = new JTextField();
 	JLabel lblTipoUsu = new JLabel("Tipo de usuario");
 	JLabel lblItrFil = new JLabel("ITR");
 	JComboBox cBoxItr = new JComboBox();
@@ -98,29 +101,29 @@ public class ListaUsuarios {
 		// frame.getContentPane().add(lblGeneracion);
 
 
-		cBoxGeneracion.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		cBoxGeneracion.setBounds(630, 84, 107, 21);
-		// frame.getContentPane().add(cBoxGeneracion);
+		tfGeneracion.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
+		tfGeneracion.setBounds(630, 84, 107, 21);
+		// frame.getContentPane().add(tfGeneracion);
 		
 		//Tipo de usuario
 		lblTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblTipoUsu.setBounds(10, 88, 96, 13);
 		frame.getContentPane().add(lblTipoUsu);
 		
-		JComboBox cBoxTipoUsu = new JComboBox(new String[] { "Seleccione", "Analista", "Estudiante", "Tutor" });
+		JComboBox cBoxTipoUsu = new JComboBox(new String[] {"SIN FILTRO", "Analista", "Estudiante", "Tutor" });
 		cBoxTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxTipoUsu.setBounds(109, 84, 107, 21);
 		cBoxTipoUsu.addActionListener(e -> {
 			String selected = cBoxTipoUsu.getSelectedItem().toString();
 			if (selected.equals("Estudiante")) {
 				frame.getContentPane().add(lblGeneracion);
-				frame.getContentPane().add(cBoxGeneracion);
+				frame.getContentPane().add(tfGeneracion);
 			} else if (selected.equals("Tutor")) {
 				frame.getContentPane().remove(lblGeneracion);
-				frame.getContentPane().remove(cBoxGeneracion);
+				frame.getContentPane().remove(tfGeneracion);
 			} else if (selected.equals("Analista")) {
 				frame.getContentPane().remove(lblGeneracion);
-				frame.getContentPane().remove(cBoxGeneracion);
+				frame.getContentPane().remove(tfGeneracion);
 			}
 
 			frame.getContentPane().revalidate();
@@ -137,7 +140,7 @@ public class ListaUsuarios {
 		cBoxItr.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxItr.setBounds(60, 110, 265, 21);
 		frame.getContentPane().add(cBoxItr);
-		
+		cBoxItr.addItem("SIN FILTRO");
 		//Estado
 		lblEstadoFil.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblEstadoFil.setBounds(400, 88, 45, 13);
@@ -147,7 +150,10 @@ public class ListaUsuarios {
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxEstado.setBounds(435, 84, 107, 21);
 		frame.getContentPane().add(cBoxEstado);
-		
+		cBoxEstado.addItem("SIN FILTRO");
+		cBoxEstado.addItem("SIN VALOR");
+		cBoxEstado.addItem("ACTIVADO");
+		cBoxEstado.addItem("ELIMINADO");
 
 		
 		//Botones
@@ -161,7 +167,11 @@ public class ListaUsuarios {
 			DefaultTableModel dtm = (DefaultTableModel) tablaUsu.getModel();
 			TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
 			tablaUsu.setRowSorter(sorter);
-			sorter.setRowFilter(RowFilter.regexFilter(cBoxItr.getSelectedItem().toString()));
+			if (!cBoxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) sorter.setRowFilter(RowFilter.regexFilter(cBoxEstado.getSelectedItem().toString()));
+			if (!cBoxItr.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) sorter.setRowFilter(RowFilter.regexFilter(cBoxItr.getSelectedItem().toString()));
+			if (!cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) sorter.setRowFilter(RowFilter.regexFilter(cBoxTipoUsu.getSelectedItem().toString().toUpperCase()));
+			if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("ESTUDIANTE") && !tfGeneracion.getText().isEmpty()) sorter.setRowFilter(RowFilter.regexFilter(tfGeneracion.getText()));
+			
 		});
 		
 		frame.getContentPane().add(btnFiltrar);
@@ -185,7 +195,7 @@ public class ListaUsuarios {
 
 				};
 
-				String[] columnasUsu  = {"Usuario", "ITR", "Estado"};
+				String[] columnasUsu  = {"Usuario","TIPO", "ITR", "Estado"};
 
 				tablaUsu = new JTable(datosUsu , columnasUsu );
 				JScrollPane scrollPaneUsu  = new JScrollPane(tablaUsu );
@@ -255,16 +265,29 @@ public class ListaUsuarios {
 	public void cargarTabla() {
 		DefaultTableModel tableModel = new DefaultTableModel();
 		tableModel.addColumn("USUARIO");
+		tableModel.addColumn("TIPO");
 		tableModel.addColumn("ITR");
 		tableModel.addColumn("ESTADO");
-		FuncionalidadesUsuario.getInstance().getUserBean().listarElementos().forEach(t -> {
+		tableModel.addColumn("GENERACION");
+		FuncionalidadesAnalista.getInstance().getBean().listarElementos().forEach(t -> {
 			String valor = "";
-			if ( t.getEstado() == 0) valor = "SIN VALOR";
-			else if ( t.getEstado() == 1)valor = "ACTIVADO";
-			else if ( t.getEstado() == 2) valor = "ELIMINADO";
-			Object[] row = {t, t.getItr(), valor};
+			int estado = t.getUsuario().getEstado();
+			if (estado == 0) valor = "SIN VALOR";
+			else if (estado == 1)valor = "ACTIVADO";
+			else if (estado == 2) valor = "ELIMINADO";
+			Object[] row = {t.getUsuario(), "ANALISTA" , t.getUsuario().getItr(), valor};
 			tableModel.addRow(row);
 		});
+		FuncionalidadesEstudiante.getInstance().getBean().listarElementos().forEach(t -> {
+			String valor = "";
+			int estado = t.getUsuario().getEstado();
+			if (estado == 0) valor = "SIN VALOR";
+			else if (estado == 1)valor = "ACTIVADO";
+			else if (estado == 2) valor = "ELIMINADO";
+			Object[] row = {t.getUsuario(), "ESTUDIANTE", t.getUsuario().getItr(), valor, t.getGeneracion()};
+			tableModel.addRow(row);
+		});
+		
 		tablaUsu.setModel(tableModel);
 		tablaUsu.getSelectionModel().addListSelectionListener(e -> {
 			btnModificar.setEnabled(true);

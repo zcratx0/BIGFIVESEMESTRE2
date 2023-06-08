@@ -174,4 +174,10 @@ public class Usuario implements Serializable {
 		this.itr = itr;
 	}
 
+	@Override
+	public String toString() {
+		return documento + "- " + nombre + "" + apellido;
+	}
+	
+
 }
