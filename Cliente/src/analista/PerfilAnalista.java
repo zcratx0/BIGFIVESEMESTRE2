@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,10 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.bigfive.entities.Departamento;
+import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
 import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesITR;
+import funcionalidades.FuncionalidadesUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -57,6 +62,7 @@ JTextField tfTel = new JTextField();
 private final JTextField tfFechaNac = new JTextField();
 private final JLabel lblGenero = new JLabel("Genero");
 JComboBox cBoxGenero = new JComboBox();
+Usuario usuario = null;
 
 
 
@@ -276,6 +282,9 @@ private void initialize() {
 	btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 	btnConfirmar.setForeground(Color.decode("#f0f9ff"));
 	btnConfirmar.setBounds(249, 563, 112, 40);
+	btnConfirmar.addActionListener(e -> {
+		guardarCambios(usuario);
+	});
 	frame.getContentPane().add(btnConfirmar);
 	
 	
@@ -307,6 +316,7 @@ private void initialize() {
 	
 }
 	public void cargarDatosAnalista(Usuario usuario) {
+		this.usuario = usuario;
 		//Carga el combobox de departamento e itr con los valores
 		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
 		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
@@ -317,9 +327,24 @@ private void initialize() {
 		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
 		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
 		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
-		if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento());
+		if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento().getIdDepartamento());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
 		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
+	}
+	public void guardarCambios(Usuario usuario) {
+		usuario.setNombre(tfNombre.getText());
+		usuario.setApellido(tfApellido.getText());
+		usuario.setDocumento(tfDocumento.getText());
+		//	TENEMOS QUE RESOLVER ESTO
+		//usuario.setFechaNacimiento(parse(tfFechaNac.getText());
+		usuario.setMail(tfMailPer.getText());
+		usuario.setMailInstitucional(tfMailInst.getText());
+		usuario.setTelefono(tfTel.getText());
+		usuario.setDepartamento( (Departamento)cBoxDepa.getSelectedItem());
+		usuario.setLocalidad(tfLoca.getText());
+		usuario.setContrasenia(new String(pasFContra.getPassword()));
+		usuario.setItr((Itr) cBoxITR.getSelectedItem());
+		FuncionalidadesUsuario.getInstance().getUserBean().modificar(usuario);
 	}
 }

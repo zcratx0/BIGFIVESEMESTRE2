@@ -16,12 +16,15 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.bigfive.entities.Departamento;
 import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
 import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesITR;
+import funcionalidades.FuncionalidadesUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -61,8 +64,7 @@ public class PerfilEstudiantes {
 	private final JTextField tfGeneracion = new JTextField();
 	private final JLabel lblGenero = new JLabel("Género");
 	private final JComboBox cBoxGenero = new JComboBox();
-
-	
+	Usuario usuario = null;
 	
 
 	/**
@@ -291,7 +293,9 @@ public class PerfilEstudiantes {
 		btnConfirmar.setForeground(Color.decode("#f0f9ff"));
 		btnConfirmar.setBounds(249, 613, 112, 40);
 		frame.getContentPane().add(btnConfirmar);
-		
+		btnConfirmar.addActionListener(e -> {
+			guardarCambios(usuario);
+		});
 		
 		// Boton Cancelar
 		
@@ -336,5 +340,22 @@ public class PerfilEstudiantes {
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
 		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
 		if (estudiante.getGeneracion() != null) tfGeneracion.setText(estudiante.getGeneracion());
+	}
+	
+
+	public void guardarCambios(Usuario usuario) {
+		usuario.setNombre(tfNombre.getText());
+		usuario.setApellido(tfApellido.getText());
+		usuario.setDocumento(tfDocumento.getText());
+		//	TENEMOS QUE RESOLVER ESTO
+		//usuario.setFechaNacimiento(parse(tfFechaNac.getText());
+		usuario.setMail(tfMailPer.getText());
+		usuario.setMailInstitucional(tfMailInst.getText());
+		usuario.setTelefono(tfTel.getText());
+		usuario.setDepartamento( (Departamento)cBoxDepa.getSelectedItem());
+		usuario.setLocalidad(tfLoca.getText());
+		usuario.setContrasenia(new String(pasFContra.getPassword()));
+		usuario.setItr((Itr) cBoxITR.getSelectedItem());
+		FuncionalidadesUsuario.getInstance().getUserBean().modificar(usuario);
 	}
 }
