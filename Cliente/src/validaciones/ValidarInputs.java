@@ -1,6 +1,8 @@
 package validaciones;
 
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class ValidarInputs {
 	// M�todo para validar solo Letras.
@@ -39,4 +41,18 @@ public class ValidarInputs {
 			return;
 		}
 	}
+	
+	public static boolean validacionFechaBd(String fecha) {
+	    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yy");
+	    formato.setLenient(false);
+	    try {
+	        formato.parse(fecha);
+	        return true;
+	    } catch (ParseException e) {
+	    	Mensajes.MostrarError("La fecha de nacimiento no es una fecha válida: " + e.getMessage());
+	        return false;
+	    }
+	}
+	
+	
 }

@@ -8,21 +8,19 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class ValidacionEmailInsti extends InputVerifier {
-	private static final Pattern pattern = Pattern.compile("^[\\w]+(\\.[\\w]+)?@(utec|estudiantes\\.utec)\\.edu\\.uy$");
+public class ValidacionFecha extends InputVerifier {
+	private static final Pattern pattern = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/\\d{2}$");
 
 	@Override
 	public boolean verify(JComponent input) {
 		JTextField textField = (JTextField) input;
 		String text = textField.getText().trim();
-		
 		if (text.isEmpty()) {
-            return true;
-        }
+			return true;
+		}
 		Matcher matcher = pattern.matcher(text);
 		if (!matcher.matches()) {
-			JOptionPane.showMessageDialog(input,
-					"Por favor, ingrese un correo electrónico válido con el dominio utec.edu.uy.");
+			JOptionPane.showMessageDialog(input, "Por favor, ingrese una fecha válida en formato dd/mm/yy");
 			return false;
 		}
 		return true;

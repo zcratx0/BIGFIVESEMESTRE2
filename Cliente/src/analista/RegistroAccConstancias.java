@@ -13,7 +13,6 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 
 public class RegistroAccConstancias {

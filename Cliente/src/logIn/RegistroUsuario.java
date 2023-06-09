@@ -37,7 +37,9 @@ import funcionalidades.FuncionalidadesUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
+import validaciones.ValidacionFecha;
 import validaciones.ValidacionMaxyMin;
+import validaciones.ValidacionTelefono;
 import validaciones.ValidarInputs;
 
 public class RegistroUsuario {
@@ -168,18 +170,21 @@ public class RegistroUsuario {
 		tfFech.setBounds(142, 178, 219, 19);
 		frame.getContentPane().add(tfFech);
 		tfFech.setColumns(10);
-		tfFech.addKeyListener(new KeyAdapter () {
+		//Verifica que la fecha coincida con el formato de la BD
+		tfFech.setInputVerifier(new ValidacionFecha());
+		
+		/*tfFech.addKeyListener(new KeyAdapter () {
 			public void keyTyped(KeyEvent e) {
 				//ValidarInputs.ValidarFechas(e);
 				 //ValidarTipos.ValidarFecha("Fecha", tfFech);
-				
+			
 			}
 		});
 		tfFech.addFocusListener(new FocusAdapter() {
 		    public void focusLost(FocusEvent e) {
 		        //ValidarTipos.ValidarFecha("Fecha", tfFech);
 		    }
-		});
+		});*/
 		
 		//Email Personal
 		JLabel lblMailP = new JLabel("Email Personal");
@@ -192,6 +197,7 @@ public class RegistroUsuario {
 		tfMailPer.setBounds(142, 213, 219, 19);
 		frame.getContentPane().add(tfMailPer);
 		tfMailPer.setColumns(10);
+		
 		tfMailPer.setInputVerifier(new ValidacionEmailPersonal());
 		
 		
@@ -206,7 +212,9 @@ public class RegistroUsuario {
 		tfTel.setBounds(142, 258, 219, 19);
 		frame.getContentPane().add(tfTel);
 		tfTel.setColumns(10);
-		tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
+		//tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
+		//Acepta paréntesis y signo de + al inicio además de puntos y guiones como separadores, minimo 8 caracteres
+		tfTel.setInputVerifier(new ValidacionTelefono());
 		
 		
 		//Localidad
@@ -300,6 +308,7 @@ public class RegistroUsuario {
 			public void keyTyped(KeyEvent e) {
 				//ValidarInputs.ValidarFechas(e);
 				//ValidarTipos.ValidarFecha("Fecha", tfAnioIng.getText());
+				
 			}
 		});
 		
@@ -330,13 +339,19 @@ public class RegistroUsuario {
 		cBoxRol.setBounds(142, 650, 219, 21);
 		
 		
-		//Boton Registro
+		// Boton Registro
 		JButton btnRegistro = new JButton("Registrarse");
-		btnRegistro.setBackground(Color.decode("#0284c7")); 
-		btnRegistro.setFont(new Font("Tahona", Font.BOLD, 10)); 
+		btnRegistro.setBackground(Color.decode("#0284c7"));
+		btnRegistro.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnRegistro.setForeground(Color.decode("#f0f9ff"));
 		btnRegistro.setBounds(261, 695, 112, 40);
 		btnRegistro.addActionListener(e -> {
+
+			if (!camposCompletos()) {
+				JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+				return;
+			}
+
 			System.out.println("USUARIO CREADO!");
 			Usuario user = new Usuario();
 			user.setNombre(tfNombre.getText());
@@ -349,7 +364,7 @@ public class RegistroUsuario {
 			user.setContrasenia(new String(pasFContra.getPassword()));
 			boolean resultado = false;
 			Long x = FuncionalidadesUsuario.getInstance().getUserBean().createWithId(user);
-			if (x!= null) {
+			if (x != null) {
 				System.out.println(x);
 				user.setIdUsuario(x);
 				System.out.println(user.getIdUsuario());
@@ -368,29 +383,26 @@ public class RegistroUsuario {
 					Tutor tutor = new Tutor();
 					Area area = (Area) cBoxArea.getSelectedItem();
 					Rol rol = (Rol) cBoxRol.getSelectedItem();
-					
+
 					tutor.setUsuario(user);
 					tutor.setArea(area);
 					tutor.setRol(rol);
 					tutor.setTipo(null);
-					
+
 				}
-				
-					
+
 			} else {
 				System.out.println("RED ALERT");
 			}
-			
-			
-			if (resultado)JOptionPane.showMessageDialog(frame, "USUARIO REGISTRADO");
+
+			if (resultado)
+				JOptionPane.showMessageDialog(frame, "USUARIO REGISTRADO");
 			else {
 				JOptionPane.showMessageDialog(frame, "ERROR AL REGISTRAR EL USUARIO");
-			}			
+			}
 			System.out.println(user.toString());
 		});
-		
-		
-		
+
 		// Boton Cancelar
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -399,21 +411,21 @@ public class RegistroUsuario {
 			}
 		});
 		btnCancelar.setBackground(Color.decode("#0284c7"));
-		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10)); 
+		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
 		btnCancelar.setBounds(98, 695, 112, 40);
-        frame.getContentPane().add(btnCancelar);
-		
-		//Tipo de Usuario
+		frame.getContentPane().add(btnCancelar);
+
+		// Tipo de Usuario
 		JLabel lblTipoUsu = new JLabel("Tipo de Usuario");
 		lblTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblTipoUsu.setBounds(10, 565, 97, 13);
 		frame.getContentPane().add(lblTipoUsu);
-			
-			//Combo Box
-		cBoxTipoUsu = new JComboBox(new String[]{"Seleccione Tipo","Analista", "Estudiante", "Tutor"});
-		
-		//TODO CAMBIAR AÑO POR ANIO
+
+		// Combo Box
+		cBoxTipoUsu = new JComboBox(new String[] { "Seleccione Tipo", "Analista", "Estudiante", "Tutor" });
+
+		// TODO CAMBIAR AÑO POR ANIO
 		
 		cBoxTipoUsu.setBounds(142, 561, 219, 21);
 		cBoxTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -436,7 +448,7 @@ public class RegistroUsuario {
 		        frame.getContentPane().remove(cBoxArea);
 		        frame.getContentPane().remove(lblRol);
 		        frame.getContentPane().remove(cBoxRol);
-	            // en tutor agrego ek label y combo correspondiente
+	            // en tutor agrego el label y combo correspondiente
 		        btnRegistro.setEnabled(true);
 	        } else if (selected.equals("Tutor")) {
 	            frame.getContentPane().add(lblArea);
@@ -480,4 +492,17 @@ public class RegistroUsuario {
 		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
 		
 	}
+	
+	//Valida que todos los campos estén llenos antes de guardar
+	private boolean camposCompletos() {
+	    return !tfNombre.getText().isEmpty() && 
+	    		!tfApellido.getText().isEmpty() &&
+	            !tfCedula.getText().isEmpty() &&
+	            !tfMailPer.getText().isEmpty() &&
+	            !tfMailInst.getText().isEmpty() &&
+	            !tfTel.getText().isEmpty() &&
+	            !tfLoca.getText().isEmpty() &&
+	            pasFContra.getPassword().length > 0;
+	}
+	
 }

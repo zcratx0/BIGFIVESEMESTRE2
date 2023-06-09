@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -29,7 +30,9 @@ import funcionalidades.FuncionalidadesUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
+import validaciones.ValidacionFecha;
 import validaciones.ValidacionMaxyMin;
+import validaciones.ValidacionTelefono;
 import validaciones.ValidarInputs;
 
 public class PerfilAnalista extends JPanel {
@@ -183,6 +186,8 @@ private void initialize() {
 	tfFechaNac.setBounds(142, 178, 219, 19);
 	tfFechaNac.setColumns(10);
 	frame.getContentPane().add(tfFechaNac);
+	//Verifica que la fecha ingresada tenga formato dd/mm/yy
+	tfFechaNac.setInputVerifier(new ValidacionFecha());
 	
 	//Email Personal
 	lblMailP.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -204,8 +209,9 @@ private void initialize() {
 	tfTel.setBounds(142, 258, 219, 19);
 	frame.getContentPane().add(tfTel);
 	tfTel.setColumns(10);
-	tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
-	
+	//tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
+	//Acepta paréntesis y signo de + al inicio además de puntos y guiones como separadores, minimo 8 caracteres
+	tfTel.setInputVerifier(new ValidacionTelefono());
 	
 	//Localidad
 	lblLoc.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -274,7 +280,6 @@ private void initialize() {
 	
 	cBoxGenero.setBounds(142, 511, 219, 21);
 	frame.getContentPane().add(cBoxGenero);
-	
 
 	
 	//Boton Registro
@@ -283,7 +288,12 @@ private void initialize() {
 	btnConfirmar.setForeground(Color.decode("#f0f9ff"));
 	btnConfirmar.setBounds(249, 563, 112, 40);
 	btnConfirmar.addActionListener(e -> {
-		guardarCambios(usuario);
+
+		if (camposCompletos()) {
+	        guardarCambios(usuario);
+	    } else {
+	    	JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+	    }
 	});
 	frame.getContentPane().add(btnConfirmar);
 	
@@ -302,9 +312,6 @@ private void initialize() {
 	btnCancelar.setBounds(114, 563, 112, 40);
     frame.getContentPane().add(btnCancelar);
 
-		
-		
-	
 	
 	//Imagen
 	JLabel lblLogoUtec = new JLabel("");
@@ -347,4 +354,20 @@ private void initialize() {
 		usuario.setItr((Itr) cBoxITR.getSelectedItem());
 		FuncionalidadesUsuario.getInstance().getUserBean().modificar(usuario);
 	}
+	
+	//Valida que todos los campos estén llenos antes de guardar
+	public boolean camposCompletos() {
+	    return !tfNombre.getText().isEmpty()
+	            && !tfApellido.getText().isEmpty()
+	            && !tfDocumento.getText().isEmpty()
+	            // Agregar validación para la fecha de nacimiento aquí
+	            && !tfMailPer.getText().isEmpty()
+	            && !tfMailInst.getText().isEmpty()
+	            && !tfTel.getText().isEmpty()
+	            && cBoxDepa.getSelectedItem() != null
+	            && !tfLoca.getText().isEmpty()
+	            && pasFContra.getPassword().length > 0
+	            && cBoxITR.getSelectedItem() != null;
+	}
+	
 }

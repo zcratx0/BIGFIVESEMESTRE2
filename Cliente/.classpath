@@ -6,14 +6,11 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/dev/Wildfly/wildfly-26.1.0.Final/bin/client/jboss-client.jar">
+	<classpathentry kind="lib" path="C:/UTEC/wildfly-26.1.0.Final/bin/client/jboss-client.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="V:/BIGFIVESEMESTRE2/Cliente/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="V:/BIGFIVESEMESTRE2/Cliente/jgoodies-forms-1.8.0.jar"/>
-	<classpathentry kind="lib" path="V:/BIGFIVESEMESTRE2/Cliente/jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ProyectoEJB"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

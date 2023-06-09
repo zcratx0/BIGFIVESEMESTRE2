@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -28,7 +29,9 @@ import funcionalidades.FuncionalidadesUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
+import validaciones.ValidacionFecha;
 import validaciones.ValidacionMaxyMin;
+import validaciones.ValidacionTelefono;
 import validaciones.ValidarInputs;
 
 public class PerfilEstudiantes {
@@ -133,7 +136,11 @@ public class PerfilEstudiantes {
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
 		tfNombre.setInputVerifier(new ValidacionMaxyMin(02,32));
+		
+		
 		tfNombre.addKeyListener(new KeyAdapter() {
+			
+			
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloLetras(e);
 			}
@@ -185,6 +192,7 @@ public class PerfilEstudiantes {
 		tfFechaNac.setBounds(142, 178, 219, 19);
 		tfFechaNac.setColumns(10);
 		frame.getContentPane().add(tfFechaNac);
+		tfFechaNac.setInputVerifier(new ValidacionFecha());
 		
 		
 		//Email Personal
@@ -197,8 +205,7 @@ public class PerfilEstudiantes {
 		frame.getContentPane().add(tfMailPer);
 		tfMailPer.setColumns(10);
 		tfMailPer.setInputVerifier(new ValidacionEmailPersonal());
-		
-		
+				
 		//Telefono
 		lblTel.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblTel.setBounds(10, 261, 45, 13);
@@ -208,8 +215,9 @@ public class PerfilEstudiantes {
 		tfTel.setBounds(142, 258, 219, 19);
 		frame.getContentPane().add(tfTel);
 		tfTel.setColumns(10);
-		tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
-		
+		//tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
+		//Acepta paréntesis y signo de + al inicio además de puntos y guiones como separadores, minimo 8 caracteres
+		tfTel.setInputVerifier(new ValidacionTelefono());
 		
 		//Localidad
 		lblLoc.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -287,31 +295,32 @@ public class PerfilEstudiantes {
 		cBoxGenero.setBounds(142, 555, 219, 21);
 		frame.getContentPane().add(cBoxGenero);
 		
-		//Boton Registro
-		btnConfirmar.setBackground(Color.decode("#0284c7")); 
-		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10)); 
+		// Boton Registro
+		btnConfirmar.setBackground(Color.decode("#0284c7"));
+		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnConfirmar.setForeground(Color.decode("#f0f9ff"));
 		btnConfirmar.setBounds(249, 613, 112, 40);
 		frame.getContentPane().add(btnConfirmar);
 		btnConfirmar.addActionListener(e -> {
-			guardarCambios(usuario);
+
+			if (camposCompletos()) {
+				guardarCambios(usuario);
+			} else {
+				JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+			}
 		});
 		
 		// Boton Cancelar
-		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}
 		});
 		btnCancelar.setBackground(Color.decode("#0284c7"));
-		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10)); 
+		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
 		btnCancelar.setBounds(119, 613, 112, 40);
-        frame.getContentPane().add(btnCancelar);
-
-			
-			
+		frame.getContentPane().add(btnCancelar);
 		
 		
 		//Imagen
@@ -319,7 +328,6 @@ public class PerfilEstudiantes {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
-		
 
 	}
 	
@@ -357,5 +365,20 @@ public class PerfilEstudiantes {
 		usuario.setContrasenia(new String(pasFContra.getPassword()));
 		usuario.setItr((Itr) cBoxITR.getSelectedItem());
 		FuncionalidadesUsuario.getInstance().getUserBean().modificar(usuario);
+	}
+	
+	//Valida que todos los campos estén llenos antes de guardar
+	public boolean camposCompletos() {
+	    return !tfNombre.getText().isEmpty()
+	            && !tfApellido.getText().isEmpty()
+	            && !tfDocumento.getText().isEmpty()
+	            // Agregar validación para la fecha de nacimiento aquí
+	            && !tfMailPer.getText().isEmpty()
+	            && !tfMailInst.getText().isEmpty()
+	            && !tfTel.getText().isEmpty()
+	            && cBoxDepa.getSelectedItem() != null
+	            && !tfLoca.getText().isEmpty()
+	            && pasFContra.getPassword().length > 0
+	            && cBoxITR.getSelectedItem() != null;
 	}
 }

@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 
 public class RegistroAccReclamo {
