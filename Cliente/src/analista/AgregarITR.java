@@ -145,7 +145,7 @@ public class AgregarITR {
 			System.out.println(this.itr.getNombre() + "-" +this.itr.getDepartamento());			
 			boolean resultado = false;
 			if (type == 0) {
-				this.itr.setEstado(BigDecimal.ONE);
+				this.itr.setEstado(1);
 				resultado = FuncionalidadesITR.getInstance().getItrBean().crear(itr);
 				}
 			else if (type == 1) resultado = FuncionalidadesITR.getInstance().getItrBean().modificar(itr);

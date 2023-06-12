@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ProyectoEJB"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/UTEC/wildfly-26.1.0.Final/bin/client/jboss-client.jar">
+	<classpathentry kind="lib" path="C:/dev/wildfly/wildfly-26.1.0.Final/bin/client/jboss-client.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/ProyectoEJB"/>
+	<classpathentry kind="lib" path="C:/Users/matia/Desktop/Semestre2/BIGFIVESEMESTRE2/Cliente/lib/DiUS-java-faker-javafaker-1.0.2-145-ga8b8ff0.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

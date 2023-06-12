@@ -114,7 +114,7 @@ public class ListaAuxITR {
 		btnEliminar.setBackground(Color.decode("#0284c7"));
 		btnEliminar.addActionListener(e -> {
 			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
-			itr.setEstado((BigDecimal.ZERO));
+			itr.setEstado((0));
 			FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
 			cargarTabla();
 		});
@@ -126,7 +126,7 @@ public class ListaAuxITR {
 		btnHabilitar.setBackground(Color.decode("#0284c7"));
 		btnHabilitar.addActionListener(e -> {
 			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
-			itr.setEstado((BigDecimal.ONE));
+			itr.setEstado((1));
 			FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
 			cargarTabla();
 		});
@@ -181,7 +181,7 @@ public class ListaAuxITR {
 		cbEstado.addItem("ACTIVADO");
 		FuncionalidadesITR.getInstance().getItrBean().listarElementos().forEach(t -> {
 			String value = "";
-			if (t.getEstado().intValue() == 1) {value = "ACTIVADO";}
+			if (t.getEstado() == 1) {value = "ACTIVADO";}
 			else {value = "DESACTIVADO";}
 			Object[] tabla = {(Itr) t, t.getDepartamento(), value};
 			tableModel.addRow(tabla);

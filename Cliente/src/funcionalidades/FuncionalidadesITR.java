@@ -38,4 +38,13 @@ public class FuncionalidadesITR {
 			// TODO: handle exception
 		}		
 	}
+	public void cargarComboBoxHabilitado(JComboBox cb) {
+		try {
+			itrBean.listarElementosHabilitados().forEach(t -> {
+				cb.addItem(t);
+			});
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
+	}
 }

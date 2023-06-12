@@ -41,6 +41,7 @@ import validaciones.ValidacionFecha;
 import validaciones.ValidacionMaxyMin;
 import validaciones.ValidacionTelefono;
 import validaciones.ValidarInputs;
+import validaciones.ValidarTipos;
 
 public class RegistroUsuario {
 
@@ -304,11 +305,10 @@ public class RegistroUsuario {
 		JTextField tfAnioIng = new JTextField();
 		tfAnioIng.setBounds(142, 606, 219, 19);
 		tfAnioIng.setColumns(10);
+		tfAnioIng.setInputVerifier(new ValidacionMaxyMin(2,32));
 		tfAnioIng.addKeyListener(new KeyAdapter () {
 			public void keyTyped(KeyEvent e) {
-				//ValidarInputs.ValidarFechas(e);
-				//ValidarTipos.ValidarFecha("Fecha", tfAnioIng.getText());
-				
+				if (!tfAnioIng.getText().isEmpty()) ValidarTipos.ValidarNumber("AÑO INGRESO", tfAnioIng.getText());
 			}
 		});
 		
@@ -487,7 +487,7 @@ public class RegistroUsuario {
 		frame.getContentPane().add(lblLogoUtec);
 		
 		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
-		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
+		FuncionalidadesITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
 		FuncionalidadesRol.getInstance().cargarComboBox(cBoxRol);
 		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
 		

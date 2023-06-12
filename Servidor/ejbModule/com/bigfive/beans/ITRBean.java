@@ -1,5 +1,6 @@
 package com.bigfive.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -60,7 +61,23 @@ public class ITRBean implements ITRBeanRemote {
 
 	@Override
 	public List<Itr> listarElementos() {
-		return em.createQuery("SELECT u FROM Itr u").getResultList();
+		List<Itr> lista = new ArrayList<Itr>();
+		try {
+			 lista = em.createQuery("SELECT u FROM Itr u").getResultList();
+		} catch (Exception e) {
+			System.out.println("ERROR AL CARGAR LA LISTA DE ELEMENTOS: " + e.getMessage());
+		}
+		return lista;
 	}
-
+	@Override
+	public List<Itr> listarElementosHabilitados() {
+		System.out.println("CARGANDO ITR'S");
+		List<Itr> lista = new ArrayList<>();
+		try {
+			lista = em.createQuery("SELECT u FROM Itr u WHERE u.estado <> 0").getResultList();
+		} catch (Exception e) {
+			System.out.println("ERROR AL CARGAR LA LISTA DE ELEMENTOS: " + e.getMessage());
+		}
+		return lista;
+	}
 }

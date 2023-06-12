@@ -20,7 +20,7 @@ public class Itr implements Serializable {
 	@Column(name="ID_ITR")
 	private long idItr;
 
-	private BigDecimal estado;
+	private int estado;
 
 	private String nombre;
 
@@ -40,11 +40,11 @@ public class Itr implements Serializable {
 		this.idItr = idItr;
 	}
 
-	public BigDecimal getEstado() {
+	public int getEstado() {
 		return this.estado;
 	}
 
-	public void setEstado(BigDecimal estado) {
+	public void setEstado(int estado) {
 		this.estado = estado;
 	}
 
