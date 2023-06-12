@@ -12,6 +12,5 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/matia/Desktop/Semestre2/BIGFIVESEMESTRE2/Cliente/lib/DiUS-java-faker-javafaker-1.0.2-145-ga8b8ff0.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

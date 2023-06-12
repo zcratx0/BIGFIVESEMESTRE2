@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -135,29 +136,30 @@ public class LogIn {
 		btnIngresar.setBounds(337, 243, 92, 29);
 		btnIngresar.addActionListener(e -> {
 			//Preguntar si existe la base de datos
-			
 			try {
 				//Tipo = tipo de usuario - 0=Analista - 1=Tutor - 2=Estudiante
 				int tipo = 0;
 				//	CONSEGUIMOS EL USUARIO
 				Usuario usuario = FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword()));
 				tipo = FuncionalidadesUsuario.getInstance().getTipo(usuario);
-				
-				//Evlua que tipo de usuario ingresa
-				if (tipo == 0) {
-					PrincipalAnalista.mostrarAnalista(usuario);
-					frame.dispose();
-				} else if (tipo == 1) {
-					Tutor tutor = FuncionalidadesUsuario.getInstance().getUserBean().getTutor(usuario);
-					PrincipalTutor.mostrarTutor(tutor);
-					frame.dispose();
-				} else if (tipo == 2) {
-					Estudiante estudiante = FuncionalidadesUsuario.getInstance().getUserBean().getEstudiante(usuario);
-					PrincipalEstudiante.mostrarEstudiante(estudiante);
-					frame.dispose();
-				}
+				if (usuario.getEstado() == 0) {JOptionPane.showMessageDialog(null, "USUARIO NO HABILITADO");}
 				else {
-					Mensajes.MostrarError("Usuario no habilitado");
+					// Evlua que tipo de usuario ingresa
+					if (tipo != 1) {
+						PrincipalAnalista.mostrarAnalista(usuario);
+						frame.dispose();
+					} else if (tipo == 1) {
+						Tutor tutor = FuncionalidadesUsuario.getInstance().getUserBean().getTutor(usuario);
+						PrincipalTutor.mostrarTutor(tutor);
+						frame.dispose();
+					} else if (tipo == 2) {
+						Estudiante estudiante = FuncionalidadesUsuario.getInstance().getUserBean()
+								.getEstudiante(usuario);
+						PrincipalEstudiante.mostrarEstudiante(estudiante);
+						frame.dispose();
+					} else {
+						Mensajes.MostrarError("Usuario no habilitado");
+					}
 				}
 			} catch(Exception e1) {
 				Mensajes.MostrarError("Usuario o Contraseña incorrecta");
