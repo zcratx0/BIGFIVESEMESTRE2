@@ -222,8 +222,8 @@ public class ListaUsuarios {
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaUsu.getSelectedRow() > -1) {
-					System.out.println((Usuario) tablaUsu.getValueAt(0, tablaUsu.getSelectedRow()));
-					DatosUsuario.loadDatosUsuario((Usuario) tablaUsu.getValueAt(0, tablaUsu.getSelectedRow()), listaUsuarios);
+					System.out.println(tablaUsu.getValueAt(tablaUsu.getSelectedRow(), 0));
+					DatosUsuario.loadDatosUsuario((Usuario) tablaUsu.getValueAt(tablaUsu.getSelectedRow(), 0), listaUsuarios);
 				}
 			}
 		});
