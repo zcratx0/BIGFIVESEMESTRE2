@@ -68,7 +68,7 @@ public class PerfilEstudiantes {
 	private final JLabel lblGenero = new JLabel("Género");
 	private final JComboBox cBoxGenero = new JComboBox();
 	Usuario usuario = null;
-	
+	Estudiante estudiante = null;
 
 	/**
 	 * Launch the application.
@@ -92,6 +92,8 @@ public class PerfilEstudiantes {
 				try {
 					PerfilEstudiantes window = new PerfilEstudiantes();
 					window.cargarDatosEstudiantes(estudiante);
+					window.usuario = estudiante.getUsuario();
+					window.estudiante = estudiante;
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
