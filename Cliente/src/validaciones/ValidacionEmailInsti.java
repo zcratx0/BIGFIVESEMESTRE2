@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class ValidacionEmailInsti extends InputVerifier {
-	private static final Pattern pattern = Pattern.compile("^[\\w]+(\\.[\\w]+)?@(utec|estudiantes\\.utec)\\.edu\\.uy$");
+	private static final Pattern pattern = Pattern.compile("^[\\w]+(\\.[\\w]+)?(\\.[\\w]+)?@(utec\\.edu\\.uy|estudiantes\\.utec\\.edu\\.uy)$");
 
 	@Override
 	public boolean verify(JComponent input) {
