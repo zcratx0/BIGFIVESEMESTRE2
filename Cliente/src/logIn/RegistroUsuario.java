@@ -9,6 +9,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Enumeration;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,10 +22,12 @@ import javax.swing.JTextField;
 
 import com.bigfive.entities.Analista;
 import com.bigfive.entities.Area;
+import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Rol;
 import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
+import com.google.common.base.Enums;
 
 import analista.ListaAuxITR;
 import funcionalidades.FuncionalidadesAnalista;
@@ -351,7 +354,7 @@ public class RegistroUsuario {
 				JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
 				return;
 			}
-
+			
 			System.out.println("USUARIO CREADO!");
 			Usuario user = new Usuario();
 			user.setNombre(tfNombre.getText());
@@ -362,6 +365,7 @@ public class RegistroUsuario {
 			user.setTelefono(tfTel.getText());
 			user.setLocalidad(tfLoca.getText());
 			user.setContrasenia(new String(pasFContra.getPassword()));
+			user.setDepartamentos((EnumDepartamentos) cBoxDepa.getSelectedItem());
 			boolean resultado = false;
 			Long x = FuncionalidadesUsuario.getInstance().getUserBean().createWithId(user);
 			if (x != null) {
@@ -490,7 +494,6 @@ public class RegistroUsuario {
 		FuncionalidadesITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
 		FuncionalidadesRol.getInstance().cargarComboBox(cBoxRol);
 		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
-		
 	}
 	
 	//Valida que todos los campos estén llenos antes de guardar

@@ -319,6 +319,8 @@ private void initialize() {
 	lblLogoUtec.setBounds(25, 1, 107, 50);
 	frame.getContentPane().add(lblLogoUtec);
 	
+	//	CARGAR DATOS
+	FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
 	
 	
 }
@@ -334,7 +336,8 @@ private void initialize() {
 		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
 		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
 		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
-		if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento().getIdDepartamento());
+		//if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento().getIdDepartamento());
+		if (usuario.getDepartamentos() != null) cBoxDepa.setSelectedItem(usuario.getDepartamentos());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
 		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());

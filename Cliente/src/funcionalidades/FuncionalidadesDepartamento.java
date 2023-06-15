@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import com.bigfive.beans.DepartamentoBeanRemote;
 import com.bigfive.beans.UsuarioBeanRemote;
 import com.bigfive.entities.Departamento;
+import com.bigfive.entities.EnumDepartamentos;
 
 public class FuncionalidadesDepartamento {
 	private static FuncionalidadesDepartamento instance = new FuncionalidadesDepartamento();
@@ -37,9 +38,9 @@ public class FuncionalidadesDepartamento {
 	}
 	
 	public void cargarComboBox(JComboBox cb) {
-		departamentoBean.listarElementos().forEach(t -> {
-			cb.addItem(t);
-		});
+		for (EnumDepartamentos departamentos : EnumDepartamentos.values()) {
+			cb.addItem(departamentos);
+		}
 	}
 	
 }
