@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
 import com.bigfive.entities.Estudiante;
@@ -28,6 +29,7 @@ import funcionalidades.FuncionalidadesReclamo;
 import utils.TBFTable;
 
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 
 public class ListaReclamoEstu {
@@ -163,8 +165,7 @@ public class ListaReclamoEstu {
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaRe.getSelectedRow() > -1) {
-					System.out.println(tablaRe.getValueAt(tablaRe.getSelectedRow(), 0));
-					AltaReclamo.main(estudiante, (Reclamo) tablaRe.getValueAt(tablaRe.getSelectedRow(), 0));
+					AltaReclamo.main(estudiante, (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0));
 					frame.dispose();
 				}
 			}
@@ -221,14 +222,19 @@ public class ListaReclamoEstu {
 	public void cargarTabla() {
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("Reclamo");
+		model.addColumn("Reclamo");
+		model.addColumn("Fecha");
 		model.addColumn("Estado");
 		FuncionalidadesReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
-			Object[] row  = {t, 0};
+			String fecha = t.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(t.getFechaHora()) : "FECHA";
+			String titulo = t.getDetalle() != null ? t.getDetalle() : "TITULO"; 
+			Object[] row  = {t, titulo , fecha ,0};
 			model.addRow(row);
 		});
 		tablaRe.setModel(model);
 		tablaRe.getSelectionModel().addListSelectionListener(e -> {
 			btnModificar.setEnabled(true);
 		});
+		tablaRe.removeColumn(tablaRe.getColumnModel().getColumn(0));
 	}
 }

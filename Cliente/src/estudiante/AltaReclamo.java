@@ -52,6 +52,7 @@ public class AltaReclamo {
 	JTextField tfCredito = new JTextField();
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
+	boolean modificar = false;
 	private final JTextField tfFech = new JTextField();
 	private Reclamo reclamo;
 	private Estudiante estudiante;
@@ -97,6 +98,7 @@ public class AltaReclamo {
 					window.reclamo = reclamo;
 					window.estudiante = estudiante;
 					window.cargarDatos();
+					window.modificar = true;
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -272,7 +274,10 @@ public class AltaReclamo {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-		FuncionalidadesReclamo.getInstance().getBean().crear(reclamo);
+		
+		if (modificar) {FuncionalidadesReclamo.getInstance().getBean().modificar(reclamo);}
+		else {FuncionalidadesReclamo.getInstance().getBean().crear(reclamo);}
+		
 	}
 	
 	public void cargarDatos() {
