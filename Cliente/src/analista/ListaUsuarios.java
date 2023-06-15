@@ -3,31 +3,29 @@ package analista;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import com.bigfive.entities.Usuario;
+import com.bigfive.entities.Analista;
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Tutor;
 
+import estudiante.ListaReclamoEstu;
 import funcionalidades.FuncionalidadesAnalista;
-import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesEstudiante;
 import funcionalidades.FuncionalidadesITR;
-import funcionalidades.FuncionalidadesUsuario;
 import utils.TBFTable;
-
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ListaUsuarios {
 
@@ -200,8 +198,13 @@ public class ListaUsuarios {
 		scrollPaneUsu.setBounds(25, 140, 955, 248);
 		frame.getContentPane().add(scrollPaneUsu);
 
-		//botones
-			//Atras
+		
+		
+		
+		//BOTONES
+		
+		
+		//Atras
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HabilitacionUsuario.mostrar();
@@ -214,12 +217,15 @@ public class ListaUsuarios {
 		btnAtras.setBounds(754, 410, 96, 31);
 		frame.getContentPane().add(btnAtras);
 		btnModificar.setToolTipText("Seleccionar usuario a modificar");
-			//Modificar
+		
+		
+		//Modificar
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaUsu.getSelectedRow() > -1) {
-					System.out.println(tablaUsu.getValueAt(tablaUsu.getSelectedRow(), 0));
-					DatosUsuario.loadDatosUsuario((Usuario) tablaUsu.getValueAt(tablaUsu.getSelectedRow(), 0), listaUsuarios);
+					if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Estudiante) DatosUsuario.loadDatosUsuario(((Estudiante) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0)).getUsuario(), listaUsuarios);
+					else if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Analista) DatosUsuario.loadDatosUsuario(((Analista) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0)).getUsuario(), listaUsuarios);
+					else if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Tutor) DatosUsuario.loadDatosUsuario(((Tutor) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0)).getUsuario(), listaUsuarios);
 				}
 			}
 		});
@@ -236,8 +242,18 @@ public class ListaUsuarios {
 		btnHistorial.setForeground(Color.decode("#f0f9ff"));
 		btnHistorial.setBackground(Color.decode("#0ea5e9"));
 		btnHistorial.setBounds(131, 415, 85, 21);
+		btnHistorial.addActionListener(e -> {
+			if (tablaUsu.getSelectedRow() > -1) {
+				if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Estudiante) ListaReclamo.main((Estudiante) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0));
+			}
+		} );
+		
+		
+		
 		frame.getContentPane().add(btnHistorial);
-
+		
+		
+		
 		// Datos
 		JButton btnDatos = new JButton("Datos");
 		btnDatos.setFont(new Font("Tahona", Font.BOLD, 10));
@@ -260,7 +276,10 @@ public class ListaUsuarios {
 	
 	public void cargarTabla() {
 		DefaultTableModel tableModel = new DefaultTableModel();
-		tableModel.addColumn("USUARIO");
+		tableModel.addColumn("Entidad");
+		tableModel.addColumn("Usuario");
+		tableModel.addColumn("Documento");
+		tableModel.addColumn("Nombre");
 		tableModel.addColumn("TIPO");
 		tableModel.addColumn("ITR");
 		tableModel.addColumn("ESTADO");
@@ -271,7 +290,7 @@ public class ListaUsuarios {
 			if (estado == 0) valor = "SIN VALOR";
 			else if (estado == 1)valor = "ACTIVADO";
 			else if (estado == 2) valor = "ELIMINADO";
-			Object[] row = {t.getUsuario(), "ANALISTA" , t.getUsuario().getItr(), valor};
+			Object[] row = {t, t.getUsuario().getMail(), t.getUsuario().getDocumento(), t.getUsuario().getNombre() + " " + t.getUsuario().getApellido(),  "ANALISTA" , t.getUsuario().getItr(), valor};
 			tableModel.addRow(row);
 		});
 		FuncionalidadesEstudiante.getInstance().getBean().listarElementos().forEach(t -> {
@@ -280,7 +299,7 @@ public class ListaUsuarios {
 			if (estado == 0) valor = "SIN VALOR";
 			else if (estado == 1)valor = "ACTIVADO";
 			else if (estado == 2) valor = "ELIMINADO";
-			Object[] row = {t.getUsuario(), "ESTUDIANTE", t.getUsuario().getItr(), valor, t.getGeneracion()};
+			Object[] row = {t, t.getUsuario().getMail(), t.getUsuario().getDocumento(), t.getUsuario().getNombre() + " " + t.getUsuario().getApellido(), "ESTUDIANTE", t.getUsuario().getItr(), valor, t.getGeneracion()};
 			tableModel.addRow(row);
 		});
 		
@@ -288,6 +307,7 @@ public class ListaUsuarios {
 		tablaUsu.getSelectionModel().addListSelectionListener(e -> {
 			btnModificar.setEnabled(true);
 		});
+		tablaUsu.removeColumn(tablaUsu.getColumnModel().getColumn(0));
 
 	}
 	

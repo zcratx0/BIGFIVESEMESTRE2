@@ -13,6 +13,7 @@ import com.bigfive.entities.Usuario;
 import analista.ListaAuxITR;
 import analista.ListaReclamo;
 import funcionalidades.FuncionalidadesReclamo;
+import utils.TBFFecha;
 import validaciones.ValidarInputs;
 
 import javax.swing.JLabel;
@@ -282,7 +283,7 @@ public class AltaReclamo {
 	
 	public void cargarDatos() {
 		if (reclamo.getDetalle() != null) taDescrip.setText(reclamo.getDetalle());
-		if (reclamo.getFechaHora() != null) tfFech.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(reclamo.getFechaHora()));
+		if (reclamo.getFechaHora() != null) tfFech.setText(TBFFecha.getFechaDDYYMMHHMM(reclamo.getFechaHora()));
 	}
 	
 }

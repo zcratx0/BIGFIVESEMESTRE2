@@ -158,8 +158,6 @@ public class LogIn {
 								.getEstudiante(usuario);
 						PrincipalEstudiante.mostrarEstudiante(estudiante);
 						frame.dispose();
-					} else {
-						Mensajes.MostrarError("Usuario no habilitado");
 					}
 				}
 			} catch(Exception e1) {

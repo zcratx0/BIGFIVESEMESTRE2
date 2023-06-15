@@ -258,6 +258,7 @@ private void initialize() {
 	tfMailInst.setColumns(10);
 	tfMailInst.setInputVerifier(new ValidacionEmailInsti());
 	
+	tfMailInst.setEnabled(false);
 	
 	//Contraseña
 	lblContra.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));

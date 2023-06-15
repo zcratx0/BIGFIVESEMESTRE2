@@ -7,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.bigfive.entities.Departamento;
+import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
@@ -29,6 +26,7 @@ import analista.ListaAuxITR;
 import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesITR;
 import funcionalidades.FuncionalidadesUsuario;
+import utils.TBFFecha;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -185,9 +183,8 @@ public class PerfilEstudiantes {
 				ValidarInputs.ValidarSoloNumeros(e);;
 			}
 		});
-		//TODO Revisar porque esto se pude romper!!
 		tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
-		
+		tfDocumento.setEnabled(false);
 		
 		//Fecha de Nacimiento 
 		lblFecNac.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -261,6 +258,7 @@ public class PerfilEstudiantes {
 		frame.getContentPane().add(tfMailInst);
 		tfMailInst.setColumns(10);
 		tfMailInst.setInputVerifier(new ValidacionEmailInsti());
+		tfMailInst.setEnabled(false);
 		
 		//Contraseña
 		lblContra.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -281,7 +279,7 @@ public class PerfilEstudiantes {
 		cBoxITR.setBackground(Color.decode("#e5e7eb"));
 		cBoxITR.setBounds(142, 472, 219, 21);
 		frame.getContentPane().add(cBoxITR);
-		
+		cBoxITR.setEnabled(false);
 		//Año de ingreso - Est
 		
 		lblGeneracion.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -291,6 +289,8 @@ public class PerfilEstudiantes {
 		tfGeneracion.setBounds(142, 513, 219, 19);
 		tfGeneracion.setColumns(10);
 		frame.getContentPane().add(tfGeneracion);
+		
+		tfGeneracion.setEnabled(false);
 		
 		//Genero
 		lblGenero.setBounds(10, 559, 45, 13);
@@ -344,11 +344,11 @@ public class PerfilEstudiantes {
 		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
 		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
 		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
-		if (usuario.getFechaNacimiento() != null) tfFechaNac.setText(usuario.getFechaNacimiento().toString());
+		if (usuario.getFechaNacimiento() != null) tfFechaNac.setText(TBFFecha.getFechaDDYYMMMM(usuario.getFechaNacimiento()));
 		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
 		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
 		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
-		if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento());
+		if (usuario.getDepartamentos() != null) cBoxDepa.setSelectedItem(usuario.getDepartamentos());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
 		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
@@ -361,17 +361,12 @@ public class PerfilEstudiantes {
 		usuario.setApellido(tfApellido.getText());
 		usuario.setDocumento(tfDocumento.getText());
 		//	TENEMOS QUE RESOLVER ESTO
-		try {
-			Date fechaNac = new SimpleDateFormat("dd/mm/yyyy").parse(tfFechaNac.getText());
-			System.out.println(fechaNac);
-			usuario.setFechaNacimiento(fechaNac);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
+		
+		usuario.setFechaNacimiento(TBFFecha.setFechaDDYYMMMM(tfFechaNac.getText()));
 		usuario.setMail(tfMailPer.getText());
 		usuario.setMailInstitucional(tfMailInst.getText());
 		usuario.setTelefono(tfTel.getText());
-		usuario.setDepartamento( (Departamento)cBoxDepa.getSelectedItem());
+		usuario.setDepartamentos( (EnumDepartamentos)cBoxDepa.getSelectedItem());
 		usuario.setLocalidad(tfLoca.getText());
 		usuario.setContrasenia(new String(pasFContra.getPassword()));
 		usuario.setItr((Itr) cBoxITR.getSelectedItem());
