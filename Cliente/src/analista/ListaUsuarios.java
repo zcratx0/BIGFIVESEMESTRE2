@@ -22,6 +22,7 @@ import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesEstudiante;
 import funcionalidades.FuncionalidadesITR;
 import funcionalidades.FuncionalidadesUsuario;
+import utils.TBFTable;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -44,7 +45,7 @@ public class ListaUsuarios {
 	JButton btnLimpiarF = new JButton("Limpiar Filtro");
 	JButton btnAtras = new JButton("Atrás");
 	JButton btnModificar = new JButton("Modificar");
-	JTable tablaUsu;
+	TBFTable tablaUsu;
 	ListaUsuarios listaUsuarios;
 	/**
 	 * Launch the application.
@@ -191,18 +192,13 @@ public class ListaUsuarios {
 		
 		
 		// Tabla
-				Object[][] datosUsu = {
-
-				};
-
-				String[] columnasUsu  = {"Usuario","TIPO", "ITR", "Estado"};
-
-				tablaUsu = new JTable(datosUsu , columnasUsu );
-				JScrollPane scrollPaneUsu  = new JScrollPane(tablaUsu );
-				scrollPaneUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-				scrollPaneUsu.setBackground(Color.decode("#f3f4f6"));
-				scrollPaneUsu.setBounds(25, 140, 955, 248);
-				frame.getContentPane().add(scrollPaneUsu);
+		Object[][] datosUsu = {};
+		String[] columnasUsu  = {"Usuario","TIPO", "ITR", "Estado"};
+		tablaUsu = new TBFTable(datosUsu , columnasUsu );
+		JScrollPane scrollPaneUsu  = new JScrollPane(tablaUsu );
+		scrollPaneUsu.setBackground(Color.decode("#f3f4f6"));
+		scrollPaneUsu.setBounds(25, 140, 955, 248);
+		frame.getContentPane().add(scrollPaneUsu);
 
 		//botones
 			//Atras

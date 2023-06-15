@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -20,13 +22,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.bigfive.entities.Departamento;
+import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
 import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesITR;
 import funcionalidades.FuncionalidadesUsuario;
+import io.netty.handler.codec.DateFormatter;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -66,6 +69,9 @@ private final JTextField tfFechaNac = new JTextField();
 private final JLabel lblGenero = new JLabel("Genero");
 JComboBox cBoxGenero = new JComboBox();
 Usuario usuario = null;
+//	Fecha
+private Date nac;
+private SimpleDateFormat format;
 
 
 
@@ -116,7 +122,8 @@ private void initialize() {
 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	frame.getContentPane().setLayout(null);
 	frame.setResizable(false);
-	
+
+	format = new SimpleDateFormat("dd-MM-yyyy");
 	
 	//Titulo
 	lblTitPerfil.setForeground(Color.decode("#08ACEC"));  
@@ -332,7 +339,7 @@ private void initialize() {
 		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
 		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
 		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
-		if (usuario.getFechaNacimiento() != null) tfFechaNac.setText(usuario.getFechaNacimiento().toString());
+		if (usuario.getFechaNacimiento() != null) tfFechaNac.setText(new SimpleDateFormat("dd/MM/YYYY").format(usuario.getFechaNacimiento()));
 		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
 		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
 		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
@@ -343,19 +350,29 @@ private void initialize() {
 		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
 	}
 	public void guardarCambios(Usuario usuario) {
+		//		PROCESAR FECHA DE NACIMIENTO
+		try {
+			Date fechaNac = new SimpleDateFormat("dd/mm/yyyy").parse(tfFechaNac.getText());
+			System.out.println(fechaNac);
+			usuario.setFechaNacimiento(fechaNac);
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
 		usuario.setNombre(tfNombre.getText());
 		usuario.setApellido(tfApellido.getText());
 		usuario.setDocumento(tfDocumento.getText());
-		//	TENEMOS QUE RESOLVER ESTO
-		//usuario.setFechaNacimiento(parse(tfFechaNac.getText());
 		usuario.setMail(tfMailPer.getText());
 		usuario.setMailInstitucional(tfMailInst.getText());
 		usuario.setTelefono(tfTel.getText());
-		usuario.setDepartamento( (Departamento)cBoxDepa.getSelectedItem());
+		usuario.setDepartamentos( (EnumDepartamentos)cBoxDepa.getSelectedItem());
 		usuario.setLocalidad(tfLoca.getText());
 		usuario.setContrasenia(new String(pasFContra.getPassword()));
 		usuario.setItr((Itr) cBoxITR.getSelectedItem());
 		FuncionalidadesUsuario.getInstance().getUserBean().modificar(usuario);
+		
+		
+		
 	}
 	
 	//Valida que todos los campos estén llenos antes de guardar

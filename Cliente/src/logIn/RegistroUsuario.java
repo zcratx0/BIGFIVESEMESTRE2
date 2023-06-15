@@ -5,11 +5,11 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Enumeration;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,7 +27,6 @@ import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Rol;
 import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
-import com.google.common.base.Enums;
 
 import analista.ListaAuxITR;
 import funcionalidades.FuncionalidadesAnalista;
@@ -59,7 +58,7 @@ public class RegistroUsuario {
 	private JPasswordField pasFContra;
 	private JComboBox cBoxTipoUsu;
 	private JTextField tfFech;
-	
+	private Date nac;
 	
 	/**
 	 * Launch the application.
@@ -95,7 +94,7 @@ public class RegistroUsuario {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
-		
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");		
 		//Titulo
 		JLabel lblTitRegUsu = new JLabel("Registro de Usuario");
 		lblTitRegUsu.setForeground(Color.decode("#08ACEC"));  
@@ -366,6 +365,17 @@ public class RegistroUsuario {
 			user.setLocalidad(tfLoca.getText());
 			user.setContrasenia(new String(pasFContra.getPassword()));
 			user.setDepartamentos((EnumDepartamentos) cBoxDepa.getSelectedItem());
+			
+			//	PROCESAR FECHA DE NACIMIENTO
+			try {
+				nac = format.parse(tfFech.getText());
+				System.out.println("Nacimiento: " + nac);
+				user.setFechaNacimiento(nac);
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			
+			
 			boolean resultado = false;
 			Long x = FuncionalidadesUsuario.getInstance().getUserBean().createWithId(user);
 			if (x != null) {

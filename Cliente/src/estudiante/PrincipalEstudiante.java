@@ -16,6 +16,8 @@ import analista.PerfilAnalista;
 import analista.PrincipalAnalista;
 import funcionalidades.FuncionalidadesDepartamento;
 import funcionalidades.FuncionalidadesITR;
+import funcionalidades.FuncionalidadesReclamo;
+import utils.TBFTable;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -132,7 +134,6 @@ public class PrincipalEstudiante {
 		btnEscolaridad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DescargarEscolaridad.main(null);
-				frame.dispose();
 			}
 		});
 		btnEscolaridad.setFont(new Font("Tahona", Font.BOLD, 10));
@@ -148,8 +149,7 @@ public class PrincipalEstudiante {
 		btnReclamos.setBounds(360, 65, 107, 40);
 		btnReclamos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaReclamoEstu.main(null);
-				frame.dispose();
+				ListaReclamoEstu.main(usuarioEstudiante);
 			}
 		});
 		frame.getContentPane().add(btnReclamos);
@@ -162,12 +162,13 @@ public class PrincipalEstudiante {
 		btnConstancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaConstancias.main(null);
-				frame.dispose();
 			}
 		});
 		frame.getContentPane().add(btnConstancia);
 		
 		
 	}
+	
+	
 	
 }

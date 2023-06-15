@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -358,7 +361,13 @@ public class PerfilEstudiantes {
 		usuario.setApellido(tfApellido.getText());
 		usuario.setDocumento(tfDocumento.getText());
 		//	TENEMOS QUE RESOLVER ESTO
-		//usuario.setFechaNacimiento(parse(tfFechaNac.getText());
+		try {
+			Date fechaNac = new SimpleDateFormat("dd/mm/yyyy").parse(tfFechaNac.getText());
+			System.out.println(fechaNac);
+			usuario.setFechaNacimiento(fechaNac);
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
 		usuario.setMail(tfMailPer.getText());
 		usuario.setMailInstitucional(tfMailInst.getText());
 		usuario.setTelefono(tfTel.getText());

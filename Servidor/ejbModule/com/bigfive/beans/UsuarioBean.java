@@ -104,6 +104,7 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		}
 		return -1;		
 	}
+	
 
 	@Override
 	public int getEstadoUsuario(Usuario usuario) {

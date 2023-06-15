@@ -6,8 +6,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Reclamo;
+import com.bigfive.entities.Usuario;
+
 import analista.ListaAuxITR;
 import analista.ListaReclamo;
+import funcionalidades.FuncionalidadesReclamo;
 import validaciones.ValidarInputs;
 
 import javax.swing.JLabel;
@@ -20,6 +25,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class AltaReclamo {
@@ -45,6 +53,8 @@ public class AltaReclamo {
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
 	private final JTextField tfFech = new JTextField();
+	private Reclamo reclamo;
+	private Estudiante estudiante;
 	
 
 
@@ -57,13 +67,46 @@ public class AltaReclamo {
 				try {
 					AltaReclamo window = new AltaReclamo();
 					window.frame.setVisible(true);
+					window.reclamo = new Reclamo();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
+	public static void main(Estudiante estudiante) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AltaReclamo window = new AltaReclamo();
+					window.reclamo = new Reclamo();
+					window.estudiante = estudiante;
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	//	MODIFICAR EL RECLAMO
+	public static void main(Estudiante estudiante, Reclamo reclamo) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AltaReclamo window = new AltaReclamo();
+					window.reclamo = reclamo;
+					window.estudiante = estudiante;
+					window.cargarDatos();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	
+	
 	/**
 	 * Create the application.
 	 */
@@ -187,6 +230,7 @@ public class AltaReclamo {
 		//Botón Confirmar
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				guardarCambios();
 			}
 		});
 		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10));
@@ -203,7 +247,7 @@ public class AltaReclamo {
 		btnCancelar.setBounds(210, 446, 104, 38);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaReclamoEstu.main(null);
+				ListaReclamoEstu.main(estudiante);
 				frame.dispose();
 			}
 		});
@@ -216,4 +260,24 @@ public class AltaReclamo {
 		frame.getContentPane().add(lblLogoUtec);
 		
 	}
+	
+	public void guardarCambios() {
+		reclamo.setDetalle(taDescrip.getText());
+		reclamo.setEstudiante(estudiante);
+		// reclamo.setEvento();
+		try {
+			Date fechaNac = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(tfFech.getText());
+			System.out.println(fechaNac);
+			reclamo.setFechaHora(fechaNac);
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		FuncionalidadesReclamo.getInstance().getBean().crear(reclamo);
+	}
+	
+	public void cargarDatos() {
+		if (reclamo.getDetalle() != null) taDescrip.setText(reclamo.getDetalle());
+		if (reclamo.getFechaHora() != null) tfFech.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm").format(reclamo.getFechaHora()));
+	}
+	
 }

@@ -144,11 +144,12 @@ public class LogIn {
 				tipo = FuncionalidadesUsuario.getInstance().getTipo(usuario);
 				if (usuario.getEstado() == 0) {JOptionPane.showMessageDialog(null, "USUARIO NO HABILITADO");}
 				else {
+					System.out.println("tipo: " + tipo);
 					// Evlua que tipo de usuario ingresa
-					if (tipo != 1) {
+					if (tipo == 0) {
 						PrincipalAnalista.mostrarAnalista(usuario);
 						frame.dispose();
-					} else if (tipo == 1) {
+					}  if (tipo == 1) {
 						Tutor tutor = FuncionalidadesUsuario.getInstance().getUserBean().getTutor(usuario);
 						PrincipalTutor.mostrarTutor(tutor);
 						frame.dispose();
