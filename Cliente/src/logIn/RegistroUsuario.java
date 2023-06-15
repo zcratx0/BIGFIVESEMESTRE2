@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,6 +37,8 @@ import funcionalidades.FuncionalidadesEstudiante;
 import funcionalidades.FuncionalidadesITR;
 import funcionalidades.FuncionalidadesRol;
 import funcionalidades.FuncionalidadesUsuario;
+import utils.DatosFalsos;
+import utils.TBFFecha;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -502,6 +505,30 @@ public class RegistroUsuario {
 		
 		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
 		FuncionalidadesITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
+		
+		JButton btnNewButton = new JButton("Rellenar datos");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tfNombre.setText(DatosFalsos.getInstance.name().firstName());
+				tfApellido.setText(DatosFalsos.getInstance.name().lastName());
+				tfLoca.setText(DatosFalsos.getInstance.address().cityName());
+				tfFech.setText(TBFFecha.getFechaDDYYMMMM(DatosFalsos.getInstance.date().birthday()));
+				tfTel.setText(DatosFalsos.getInstance.phoneNumber().cellPhone().toString());
+				tfMailPer.setText(DatosFalsos.getInstance.internet().emailAddress());
+				cBoxDepa.setSelectedIndex(new Random().nextInt(19));
+				tfCedula.setText(DatosFalsos.getInstance.number().numberBetween(10000000, 99999999) + "");
+				pasFContra.setText("Contraseña1");
+				int valor = new Random().nextInt(3)+1;
+				if (valor == 2) {
+					tfMailInst.setText(tfNombre.getText()+"."+tfApellido.getText()+"@estudiante.utec.edu.uy");
+					tfAnioIng.setText(DatosFalsos.getInstance.number().numberBetween(1990, 2023) + "");
+					}
+				else tfMailInst.setText(tfNombre.getText()+"."+tfApellido.getText()+"@utec.edu.uy");
+				cBoxTipoUsu.setSelectedIndex(valor);
+			}
+		});
+		btnNewButton.setBounds(284, 19, 107, 19);
+		frame.getContentPane().add(btnNewButton);
 		FuncionalidadesRol.getInstance().cargarComboBox(cBoxRol);
 		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
 	}
@@ -517,5 +544,4 @@ public class RegistroUsuario {
 	            !tfLoca.getText().isEmpty() &&
 	            pasFContra.getPassword().length > 0;
 	}
-	
 }
