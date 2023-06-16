@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.bigfive.entities.Estudiante;
 
-import funcionalidades.FuncionalidadesReclamo;
+import funcionalidades.DAOReclamo;
 import utils.TBFTable;
 
 import javax.swing.JComboBox;
@@ -216,7 +216,7 @@ public class ListaReclamo {
 		model.addColumn("Reclamo");
 		model.addColumn("Fecha");
 		model.addColumn("Estado");
-		FuncionalidadesReclamo.getInstance().getBean().listarElementos().forEach(r -> {
+		DAOReclamo.getInstance().getBean().listarElementos().forEach(r -> {
 			String fecha = r.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(r.getFechaHora()) : "FECHA";
 			String titulo = r.getDetalle() != null ? r.getDetalle() : "TITULO"; 
 			Object[] row  = {r, titulo , fecha ,0};
@@ -235,7 +235,7 @@ public class ListaReclamo {
 		model.addColumn("Reclamo");
 		model.addColumn("Fecha");
 		model.addColumn("Estado");
-		FuncionalidadesReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
+		DAOReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
 			String fecha = t.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(t.getFechaHora()) : "FECHA";
 			String titulo = t.getDetalle() != null ? t.getDetalle() : "TITULO"; 
 			Object[] row  = {t, titulo , fecha ,0};

@@ -30,13 +30,13 @@ import com.bigfive.entities.Usuario;
 import com.google.common.base.Enums;
 
 import analista.ListaAuxITR;
-import funcionalidades.FuncionalidadesAnalista;
-import funcionalidades.FuncionalidadesArea;
-import funcionalidades.FuncionalidadesDepartamento;
-import funcionalidades.FuncionalidadesEstudiante;
-import funcionalidades.FuncionalidadesITR;
-import funcionalidades.FuncionalidadesRol;
-import funcionalidades.FuncionalidadesUsuario;
+import funcionalidades.DAOAnalista;
+import funcionalidades.DAOArea;
+import funcionalidades.DAODepartamento;
+import funcionalidades.DAOEstudiante;
+import funcionalidades.DAOITR;
+import funcionalidades.DAORol;
+import funcionalidades.DAOUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -367,7 +367,7 @@ public class DatosUsuarios {
 			user.setContrasenia(new String(pasFContra.getPassword()));
 			user.setDepartamentos((EnumDepartamentos) cBoxDepa.getSelectedItem());
 			boolean resultado = false;
-			Long x = FuncionalidadesUsuario.getInstance().getUserBean().createWithId(user);
+			Long x = DAOUsuario.getInstance().getUserBean().createWithId(user);
 			if (x != null) {
 				System.out.println(x);
 				user.setIdUsuario(x);
@@ -375,13 +375,13 @@ public class DatosUsuarios {
 				if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("analista")) {
 					Analista analista = new Analista();
 					analista.setUsuario(user);
-					resultado = FuncionalidadesAnalista.getInstance().getBean().crear(analista);
+					resultado = DAOAnalista.getInstance().getBean().crear(analista);
 					System.out.println("CREADO - ANALISTA");
 				} else if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("estudiante")) {
 					Estudiante estudiante = new Estudiante();
 					estudiante.setUsuario(user);
 					estudiante.setGeneracion(tfAnioIng.getText());
-					resultado = FuncionalidadesEstudiante.getInstance().getBean().crear(estudiante);
+					resultado = DAOEstudiante.getInstance().getBean().crear(estudiante);
 					System.out.print("CREADO - ESTUDIANTE");
 				} else if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("tutor")) {
 					Tutor tutor = new Tutor();
@@ -490,10 +490,10 @@ public class DatosUsuarios {
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
-		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
-		FuncionalidadesITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
-		FuncionalidadesRol.getInstance().cargarComboBox(cBoxRol);
-		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
+		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
+		DAOITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
+		DAORol.getInstance().cargarComboBox(cBoxRol);
+		DAOArea.getInstance().cargarComboBox(cBoxArea);
 	}
 	
 	//Valida que todos los campos estén llenos antes de guardar

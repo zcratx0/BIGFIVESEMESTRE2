@@ -13,9 +13,9 @@ import com.bigfive.entities.Departamento;
 import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
-import funcionalidades.FuncionalidadesDepartamento;
-import funcionalidades.FuncionalidadesITR;
-import funcionalidades.FuncionalidadesUsuario;
+import funcionalidades.DAODepartamento;
+import funcionalidades.DAOITR;
+import funcionalidades.DAOUsuario;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -293,8 +293,8 @@ public class DatosUsuario {
 		frame.getContentPane().add(btnAtras);
 		
 		//	FUNCIONALIDAD
-		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
-		FuncionalidadesITR.getInstance().cargarComboBox(cBoxItr);
+		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
+		DAOITR.getInstance().cargarComboBox(cBoxItr);
 		
 		
 		
@@ -338,7 +338,7 @@ public class DatosUsuario {
 		if ( value.equalsIgnoreCase("ELIMINADO")) user.setEstado(2);
 		System.out.println("MODIFICANDO USUARIO");
 		System.out.println(cBoxEstado.getSelectedItem());
-		FuncionalidadesUsuario.getInstance().getUserBean().modificar(this.user);
+		DAOUsuario.getInstance().getUserBean().modificar(this.user);
 		if (listaUsuarios != null) listaUsuarios.cargarTabla();
 	}
 }

@@ -14,9 +14,9 @@ import com.bigfive.entities.Usuario;
 import analista.AgregarITR;
 import analista.PerfilAnalista;
 import analista.PrincipalAnalista;
-import funcionalidades.FuncionalidadesDepartamento;
-import funcionalidades.FuncionalidadesITR;
-import funcionalidades.FuncionalidadesReclamo;
+import funcionalidades.DAODepartamento;
+import funcionalidades.DAOITR;
+import funcionalidades.DAOReclamo;
 import utils.TBFTable;
 
 import javax.swing.JButton;

@@ -6,15 +6,15 @@ import javax.swing.JComboBox;
 import com.bigfive.beans.DepartamentoBeanRemote;
 import com.bigfive.beans.ITRBeanRemote;
 
-public class FuncionalidadesITR {
-	private static FuncionalidadesITR instance = new FuncionalidadesITR();
+public class DAOITR {
+	private static DAOITR instance = new DAOITR();
 	private ITRBeanRemote itrBean;
 
-	public static FuncionalidadesITR getInstance() {
+	public static DAOITR getInstance() {
 		return instance;
 	}
 	
-	public FuncionalidadesITR() {
+	public DAOITR() {
 		try {
 			setItrBean((ITRBeanRemote) InitialContext.doLookup("ejb:/ProyectoEJB/ITRBean!com.bigfive.beans.ITRBeanRemote"));
 		} catch (Exception e) {

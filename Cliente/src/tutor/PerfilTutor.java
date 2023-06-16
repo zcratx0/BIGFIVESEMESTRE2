@@ -22,9 +22,9 @@ import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
 import estudiante.PerfilEstudiantes;
-import funcionalidades.FuncionalidadesArea;
-import funcionalidades.FuncionalidadesDepartamento;
-import funcionalidades.FuncionalidadesITR;
+import funcionalidades.DAOArea;
+import funcionalidades.DAODepartamento;
+import funcionalidades.DAOITR;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -331,9 +331,9 @@ public class PerfilTutor {
 		Usuario usuario = null;
 		
 		//Carga el combobox de departamento e itr con los valores
-		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
-		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
-		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
+		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
+		DAOITR.getInstance().cargarComboBox(cBoxITR);
+		DAOArea.getInstance().cargarComboBox(cBoxArea);
 		//FuncionalidadesRol.getInstance().cargarComboBox(cBoxRol);
 		if (tutor != null) {
 		if (tutor.getUsuario() != null) usuario =  tutor.getUsuario(); 

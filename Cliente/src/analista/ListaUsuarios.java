@@ -22,9 +22,9 @@ import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Tutor;
 
 import estudiante.ListaReclamoEstu;
-import funcionalidades.FuncionalidadesAnalista;
-import funcionalidades.FuncionalidadesEstudiante;
-import funcionalidades.FuncionalidadesITR;
+import funcionalidades.DAOAnalista;
+import funcionalidades.DAOEstudiante;
+import funcionalidades.DAOITR;
 import utils.TBFTable;
 
 public class ListaUsuarios {
@@ -270,7 +270,7 @@ public class ListaUsuarios {
 		
 		//	FUNCIONALIDAD
 		cargarTabla();
-		FuncionalidadesITR.getInstance().cargarComboBox(cBoxItr);
+		DAOITR.getInstance().cargarComboBox(cBoxItr);
 		
 	}
 	
@@ -284,7 +284,7 @@ public class ListaUsuarios {
 		tableModel.addColumn("ITR");
 		tableModel.addColumn("ESTADO");
 		tableModel.addColumn("GENERACION");
-		FuncionalidadesAnalista.getInstance().getBean().listarElementos().forEach(t -> {
+		DAOAnalista.getInstance().getBean().listarElementos().forEach(t -> {
 			String valor = "";
 			int estado = t.getUsuario().getEstado();
 			if (estado == 0) valor = "SIN VALOR";
@@ -293,7 +293,7 @@ public class ListaUsuarios {
 			Object[] row = {t, t.getUsuario().getMail(), t.getUsuario().getDocumento(), t.getUsuario().getNombre() + " " + t.getUsuario().getApellido(),  "ANALISTA" , t.getUsuario().getItr(), valor};
 			tableModel.addRow(row);
 		});
-		FuncionalidadesEstudiante.getInstance().getBean().listarElementos().forEach(t -> {
+		DAOEstudiante.getInstance().getBean().listarElementos().forEach(t -> {
 			String valor = "";
 			int estado = t.getUsuario().getEstado();
 			if (estado == 0) valor = "SIN VALOR";

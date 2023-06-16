@@ -8,11 +8,12 @@ import javax.swing.JTextField;
 
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Reclamo;
+import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
 import analista.ListaReclamo;
-import funcionalidades.FuncionalidadesReclamo;
+import funcionalidades.DAOReclamo;
 import utils.TBFFecha;
 import validaciones.ValidarInputs;
 
@@ -23,6 +24,8 @@ import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -48,7 +51,7 @@ public class AltaReclamo {
 	JTextField tfSemestre = new JTextField();
 	JLabel lblFecha = new JLabel("Fecha *");
 	JLabel lblDocente = new JLabel("Docente *");
-	JTextField tfDocente = new JTextField();
+	JComboBox<Tutor> tfDocente = new JComboBox<>();
 	JLabel lblCredito = new JLabel("Crédito *");
 	JTextField tfCredito = new JTextField();
 	JButton btnConfirmar = new JButton("Confirmar");
@@ -205,9 +208,10 @@ public class AltaReclamo {
 		lblDocente.setBounds(40, 340, 77, 13);
 		frame.getContentPane().add(lblDocente);
 		
+		
 		tfDocente.setBounds(200, 342, 227, 19);
 		frame.getContentPane().add(tfDocente);
-		tfDocente.setColumns(10);
+		//tfDocente.setColumns(10);
 		tfDocente.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloLetras(e);
@@ -276,14 +280,17 @@ public class AltaReclamo {
 			e1.printStackTrace();
 		}
 		
-		if (modificar) {FuncionalidadesReclamo.getInstance().getBean().modificar(reclamo);}
-		else {FuncionalidadesReclamo.getInstance().getBean().crear(reclamo);}
+		if (modificar) {DAOReclamo.getInstance().getBean().modificar(reclamo);}
+		else {DAOReclamo.getInstance().getBean().crear(reclamo);}
 		
 	}
 	
 	public void cargarDatos() {
 		if (reclamo.getDetalle() != null) taDescrip.setText(reclamo.getDetalle());
 		if (reclamo.getFechaHora() != null) tfFech.setText(TBFFecha.getFechaDDYYMMHHMM(reclamo.getFechaHora()));
+		if (reclamo.getTitulo() != null) taDescrip.setText(reclamo.getTitulo());
+		if (reclamo.getSemestre() != null) taDescrip.setText(reclamo.getSemestre());
+		
 	}
 	
 }

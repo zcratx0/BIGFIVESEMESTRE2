@@ -25,7 +25,7 @@ import com.bigfive.entities.Usuario;
 
 import analista.DatosUsuario;
 import analista.ListaAuxITR;
-import funcionalidades.FuncionalidadesReclamo;
+import funcionalidades.DAOReclamo;
 import utils.TBFTable;
 
 import java.awt.event.ActionListener;
@@ -225,7 +225,7 @@ public class ListaReclamoEstu {
 		model.addColumn("Reclamo");
 		model.addColumn("Fecha");
 		model.addColumn("Estado");
-		FuncionalidadesReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
+		DAOReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
 			String fecha = t.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(t.getFechaHora()) : "FECHA";
 			String titulo = t.getDetalle() != null ? t.getDetalle() : "TITULO"; 
 			Object[] row  = {t, titulo , fecha ,0};

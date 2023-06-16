@@ -23,9 +23,9 @@ import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
-import funcionalidades.FuncionalidadesDepartamento;
-import funcionalidades.FuncionalidadesITR;
-import funcionalidades.FuncionalidadesUsuario;
+import funcionalidades.DAODepartamento;
+import funcionalidades.DAOITR;
+import funcionalidades.DAOUsuario;
 import utils.TBFFecha;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
@@ -339,8 +339,8 @@ public class PerfilEstudiantes {
 	public void cargarDatosEstudiantes(Estudiante estudiante) {
 		Usuario usuario = estudiante.getUsuario();
 		//Carga el combobox de departamento e itr con los valores
-		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
-		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
+		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
+		DAOITR.getInstance().cargarComboBox(cBoxITR);
 		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
 		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
 		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
@@ -370,7 +370,7 @@ public class PerfilEstudiantes {
 		usuario.setLocalidad(tfLoca.getText());
 		usuario.setContrasenia(new String(pasFContra.getPassword()));
 		usuario.setItr((Itr) cBoxITR.getSelectedItem());
-		FuncionalidadesUsuario.getInstance().getUserBean().modificar(usuario);
+		DAOUsuario.getInstance().getUserBean().modificar(usuario);
 	}
 	
 	//Valida que todos los campos estén llenos antes de guardar

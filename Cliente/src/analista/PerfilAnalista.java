@@ -26,9 +26,9 @@ import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
-import funcionalidades.FuncionalidadesDepartamento;
-import funcionalidades.FuncionalidadesITR;
-import funcionalidades.FuncionalidadesUsuario;
+import funcionalidades.DAODepartamento;
+import funcionalidades.DAOITR;
+import funcionalidades.DAOUsuario;
 import io.netty.handler.codec.DateFormatter;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
@@ -328,15 +328,15 @@ private void initialize() {
 	frame.getContentPane().add(lblLogoUtec);
 	
 	//	CARGAR DATOS
-	FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
+	DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
 	
 	
 }
 	public void cargarDatosAnalista(Usuario usuario) {
 		this.usuario = usuario;
 		//Carga el combobox de departamento e itr con los valores
-		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
-		FuncionalidadesITR.getInstance().cargarComboBox(cBoxITR);
+		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
+		DAOITR.getInstance().cargarComboBox(cBoxITR);
 		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
 		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
 		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
@@ -370,7 +370,7 @@ private void initialize() {
 		usuario.setLocalidad(tfLoca.getText());
 		usuario.setContrasenia(new String(pasFContra.getPassword()));
 		usuario.setItr((Itr) cBoxITR.getSelectedItem());
-		FuncionalidadesUsuario.getInstance().getUserBean().modificar(usuario);
+		DAOUsuario.getInstance().getUserBean().modificar(usuario);
 		
 		
 		
