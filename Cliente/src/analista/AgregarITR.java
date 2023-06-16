@@ -14,8 +14,8 @@ import javax.swing.JTextField;
 import com.bigfive.entities.Departamento;
 import com.bigfive.entities.Itr;
 
-import funcionalidades.FuncionalidadesDepartamento;
-import funcionalidades.FuncionalidadesITR;
+import funcionalidades.DAODepartamento;
+import funcionalidades.DAOITR;
 
 import java.awt.SystemColor;
 
@@ -146,9 +146,9 @@ public class AgregarITR {
 			boolean resultado = false;
 			if (type == 0) {
 				this.itr.setEstado(1);
-				resultado = FuncionalidadesITR.getInstance().getItrBean().crear(itr);
+				resultado = DAOITR.getInstance().getItrBean().crear(itr);
 				}
-			else if (type == 1) resultado = FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
+			else if (type == 1) resultado = DAOITR.getInstance().getItrBean().modificar(itr);
 			if (resultado) {
 				System.out.println("ITR CREADO");
 				JOptionPane.showMessageDialog(frame, "ITR Agregado\n"+this.itr.getNombre() + " - " +this.itr.getDepartamento());
@@ -179,7 +179,7 @@ public class AgregarITR {
 		
 		
 		//	FUNCIONALIDADES
-		FuncionalidadesDepartamento.getInstance().cargarComboBox(cbDepa);
+		DAODepartamento.getInstance().cargarComboBox(cbDepa);
 	}
 
 	public Itr getItr() {

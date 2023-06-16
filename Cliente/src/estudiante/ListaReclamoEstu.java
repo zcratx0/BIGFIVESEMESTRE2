@@ -7,6 +7,7 @@ import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,22 +15,35 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
+import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Reclamo;
+import com.bigfive.entities.Usuario;
+
+import analista.DatosUsuario;
 import analista.ListaAuxITR;
+import funcionalidades.DAOReclamo;
+import utils.TBFTable;
 
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 
 public class ListaReclamoEstu {
 
 	//Atributos
 	JFrame frame = new JFrame();
+	JButton btnModificar;
 	JLabel lblListaReclamo = new JLabel("Lista de Reclamos");
 	JLabel lblEstado = new JLabel("Estado");
 	JComboBox cboxEstado = new JComboBox();
 	JButton btnFiltrar = new JButton("Filtrar");
 	JButton btnLimpFiltro = new JButton("Limpiar Filtro");
-	
+	TBFTable tablaRe;
+	Estudiante estudiante;
 
 	/**
 	 * Launch the application.
@@ -39,6 +53,20 @@ public class ListaReclamoEstu {
 			public void run() {
 				try {
 					ListaReclamoEstu window = new ListaReclamoEstu();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public static void main(Estudiante estudiante) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ListaReclamoEstu window = new ListaReclamoEstu();
+					window.estudiante = estudiante;
+					window.cargarTabla();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,10 +105,18 @@ public class ListaReclamoEstu {
 		lblEstado.setBounds(10, 65, 45, 13);
 		frame.getContentPane().add(lblEstado);
 		
+		
+		
 		cboxEstado.setBackground(Color.decode("#e5e7eb"));
 		cboxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cboxEstado.setBounds(51, 65, 119, 17);
 		frame.getContentPane().add(cboxEstado);
+
+		cboxEstado.addItem("SIN FILTRO");
+		cboxEstado.addItem("SIN VALOR");
+		cboxEstado.addItem("ACTIVADO");
+		cboxEstado.addItem("ELIMINADO");
+		
 		
 			//filtro
 		btnFiltrar.setBackground(Color.decode("#0ea5e9"));
@@ -99,6 +135,10 @@ public class ListaReclamoEstu {
 		btnLimpFiltro.setForeground(Color.decode("#f0f9ff"));
 		btnLimpFiltro.setBounds(277, 62, 103, 21);
 		frame.getContentPane().add(btnLimpFiltro);
+		btnLimpFiltro.addActionListener(e -> {
+			cboxEstado.setSelectedIndex(0);
+			tablaRe.limpiarFiltro();
+		});
 		
 		
 		// Tabla
@@ -108,7 +148,8 @@ public class ListaReclamoEstu {
 
 		String[] columnasRe = { "Reclamo", "Estado"};
 
-		JTable tablaRe = new JTable(datosReclamo, columnasRe);
+		tablaRe = new TBFTable(datosReclamo, columnasRe);
+		
 		JScrollPane scrollPaneRe = new JScrollPane(tablaRe);
 		scrollPaneRe.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		scrollPaneRe.setBackground(Color.decode("#f3f4f6"));
@@ -116,12 +157,17 @@ public class ListaReclamoEstu {
 		frame.getContentPane().add(scrollPaneRe);
 		
 		//BOTONES
-			//Modificar
-		JButton btnModificar = new JButton("Modificar");
+		
+		//Modificar
+		btnModificar = new JButton("Modificar");
+		btnModificar.setEnabled(false);
+		btnModificar.setToolTipText("Seleccionar usuario a modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AltaReclamo.main(null);
-				frame.dispose();
+				if (tablaRe.getSelectedRow() > -1) {
+					AltaReclamo.main(estudiante, (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0));
+					frame.dispose();
+				}
 			}
 		});
 		btnModificar.setBackground(Color.decode("#0284c7"));  
@@ -129,19 +175,21 @@ public class ListaReclamoEstu {
 		btnModificar.setForeground(Color.decode("#f0f9ff"));
 		btnModificar.setBounds(261, 402, 100, 28);
 		frame.getContentPane().add(btnModificar);
-			//Eliminar
+		
+		//Eliminar
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBackground(Color.decode("#0284c7"));  
 		btnEliminar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnEliminar.setForeground(Color.decode("#f0f9ff"));
 		btnEliminar.setBounds(10, 402, 100, 28);
 		frame.getContentPane().add(btnEliminar);
-			//Agregar
+		
+		//Agregar
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				AltaReclamo.main(null);
+				AltaReclamo.main(estudiante);
 			}
 		});
 		btnAgregar.setBackground(Color.decode("#0284c7"));  
@@ -149,7 +197,8 @@ public class ListaReclamoEstu {
 		btnAgregar.setForeground(Color.decode("#f0f9ff"));
 		btnAgregar.setBounds(365, 402, 100, 28);
 		frame.getContentPane().add(btnAgregar);
-			//Atras
+		
+		//Atras
 		JButton btnAtras = new JButton("Atrás");
 		btnAtras.setBackground(Color.decode("#0284c7"));  
 		btnAtras.setFont(new Font("Tahona", Font.BOLD, 10));
@@ -157,7 +206,6 @@ public class ListaReclamoEstu {
 		btnAtras.setBounds(116, 402, 100, 28);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalEstudiante.main(null);
 				frame.dispose();
 			}
 		});
@@ -168,7 +216,25 @@ public class ListaReclamoEstu {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 100, 50);
 		frame.getContentPane().add(lblLogoUtec);
-		
-		
+	}
+
+	
+	public void cargarTabla() {
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Reclamo");
+		model.addColumn("Reclamo");
+		model.addColumn("Fecha");
+		model.addColumn("Estado");
+		DAOReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
+			String fecha = t.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(t.getFechaHora()) : "FECHA";
+			String titulo = t.getDetalle() != null ? t.getTitulo() : "TITULO"; 
+			Object[] row  = {t, titulo , fecha ,0};
+			model.addRow(row);
+		});
+		tablaRe.setModel(model);
+		tablaRe.getSelectionModel().addListSelectionListener(e -> {
+			btnModificar.setEnabled(true);
+		});
+		tablaRe.removeColumn(tablaRe.getColumnModel().getColumn(0));
 	}
 }

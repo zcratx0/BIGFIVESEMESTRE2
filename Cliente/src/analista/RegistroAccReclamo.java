@@ -137,7 +137,7 @@ public class RegistroAccReclamo {
 		btnCancelar.setBounds(217, 259, 86, 27);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaReclamo.main(null);
+				//	ListaReclamo.main(null);
 				frame.dispose();
 			}
 		});

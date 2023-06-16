@@ -24,7 +24,7 @@ import com.bigfive.entities.Usuario;
 
 import analista.PrincipalAnalista;
 import estudiante.PrincipalEstudiante;
-import funcionalidades.FuncionalidadesUsuario;
+import funcionalidades.DAOUsuario;
 import tutor.PrincipalTutor;
 import validaciones.Mensajes;
 
@@ -140,25 +140,24 @@ public class LogIn {
 				//Tipo = tipo de usuario - 0=Analista - 1=Tutor - 2=Estudiante
 				int tipo = 0;
 				//	CONSEGUIMOS EL USUARIO
-				Usuario usuario = FuncionalidadesUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword()));
-				tipo = FuncionalidadesUsuario.getInstance().getTipo(usuario);
+				Usuario usuario = DAOUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword()));
+				tipo = DAOUsuario.getInstance().getTipo(usuario);
 				if (usuario.getEstado() == 0) {JOptionPane.showMessageDialog(null, "USUARIO NO HABILITADO");}
 				else {
+					System.out.println("tipo: " + tipo);
 					// Evlua que tipo de usuario ingresa
-					if (tipo != 1) {
+					if (tipo == 0) {
 						PrincipalAnalista.mostrarAnalista(usuario);
 						frame.dispose();
-					} else if (tipo == 1) {
-						Tutor tutor = FuncionalidadesUsuario.getInstance().getUserBean().getTutor(usuario);
+					}  if (tipo == 1) {
+						Tutor tutor = DAOUsuario.getInstance().getBean().getTutor(usuario);
 						PrincipalTutor.mostrarTutor(tutor);
 						frame.dispose();
 					} else if (tipo == 2) {
-						Estudiante estudiante = FuncionalidadesUsuario.getInstance().getUserBean()
+						Estudiante estudiante = DAOUsuario.getInstance().getBean()
 								.getEstudiante(usuario);
 						PrincipalEstudiante.mostrarEstudiante(estudiante);
 						frame.dispose();
-					} else {
-						Mensajes.MostrarError("Usuario no habilitado");
 					}
 				}
 			} catch(Exception e1) {

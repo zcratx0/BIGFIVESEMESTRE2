@@ -26,6 +26,10 @@ public class Reclamo implements Serializable {
 	@Column(name="FECHA_HORA")
 	private Date fechaHora;
 
+	private String semestre;
+
+	private String titulo;
+
 	//uni-directional many-to-one association to Estudiante
 	@ManyToOne
 	@JoinColumn(name="ID_ESTUDIANTE")
@@ -35,6 +39,11 @@ public class Reclamo implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_EVENTO")
 	private Evento evento;
+
+	//bi-directional many-to-one association to Tutor
+	@ManyToOne
+	@JoinColumn(name="ID_TUTOR")
+	private Tutor tutor;
 
 	public Reclamo() {
 	}
@@ -63,6 +72,22 @@ public class Reclamo implements Serializable {
 		this.fechaHora = fechaHora;
 	}
 
+	public String getSemestre() {
+		return this.semestre;
+	}
+
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
+	}
+
+	public String getTitulo() {
+		return this.titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
 	public Estudiante getEstudiante() {
 		return this.estudiante;
 	}
@@ -77,6 +102,14 @@ public class Reclamo implements Serializable {
 
 	public void setEvento(Evento evento) {
 		this.evento = evento;
+	}
+
+	public Tutor getTutor() {
+		return this.tutor;
+	}
+
+	public void setTutor(Tutor tutor) {
+		this.tutor = tutor;
 	}
 
 }

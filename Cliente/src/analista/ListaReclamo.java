@@ -9,6 +9,13 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import com.bigfive.entities.Estudiante;
+
+import funcionalidades.DAOReclamo;
+import utils.TBFTable;
+
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +23,7 @@ import java.awt.SystemColor;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 
 public class ListaReclamo {
@@ -31,6 +39,7 @@ public class ListaReclamo {
 	JButton btnLimpiarF = new JButton("Limpiar Filtro");
 	JButton btnRegAcc = new JButton("Registrar Acción");
 	JButton btnAtras = new JButton("Atrás");
+	TBFTable tablaRe;
 
 	/**
 	 * Launch the application.
@@ -40,6 +49,7 @@ public class ListaReclamo {
 			public void run() {
 				try {
 					ListaReclamo window = new ListaReclamo();
+					window.cargarTabla();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,6 +58,45 @@ public class ListaReclamo {
 		});
 	}
 
+	/**
+	 * Cargar reclamos de todos los estudiantes
+	 */
+	public static void main() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ListaReclamo window = new ListaReclamo();
+					window.cargarTabla();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Cargar reclamos de un estudiante
+	 */
+	public static void main(Estudiante estudiante) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ListaReclamo window = new ListaReclamo();
+					window.cargarTablaEstudiante(estudiante);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	
+	
+	
+	
+	
 	/**
 	 * Create the application.
 	 */
@@ -116,7 +165,7 @@ public class ListaReclamo {
 
 				String[] columnasRe = { "Usuario", "Estado"};
 
-				JTable tablaRe = new JTable(datosReclamo, columnasRe);
+				tablaRe = new TBFTable(datosReclamo, columnasRe);
 				JScrollPane scrollPaneRe = new JScrollPane(tablaRe);
 				scrollPaneRe.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 				scrollPaneRe.setBackground(Color.decode("#f3f4f6"));
@@ -124,7 +173,9 @@ public class ListaReclamo {
 				frame.getContentPane().add(scrollPaneRe);
 			
 		//Botones
-				//Registrar Accion
+		
+		
+		//Registrar Accion
 		btnRegAcc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegistroAccReclamo.main(null);
@@ -137,7 +188,8 @@ public class ListaReclamo {
 		btnRegAcc.setBounds(345, 445, 152, 27);
 		frame.getContentPane().add(btnRegAcc);
 		
-				//Atras
+		
+		//Atras
 		btnAtras.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnAtras.setForeground(Color.decode("#f0f9ff"));
 		btnAtras.setBackground(Color.decode("#0284c7"));   
@@ -157,5 +209,42 @@ public class ListaReclamo {
 		frame.getContentPane().add(lblLogoUtec);
 		
 		
+	}
+	public void cargarTabla() {
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Reclamo");
+		model.addColumn("Reclamo");
+		model.addColumn("Fecha");
+		model.addColumn("Estado");
+		DAOReclamo.getInstance().getBean().listarElementos().forEach(r -> {
+			String fecha = r.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(r.getFechaHora()) : "FECHA";
+			String titulo = r.getDetalle() != null ? r.getDetalle() : "TITULO"; 
+			Object[] row  = {r, titulo , fecha ,0};
+			model.addRow(row);
+		});
+		tablaRe.setModel(model);
+		tablaRe.getSelectionModel().addListSelectionListener(e -> {
+			btnRegAcc.setEnabled(true);
+		});
+		tablaRe.removeColumn(tablaRe.getColumnModel().getColumn(0));
+	}
+	
+	public void cargarTablaEstudiante(Estudiante estudiante) {
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Reclamo");
+		model.addColumn("Reclamo");
+		model.addColumn("Fecha");
+		model.addColumn("Estado");
+		DAOReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
+			String fecha = t.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(t.getFechaHora()) : "FECHA";
+			String titulo = t.getDetalle() != null ? t.getDetalle() : "TITULO"; 
+			Object[] row  = {t, titulo , fecha ,0};
+			model.addRow(row);
+		}); 
+		tablaRe.setModel(model);
+		tablaRe.getSelectionModel().addListSelectionListener(e -> {
+			btnRegAcc.setEnabled(true);
+		});
+		tablaRe.removeColumn(tablaRe.getColumnModel().getColumn(0));
 	}
 }

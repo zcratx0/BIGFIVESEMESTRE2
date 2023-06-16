@@ -5,10 +5,12 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,19 +23,22 @@ import javax.swing.JTextField;
 
 import com.bigfive.entities.Analista;
 import com.bigfive.entities.Area;
+import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Rol;
 import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
-import funcionalidades.FuncionalidadesAnalista;
-import funcionalidades.FuncionalidadesArea;
-import funcionalidades.FuncionalidadesDepartamento;
-import funcionalidades.FuncionalidadesEstudiante;
-import funcionalidades.FuncionalidadesITR;
-import funcionalidades.FuncionalidadesRol;
-import funcionalidades.FuncionalidadesUsuario;
+import funcionalidades.DAOAnalista;
+import funcionalidades.DAOArea;
+import funcionalidades.DAODepartamento;
+import funcionalidades.DAOEstudiante;
+import funcionalidades.DAOITR;
+import funcionalidades.DAORol;
+import funcionalidades.DAOUsuario;
+import utils.DatosFalsos;
+import utils.TBFFecha;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -56,7 +61,7 @@ public class RegistroUsuario {
 	private JPasswordField pasFContra;
 	private JComboBox cBoxTipoUsu;
 	private JTextField tfFech;
-	
+	private Date nac;
 	
 	/**
 	 * Launch the application.
@@ -92,7 +97,7 @@ public class RegistroUsuario {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
-		
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");		
 		//Titulo
 		JLabel lblTitRegUsu = new JLabel("Registro de Usuario");
 		lblTitRegUsu.setForeground(Color.decode("#08ACEC"));  
@@ -351,7 +356,7 @@ public class RegistroUsuario {
 				JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
 				return;
 			}
-
+			
 			System.out.println("USUARIO CREADO!");
 			Usuario user = new Usuario();
 			user.setNombre(tfNombre.getText());
@@ -362,8 +367,20 @@ public class RegistroUsuario {
 			user.setTelefono(tfTel.getText());
 			user.setLocalidad(tfLoca.getText());
 			user.setContrasenia(new String(pasFContra.getPassword()));
+			user.setDepartamentos((EnumDepartamentos) cBoxDepa.getSelectedItem());
+			
+			//	PROCESAR FECHA DE NACIMIENTO
+			try {
+				nac = format.parse(tfFech.getText());
+				System.out.println("Nacimiento: " + nac);
+				user.setFechaNacimiento(nac);
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			
+			
 			boolean resultado = false;
-			Long x = FuncionalidadesUsuario.getInstance().getUserBean().createWithId(user);
+			Long x = DAOUsuario.getInstance().getBean().createWithId(user);
 			if (x != null) {
 				System.out.println(x);
 				user.setIdUsuario(x);
@@ -371,13 +388,13 @@ public class RegistroUsuario {
 				if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("analista")) {
 					Analista analista = new Analista();
 					analista.setUsuario(user);
-					resultado = FuncionalidadesAnalista.getInstance().getBean().crear(analista);
+					resultado = DAOAnalista.getInstance().getBean().crear(analista);
 					System.out.println("CREADO - ANALISTA");
 				} else if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("estudiante")) {
 					Estudiante estudiante = new Estudiante();
 					estudiante.setUsuario(user);
 					estudiante.setGeneracion(tfAnioIng.getText());
-					resultado = FuncionalidadesEstudiante.getInstance().getBean().crear(estudiante);
+					resultado = DAOEstudiante.getInstance().getBean().crear(estudiante);
 					System.out.print("CREADO - ESTUDIANTE");
 				} else if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("tutor")) {
 					Tutor tutor = new Tutor();
@@ -486,11 +503,34 @@ public class RegistroUsuario {
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
-		FuncionalidadesDepartamento.getInstance().cargarComboBox(cBoxDepa);
-		FuncionalidadesITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
-		FuncionalidadesRol.getInstance().cargarComboBox(cBoxRol);
-		FuncionalidadesArea.getInstance().cargarComboBox(cBoxArea);
+		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
+		DAOITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
 		
+		JButton btnNewButton = new JButton("Rellenar datos");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tfNombre.setText(DatosFalsos.getInstance.name().firstName());
+				tfApellido.setText(DatosFalsos.getInstance.name().lastName());
+				tfLoca.setText(DatosFalsos.getInstance.address().cityName());
+				tfFech.setText(TBFFecha.getFechaDDYYMMMM(DatosFalsos.getInstance.date().birthday()));
+				tfTel.setText(DatosFalsos.getInstance.phoneNumber().cellPhone().toString());
+				tfMailPer.setText(DatosFalsos.getInstance.internet().emailAddress());
+				cBoxDepa.setSelectedIndex(new Random().nextInt(19));
+				tfCedula.setText(DatosFalsos.getInstance.number().numberBetween(10000000, 99999999) + "");
+				pasFContra.setText("Contraseña1");
+				int valor = new Random().nextInt(3)+1;
+				if (valor == 2) {
+					tfMailInst.setText(tfNombre.getText()+"."+tfApellido.getText()+"@estudiante.utec.edu.uy");
+					tfAnioIng.setText(DatosFalsos.getInstance.number().numberBetween(1990, 2023) + "");
+					}
+				else tfMailInst.setText(tfNombre.getText()+"."+tfApellido.getText()+"@utec.edu.uy");
+				cBoxTipoUsu.setSelectedIndex(valor);
+			}
+		});
+		btnNewButton.setBounds(284, 19, 107, 19);
+		frame.getContentPane().add(btnNewButton);
+		DAORol.getInstance().cargarComboBox(cBoxRol);
+		DAOArea.getInstance().cargarComboBox(cBoxArea);
 	}
 	
 	//Valida que todos los campos estén llenos antes de guardar
@@ -504,5 +544,4 @@ public class RegistroUsuario {
 	            !tfLoca.getText().isEmpty() &&
 	            pasFContra.getPassword().length > 0;
 	}
-	
 }

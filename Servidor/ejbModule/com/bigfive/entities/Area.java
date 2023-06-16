@@ -40,9 +40,4 @@ public class Area implements Serializable {
 		this.area = area;
 	}
 
-	@Override
-	public String toString() {
-		return idArea+"-" + area;
-	}
-	
 }

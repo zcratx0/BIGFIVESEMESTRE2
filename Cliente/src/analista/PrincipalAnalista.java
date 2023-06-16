@@ -151,7 +151,7 @@ public class PrincipalAnalista {//Atributos
 		btnReclamos.setBounds(360, 65, 107, 40);
 		btnReclamos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaReclamo.main(null);
+				ListaReclamo.main();
 				//frame.dispose();
 			}
 		});

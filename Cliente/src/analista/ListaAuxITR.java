@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.bigfive.entities.Itr;
 
-import funcionalidades.FuncionalidadesITR;
+import funcionalidades.DAOITR;
 
 public class ListaAuxITR {
 	
@@ -115,7 +115,7 @@ public class ListaAuxITR {
 		btnEliminar.addActionListener(e -> {
 			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
 			itr.setEstado((0));
-			FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
+			DAOITR.getInstance().getItrBean().modificar(itr);
 			cargarTabla();
 		});
 		frame.getContentPane().add(btnEliminar);
@@ -127,7 +127,7 @@ public class ListaAuxITR {
 		btnHabilitar.addActionListener(e -> {
 			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
 			itr.setEstado((1));
-			FuncionalidadesITR.getInstance().getItrBean().modificar(itr);
+			DAOITR.getInstance().getItrBean().modificar(itr);
 			cargarTabla();
 		});
 		frame.getContentPane().add(btnHabilitar);
@@ -179,7 +179,7 @@ public class ListaAuxITR {
 		JComboBox cbEstado = new JComboBox<>();
 		cbEstado.addItem("DESACTIVADO");
 		cbEstado.addItem("ACTIVADO");
-		FuncionalidadesITR.getInstance().getItrBean().listarElementos().forEach(t -> {
+		DAOITR.getInstance().getItrBean().listarElementos().forEach(t -> {
 			String value = "";
 			if (t.getEstado() == 1) {value = "ACTIVADO";}
 			else {value = "DESACTIVADO";}

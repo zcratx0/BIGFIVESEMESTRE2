@@ -18,9 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 import com.bigfive.entities.Usuario;
 
-import funcionalidades.FuncionalidadesAnalista;
-import funcionalidades.FuncionalidadesEstudiante;
-import funcionalidades.FuncionalidadesUsuario;
+import funcionalidades.DAOAnalista;
+import funcionalidades.DAOEstudiante;
+import funcionalidades.DAOUsuario;
 
 public class HabilitacionUsuario {
 
@@ -162,20 +162,20 @@ public class HabilitacionUsuario {
 				if ( value.equalsIgnoreCase("SIN VALOR")) usuario.setEstado(0);
 				if ( value.equalsIgnoreCase("ACTIVADO")) usuario.setEstado(1);
 				if ( value.equalsIgnoreCase("ELIMINADO")) usuario.setEstado(2);
-				FuncionalidadesUsuario.getInstance().getUserBean().modificar(usuario);
+				DAOUsuario.getInstance().getBean().modificar(usuario);
 				cargarListaDeUsuarios();
 			}
 		} );
 		
 		tablaEst.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(cbEstado));
-		FuncionalidadesEstudiante.getInstance().getBean().listarElementos().forEach(t -> {
+		DAOEstudiante.getInstance().getBean().listarElementos().forEach(t -> {
 			if (t.getUsuario().getEstado() == 0) {
 				Object[] row = { t.getUsuario(), "ESTUDIANTE", t.getUsuario().getItr(), t.getGeneracion(),
 						 cbEstado.getItemAt(0), "INFORMACION" };
 				tableModel.addRow(row);
 			}
 		});
-		FuncionalidadesAnalista.getInstance().getBean().listarElementos().forEach(t -> {
+		DAOAnalista.getInstance().getBean().listarElementos().forEach(t -> {
 
 			if (t.getUsuario().getEstado() == 0) {
 				Object[] row = { t.getUsuario(), "ANALISTA", "", "GENERACION", "SIN VALOR",

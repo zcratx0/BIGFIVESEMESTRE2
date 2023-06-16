@@ -50,7 +50,7 @@ public class AnalistaBeanRemote implements AnalistaBeanRemoteRemote {
 	@Override
 	public boolean modificar(Analista value) {
 		try {
-			em.persist(value);
+			em.merge(value);
 			em.flush();
 		} catch (Exception e) {
 			System.err.println("ERROR AL MODIFICAR ESTUDIANTE");
