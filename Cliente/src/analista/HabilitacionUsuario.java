@@ -162,7 +162,7 @@ public class HabilitacionUsuario {
 				if ( value.equalsIgnoreCase("SIN VALOR")) usuario.setEstado(0);
 				if ( value.equalsIgnoreCase("ACTIVADO")) usuario.setEstado(1);
 				if ( value.equalsIgnoreCase("ELIMINADO")) usuario.setEstado(2);
-				DAOUsuario.getInstance().getUserBean().modificar(usuario);
+				DAOUsuario.getInstance().getBean().modificar(usuario);
 				cargarListaDeUsuarios();
 			}
 		} );

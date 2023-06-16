@@ -380,7 +380,7 @@ public class RegistroUsuario {
 			
 			
 			boolean resultado = false;
-			Long x = DAOUsuario.getInstance().getUserBean().createWithId(user);
+			Long x = DAOUsuario.getInstance().getBean().createWithId(user);
 			if (x != null) {
 				System.out.println(x);
 				user.setIdUsuario(x);

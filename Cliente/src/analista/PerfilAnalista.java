@@ -370,7 +370,7 @@ private void initialize() {
 		usuario.setLocalidad(tfLoca.getText());
 		usuario.setContrasenia(new String(pasFContra.getPassword()));
 		usuario.setItr((Itr) cBoxITR.getSelectedItem());
-		DAOUsuario.getInstance().getUserBean().modificar(usuario);
+		DAOUsuario.getInstance().getBean().modificar(usuario);
 		
 		
 		

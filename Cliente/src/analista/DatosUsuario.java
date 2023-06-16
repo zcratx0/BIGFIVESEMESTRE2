@@ -338,7 +338,7 @@ public class DatosUsuario {
 		if ( value.equalsIgnoreCase("ELIMINADO")) user.setEstado(2);
 		System.out.println("MODIFICANDO USUARIO");
 		System.out.println(cBoxEstado.getSelectedItem());
-		DAOUsuario.getInstance().getUserBean().modificar(this.user);
+		DAOUsuario.getInstance().getBean().modificar(this.user);
 		if (listaUsuarios != null) listaUsuarios.cargarTabla();
 	}
 }

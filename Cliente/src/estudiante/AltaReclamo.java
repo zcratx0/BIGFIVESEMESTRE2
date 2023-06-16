@@ -167,6 +167,7 @@ public class AltaReclamo {
 		tfNombEvento.setBounds(200, 182, 227, 19);
 		frame.getContentPane().add(tfNombEvento);
 		tfNombEvento.setColumns(10);
+	
 		
 		//Nombre de la actividad
 		lblNombAct.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -266,11 +267,20 @@ public class AltaReclamo {
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
+		
+		//	TODO A medida que se vayan agregando a la base de datos, vamos habilitando su uso.
+		tfNombAct.setEnabled(false);
+		tfDocente.setEnabled(false);
+		tfNombEvento.setEnabled(false);
+		tfCredito.setEnabled(false);
+		
 	}
 	
 	public void guardarCambios() {
 		reclamo.setDetalle(taDescrip.getText());
 		reclamo.setEstudiante(estudiante);
+		reclamo.setTitulo(tfTitReclamo.getText());
+		reclamo.setSemestre(tfSemestre.getText());
 		// reclamo.setEvento();
 		try {
 			Date fechaNac = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(tfFech.getText());

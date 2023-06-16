@@ -150,11 +150,11 @@ public class LogIn {
 						PrincipalAnalista.mostrarAnalista(usuario);
 						frame.dispose();
 					}  if (tipo == 1) {
-						Tutor tutor = DAOUsuario.getInstance().getUserBean().getTutor(usuario);
+						Tutor tutor = DAOUsuario.getInstance().getBean().getTutor(usuario);
 						PrincipalTutor.mostrarTutor(tutor);
 						frame.dispose();
 					} else if (tipo == 2) {
-						Estudiante estudiante = DAOUsuario.getInstance().getUserBean()
+						Estudiante estudiante = DAOUsuario.getInstance().getBean()
 								.getEstudiante(usuario);
 						PrincipalEstudiante.mostrarEstudiante(estudiante);
 						frame.dispose();
