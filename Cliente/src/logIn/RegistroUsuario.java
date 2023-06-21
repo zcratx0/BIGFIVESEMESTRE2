@@ -39,6 +39,7 @@ import funcionalidades.DAORol;
 import funcionalidades.DAOUsuario;
 import utils.DatosFalsos;
 import utils.TBFFecha;
+import validaciones.Mensajes;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -353,7 +354,7 @@ public class RegistroUsuario {
 		btnRegistro.addActionListener(e -> {
 
 			if (!camposCompletos()) {
-				JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+				Mensajes.MostrarError("Por favor, complete todos los campos antes de registrarse.");
 				return;
 			}
 			

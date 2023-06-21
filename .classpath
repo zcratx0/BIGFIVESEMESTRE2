@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Cliente/src"/>
+	<classpathentry kind="src" path="Servidor/ejbModule"/>
+	<classpathentry kind="lib" path="Cliente/build/libs/clienteProyectoEJB-1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="Cliente/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="Cliente/jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="Cliente/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="Cliente/lib/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="lib" path="Cliente/lib/Fakerlib.jar"/>
+	<classpathentry kind="lib" path="Cliente/lib/generex-1.0.2.jar"/>
+	<classpathentry kind="lib" path="Cliente/lib/javafaker-1.0.2 (1).jar"/>
+	<classpathentry kind="lib" path="Cliente/lib/snakeyaml-1.23.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

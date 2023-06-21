@@ -15,7 +15,11 @@ import analista.ListaAuxITR;
 import analista.ListaReclamo;
 import funcionalidades.DAOReclamo;
 import utils.TBFFecha;
+import validaciones.Mensajes;
+import validaciones.ValidacionFecha;
+import validaciones.ValidacionMaxyMin;
 import validaciones.ValidarInputs;
+import validaciones.ValidarTipos;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -36,9 +40,9 @@ import java.awt.event.ActionEvent;
 
 public class AltaReclamo {
 
-	//Atributos
+	// Atributos
 	JFrame frame = new JFrame();
-	JLabel lblTitR = new JLabel("Ingresar Nuevo Reclamo");
+	JLabel lblTitR = new JLabel("Reclamo");
 	JLabel lblTitReclamo = new JLabel("Título *");
 	JTextField tfTitReclamo = new JTextField();
 	JLabel lblDescrip = new JLabel("Descripción *");
@@ -60,8 +64,6 @@ public class AltaReclamo {
 	private final JTextField tfFech = new JTextField();
 	private Reclamo reclamo;
 	private Estudiante estudiante;
-	
-
 
 	/**
 	 * Launch the application.
@@ -79,6 +81,7 @@ public class AltaReclamo {
 			}
 		});
 	}
+
 	public static void main(Estudiante estudiante) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -93,7 +96,8 @@ public class AltaReclamo {
 			}
 		});
 	}
-	//	MODIFICAR EL RECLAMO
+
+	// MODIFICAR EL RECLAMO
 	public static void main(Estudiante estudiante, Reclamo reclamo) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -110,14 +114,12 @@ public class AltaReclamo {
 			}
 		});
 	}
-	
-	
-	
+
 	/**
 	 * Create the application.
 	 */
 	public AltaReclamo() {
-		
+
 		initialize();
 	}
 
@@ -130,127 +132,143 @@ public class AltaReclamo {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
-		
-		
-		//Titulo
+
+		// Titulo
 		lblTitR.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitR.setForeground(Color.decode("#08ACEC"));
 		lblTitR.setBounds(136, 10, 282, 25);
 		frame.getContentPane().add(lblTitR);
-		
-		//Titulo de Reclamo
+
+		// Titulo de Reclamo
 		lblTitReclamo.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblTitReclamo.setBounds(40, 62, 112, 13);
 		frame.getContentPane().add(lblTitReclamo);
-		
+
 		tfTitReclamo.setBounds(200, 60, 227, 19);
+		tfTitReclamo.setInputVerifier(new ValidacionMaxyMin(62,62));
+		tfTitReclamo.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		});
 		frame.getContentPane().add(tfTitReclamo);
 		tfTitReclamo.setColumns(10);
-		
-		
-		//Descripcion de Reclamo
+
+		// Descripcion de Reclamo
 		lblDescrip.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblDescrip.setBounds(40, 104, 112, 13);
 		frame.getContentPane().add(lblDescrip);
-		
 
 		taDescrip.setBackground(Color.WHITE);
 		taDescrip.setBounds(200, 100, 227, 60);
+		taDescrip.setInputVerifier(new ValidacionMaxyMin(120,120));
 		frame.getContentPane().add(taDescrip);
-		
-		
-		//Nombre del evento
+
+		// Nombre del evento
 		lblNomEvento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblNomEvento.setBounds(40, 180, 128, 13);
 		frame.getContentPane().add(lblNomEvento);
-		
+
 		tfNombEvento.setBounds(200, 182, 227, 19);
+		tfNombEvento.setInputVerifier(new ValidacionMaxyMin(62,62));
+		tfNombEvento.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		});
 		frame.getContentPane().add(tfNombEvento);
 		tfNombEvento.setColumns(10);
-	
-		
-		//Nombre de la actividad
+
+		// Nombre de la actividad
 		lblNombAct.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblNombAct.setBounds(40, 220, 144, 13);
 		frame.getContentPane().add(lblNombAct);
-		
-	
+
 		tfNombAct.setBounds(200, 222, 227, 19);
+		tfNombAct.setInputVerifier(new ValidacionMaxyMin(62,62));
+		tfNombAct.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		});
 		frame.getContentPane().add(tfNombAct);
 		tfNombAct.setColumns(10);
-		
-		
-		//Semestre
+
+		// Semestre
 		lblSemestre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblSemestre.setBounds(40, 260, 90, 13);
 		frame.getContentPane().add(lblSemestre);
-		
+
 		tfSemestre.setBounds(200, 262, 227, 19);
 		frame.getContentPane().add(tfSemestre);
 		tfSemestre.setColumns(10);
+		tfSemestre.setInputVerifier(new ValidacionMaxyMin(1,8));
 		tfSemestre.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloNumeros(e);
 			}
-		}); 
-		
-		
-		//Fecha
+		});
+
+		// Fecha
 		lblFecha.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblFecha.setBounds(40, 300, 45, 13);
 		frame.getContentPane().add(lblFecha);
-		
+
 		tfFech.setBounds(200, 297, 227, 19);
 		tfFech.setColumns(10);
+		tfFech.setInputVerifier(new ValidacionFecha());
 		frame.getContentPane().add(tfFech);
-		
-		//Docente
+
+		// Docente
 		lblDocente.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblDocente.setBounds(40, 340, 77, 13);
 		frame.getContentPane().add(lblDocente);
-		
-		
+
 		tfDocente.setBounds(200, 342, 227, 19);
 		frame.getContentPane().add(tfDocente);
-		//tfDocente.setColumns(10);
+		tfDocente.setInputVerifier(new ValidacionMaxyMin(32,32));
+		// tfDocente.setColumns(10);
 		tfDocente.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloLetras(e);
 			}
-		}); 
-		
-		
-		//Crédito
+		});
+
+		// Crédito
 		lblCredito.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblCredito.setBounds(40, 380, 66, 13);
 		frame.getContentPane().add(lblCredito);
-		
+
 		tfCredito.setBounds(200, 382, 227, 19);
 		frame.getContentPane().add(tfCredito);
+		tfCredito.setInputVerifier(new ValidacionMaxyMin(1,100));
 		tfCredito.setColumns(10);
 		tfCredito.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloNumeros(e);
 			}
-		}); 
-		
-		
-		//Botón Confirmar
+		});
+
+		// Botón Confirmar
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(!camposCompletos() || !camposActEven()) {//&& !camposActEven()
+					Mensajes.MostrarError("Por favor, complete todos los campos necesarios antes de confirmar.");
+				}
+				
 				guardarCambios();
 			}
 		});
 		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10));
-		btnConfirmar.setBackground(Color.decode("#0284c7")); 
+		btnConfirmar.setBackground(Color.decode("#0284c7"));
 		btnConfirmar.setForeground(Color.decode("#f0f9ff"));
 		btnConfirmar.setBounds(362, 446, 104, 38);
 		frame.getContentPane().add(btnConfirmar);
-		
-		
-		//Boton Cancelar
+
+		// Boton Cancelar
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
-		btnCancelar.setBackground(Color.decode("#0284c7"));  
+		btnCancelar.setBackground(Color.decode("#0284c7"));
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
 		btnCancelar.setBounds(210, 446, 104, 38);
 		btnCancelar.addActionListener(new ActionListener() {
@@ -260,22 +278,22 @@ public class AltaReclamo {
 			}
 		});
 		frame.getContentPane().add(btnCancelar);
-		
+
 		// Imagen
 		JLabel lblLogoUtec = new JLabel("");
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
-		
-		
-		//	TODO A medida que se vayan agregando a la base de datos, vamos habilitando su uso.
-		tfNombAct.setEnabled(false);
-		tfDocente.setEnabled(false);
-		tfNombEvento.setEnabled(false);
-		tfCredito.setEnabled(false);
-		
+
+		// TODO A medida que se vayan agregando a la base de datos, vamos habilitando su
+		// uso.
+		//tfNombAct.setEnabled(false);
+		//tfDocente.setEnabled(false);
+		//tfNombEvento.setEnabled(false);
+		//tfCredito.setEnabled(false);
+
 	}
-	
+
 	public void guardarCambios() {
 		reclamo.setDetalle(taDescrip.getText());
 		reclamo.setEstudiante(estudiante);
@@ -286,21 +304,44 @@ public class AltaReclamo {
 			Date fechaNac = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(tfFech.getText());
 			System.out.println(fechaNac);
 			reclamo.setFechaHora(fechaNac);
+			Mensajes.MostrarExito("Se ha guardado correctamente");
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-		
-		if (modificar) {DAOReclamo.getInstance().getBean().modificar(reclamo);}
-		else {DAOReclamo.getInstance().getBean().crear(reclamo);}
-		
+
+		if (modificar) {
+			DAOReclamo.getInstance().getBean().modificar(reclamo);
+		} else {
+			DAOReclamo.getInstance().getBean().crear(reclamo);
+		}
+
 	}
-	
+
 	public void cargarDatos() {
-		if (reclamo.getDetalle() != null) taDescrip.setText(reclamo.getDetalle());
-		if (reclamo.getFechaHora() != null) tfFech.setText(TBFFecha.getFechaDDYYMMHHMM(reclamo.getFechaHora()));
-		if (reclamo.getTitulo() != null) taDescrip.setText(reclamo.getTitulo());
-		if (reclamo.getSemestre() != null) taDescrip.setText(reclamo.getSemestre());
-		
+		if (reclamo.getDetalle() != null)
+			taDescrip.setText(reclamo.getDetalle());
+		if (reclamo.getFechaHora() != null)
+			tfFech.setText(TBFFecha.getFechaDDYYMMHHMM(reclamo.getFechaHora()));
+		if (reclamo.getTitulo() != null)
+			taDescrip.setText(reclamo.getTitulo());
+		if (reclamo.getSemestre() != null)
+			taDescrip.setText(reclamo.getSemestre());
+
 	}
-	
-}
+
+	// validar que todos los campos esten llenos antes de guardar
+	private boolean camposCompletos() {
+		return !tfTitReclamo.getText().isEmpty() && 
+				!tfSemestre.getText().isEmpty() && 
+				!tfCredito.getText().isEmpty() &&
+				!tfCredito.getText().isEmpty() ;
+					
+	} 
+	//TODO Modificar esta validacion
+		private boolean camposActEven() {
+			return !tfNombAct.getText().isEmpty() 
+					|| !tfNombEvento.getText().isEmpty();
+		
+		}
+	}
+
