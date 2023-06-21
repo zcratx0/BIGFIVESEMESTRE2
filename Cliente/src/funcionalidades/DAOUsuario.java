@@ -10,13 +10,13 @@ public class DAOUsuario extends DAO<UsuarioBeanRemote>{
 	}
 	
 	private DAOUsuario() {
-		initilize("ejb:/ProyectoEJB/UsuarioBean!com.bigfive.beans.UsuarioBeanRemote");
+		initialize("ejb:/ProyectoEJB/UsuarioBean!com.bigfive.beans.UsuarioBeanRemote");
 	}
 	
 	public Usuario login(String user, String password) {
-		return this.bean.loginUsuario(user, password);
+		return this.getBean().loginUsuario(user, password);
 	}
 	public int getTipo(Usuario usuario) {
-		return this.bean.detectarUsuario(usuario.getIdUsuario());
+		return this.getBean().detectarUsuario(usuario.getIdUsuario());
 	}
 }

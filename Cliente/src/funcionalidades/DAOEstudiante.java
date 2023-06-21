@@ -10,7 +10,7 @@ public class DAOEstudiante extends DAO<EstudianteBeanRemote>{
 	}
 	
 	public DAOEstudiante() {
-		initilize("ejb:/ProyectoEJB/EstudianteBean!com.bigfive.beans.EstudianteBeanRemote");
+		initialize("ejb:/ProyectoEJB/EstudianteBean!com.bigfive.beans.EstudianteBeanRemote");
 	}
 
 }

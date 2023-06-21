@@ -9,7 +9,7 @@ public class DAOAnalista extends DAO<AnalistaBeanRemoteRemote> {
 	}
 	
 	private DAOAnalista() {
-		initilize("ejb:/ProyectoEJB/AnalistaBeanRemote!com.bigfive.beans.AnalistaBeanRemoteRemote");		
+		initialize("ejb:/ProyectoEJB/AnalistaBeanRemote!com.bigfive.beans.AnalistaBeanRemoteRemote");		
 	}
 
 }

@@ -10,7 +10,7 @@ public class DAOReclamo extends DAO<ReclamoRemote> {
 	}
 	
 	public DAOReclamo() {
-		initilize("ejb:/ProyectoEJB/ReclamoBean!com.bigfive.beans.ReclamoRemote");
+		initialize("ejb:/ProyectoEJB/ReclamoBean!com.bigfive.beans.ReclamoRemote");
 	}
 
 	

@@ -13,7 +13,7 @@ import com.bigfive.entities.Accione;
  */
 @Stateless
 public class AccionesBean implements AccionesBeanRemote {
-    @PersistenceContext
+	@PersistenceContext
     EntityManager em;
     /**
      * Default constructor. 

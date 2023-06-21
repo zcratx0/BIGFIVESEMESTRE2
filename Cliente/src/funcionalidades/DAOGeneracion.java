@@ -9,6 +9,6 @@ public class DAOGeneracion extends DAO<GeneracionBeanRemote> {
 	}
 	
 	private DAOGeneracion() {
-		initilize("ejb:/ProyectoEJB/GeneracionBean!com.bigfive.beans.GeneracionBeanRemote");
+		initialize("ejb:/ProyectoEJB/GeneracionBean!com.bigfive.beans.GeneracionBeanRemote");
 	}
 }
