@@ -1,8 +1,20 @@
 package com.bigfive.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -20,30 +32,38 @@ public class Reclamo implements Serializable {
 	@Column(name="ID_RECLAMO")
 	private long idReclamo;
 
+	private BigDecimal credito;
+
 	private String detalle;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_HORA")
-	private Date fechaHora;
+	private Date fecha;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="FECHA_REGISTRO")
+	private Date fechaRegistro;
+
+	@ManyToOne
+	@JoinColumn(name="ID_ESTUDIANTE")
+	private Estudiante estudiante;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_EVENTO")
+	private Evento evento;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_TUTOR")
+	private Tutor tutor;
+
+	@Column(name="NOMBRE_ACTIVIDAD")
+	private String nombreActividad;
+
+	@Column(name="NOMBRE_EVENTO")
+	private String nombreEvento;
 
 	private String semestre;
 
 	private String titulo;
-
-	//uni-directional many-to-one association to Estudiante
-	@ManyToOne
-	@JoinColumn(name="ID_ESTUDIANTE")
-	private Estudiante estudiante;
-
-	//uni-directional many-to-one association to Evento
-	@ManyToOne
-	@JoinColumn(name="ID_EVENTO")
-	private Evento evento;
-
-	//bi-directional many-to-one association to Tutor
-	@ManyToOne
-	@JoinColumn(name="ID_TUTOR")
-	private Tutor tutor;
 
 	public Reclamo() {
 	}
@@ -56,6 +76,14 @@ public class Reclamo implements Serializable {
 		this.idReclamo = idReclamo;
 	}
 
+	public BigDecimal getCredito() {
+		return this.credito;
+	}
+
+	public void setCredito(BigDecimal credito) {
+		this.credito = credito;
+	}
+
 	public String getDetalle() {
 		return this.detalle;
 	}
@@ -64,12 +92,60 @@ public class Reclamo implements Serializable {
 		this.detalle = detalle;
 	}
 
-	public Date getFechaHora() {
-		return this.fechaHora;
+	public Date getFecha() {
+		return this.fecha;
 	}
 
-	public void setFechaHora(Date fechaHora) {
-		this.fechaHora = fechaHora;
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Date getFechaRegistro() {
+		return this.fechaRegistro;
+	}
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public Estudiante getEstudiante() {
+		return this.estudiante;
+	}
+
+	public void setEstudiante(Estudiante idEstudiante) {
+		this.estudiante = idEstudiante;
+	}
+
+	public Evento getEvento() {
+		return this.evento;
+	}
+
+	public void setEvento(Evento idEvento) {
+		this.evento = idEvento;
+	}
+
+	public Tutor getTutor() {
+		return this.tutor;
+	}
+
+	public void setTutor(Tutor idTutor) {
+		this.tutor = idTutor;
+	}
+
+	public String getNombreActividad() {
+		return this.nombreActividad;
+	}
+
+	public void setNombreActividad(String nombreActividad) {
+		this.nombreActividad = nombreActividad;
+	}
+
+	public String getNombreEvento() {
+		return this.nombreEvento;
+	}
+
+	public void setNombreEvento(String nombreEvento) {
+		this.nombreEvento = nombreEvento;
 	}
 
 	public String getSemestre() {
@@ -86,30 +162,6 @@ public class Reclamo implements Serializable {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
-	}
-
-	public Estudiante getEstudiante() {
-		return this.estudiante;
-	}
-
-	public void setEstudiante(Estudiante estudiante) {
-		this.estudiante = estudiante;
-	}
-
-	public Evento getEvento() {
-		return this.evento;
-	}
-
-	public void setEvento(Evento evento) {
-		this.evento = evento;
-	}
-
-	public Tutor getTutor() {
-		return this.tutor;
-	}
-
-	public void setTutor(Tutor tutor) {
-		this.tutor = tutor;
 	}
 
 }
