@@ -12,12 +12,12 @@ public class DAORol extends DAO<RolBeanRemote>{
 	}
 	
 	public DAORol() {
-		initilize("ejb:/ProyectoEJB/RolBean!com.bigfive.beans.RolBeanRemote");
+		initialize("ejb:/ProyectoEJB/RolBean!com.bigfive.beans.RolBeanRemote");
 	}
 	
 	public void cargarComboBox(JComboBox cb) {
 		try {
-			this.bean.listarElementos().forEach(t -> {
+			this.getBean().listarElementos().forEach(t -> {
 				cb.addItem(t.toString());
 			});
 		} catch (Exception e) {
