@@ -413,7 +413,7 @@ public class RegistroUsuario {
 			}
 
 			if (resultado)
-				JOptionPane.showMessageDialog(frame, "USUARIO REGISTRADO");
+				JOptionPane.showMessageDialog(frame, "Solicitud de usuario enviada, pronto será revisada por un analista");
 			else {
 				JOptionPane.showMessageDialog(frame, "ERROR AL REGISTRAR EL USUARIO");
 			}

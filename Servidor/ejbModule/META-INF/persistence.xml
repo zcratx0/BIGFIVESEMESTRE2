@@ -10,7 +10,6 @@
 		<class>com.bigfive.entities.Departamento</class>
 		<class>com.bigfive.entities.Estudiante</class>
 		<class>com.bigfive.entities.Evento</class>
-		<class>com.bigfive.entities.Generacion</class>
 		<class>com.bigfive.entities.Genero</class>
 		<class>com.bigfive.entities.Itr</class>
 		<class>com.bigfive.entities.Justificacion</class>
