@@ -181,8 +181,20 @@ public class PrincipalAnalista {//Atributos
 		btnMantenimiento.setForeground(Color.decode("#f0f9ff"));
 		btnMantenimiento.setBackground(Color.decode("#3b82f6"));
 		btnMantenimiento.setBounds(780, 65, 139, 40);
-		
 		frame.getContentPane().add(btnMantenimiento);
+		
+				//mantenimiento Estado
+		JButton btnMantEstado = new JButton("Lista Estado");
+		btnMantEstado.setBounds(780, 136, 139, 40);
+		btnMantEstado.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnMantEstado.setForeground(Color.decode("#f0f9ff"));
+		btnMantEstado.setBackground(Color.decode("#3b82f6"));
+		btnMantEstado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaAuxEstados.main(null);
+			}
+		});
+		frame.getContentPane().add(btnMantEstado);
 		
 		// usuarios 
 		btnUsuarios.addActionListener(new ActionListener() {
@@ -196,8 +208,7 @@ public class PrincipalAnalista {//Atributos
 		btnUsuarios.setBackground(Color.decode("#3b82f6"));
 		btnUsuarios.setBounds(640, 65, 107, 40);
 		frame.getContentPane().add(btnUsuarios);
-		
-		
+
 		
 		
 	}

@@ -20,16 +20,36 @@ public class Reclamo implements Serializable {
 	@Column(name="ID_RECLAMO")
 	private long idReclamo;
 
-	private String detalle;
-
+	//	FECHA GUARDADA POR EL SISTEMA
+	@Column(name="FECHA_REGISTRO")
+	private Date fechaRegistro;
+	
+	//	FECHA GUARDADA POR EL USUARIO
 	@Temporal(TemporalType.DATE)
-	@Column(name="FECHA_HORA")
+	@Column(name="FECHA")
 	private Date fechaHora;
-
+	
+	
+	
+	@Column(name="CREDITO")
+	private Integer credito;
+	
+	@Column(name="SEMESTRE")
 	private String semestre;
-
+	
+	@Column(name="TITULO")
 	private String titulo;
+	
 
+	@Column(name="DETALLE")
+	private String detalle;
+	
+	@Column(name="NOMBRE_ACTIVIDAD")
+	private String nombreActividad;
+	
+	@Column(name="NOMBRE_EVENTO")
+	private String nombreEvento;
+	
 	//uni-directional many-to-one association to Estudiante
 	@ManyToOne
 	@JoinColumn(name="ID_ESTUDIANTE")
@@ -111,5 +131,39 @@ public class Reclamo implements Serializable {
 	public void setTutor(Tutor tutor) {
 		this.tutor = tutor;
 	}
+
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public Integer getCredito() {
+		return credito;
+	}
+
+	public void setCredito(Integer credito) {
+		this.credito = credito;
+	}
+
+	public String getNombreActividad() {
+		return nombreActividad;
+	}
+
+	public void setNombreActividad(String nombreActividad) {
+		this.nombreActividad = nombreActividad;
+	}
+
+	public String getNombreEvento() {
+		return nombreEvento;
+	}
+
+	public void setNombreEvento(String nombreEvento) {
+		this.nombreEvento = nombreEvento;
+	}
+	
+	
 
 }
