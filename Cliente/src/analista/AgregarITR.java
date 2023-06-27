@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 
 import com.bigfive.entities.Departamento;
+import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Itr;
 
 import funcionalidades.DAODepartamento;
@@ -81,7 +82,8 @@ public class AgregarITR {
 					AgregarITR window = new AgregarITR(type);
 					window.setItr(itr);
 					if (itr.getNombre() != null )window.getTfNombre().setText(itr.getNombre().toString());
-					window.cbDepa.setSelectedIndex((int)itr.getDepartamento().getIdDepartamento());
+					
+					window.cbDepa.setSelectedItem(itr.getDepartamento());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -140,7 +142,7 @@ public class AgregarITR {
 		btnConfirmar.setBounds(311, 184, 105, 33);
 		frame.getContentPane().add(btnConfirmar);
 		btnConfirmar.addActionListener(e -> {
-			this.itr.setDepartamento((Departamento) cbDepa.getSelectedItem());
+			this.itr.setDepartamento((EnumDepartamentos) cbDepa.getSelectedItem());
 			this.itr.setNombre(tfNombre.getText());
 			System.out.println(this.itr.getNombre() + "-" +this.itr.getDepartamento());			
 			boolean resultado = false;

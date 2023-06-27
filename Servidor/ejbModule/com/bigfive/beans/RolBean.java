@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import com.bigfive.entities.Rol;
 
 /**
@@ -61,7 +60,7 @@ public class RolBean implements RolBeanRemote {
 	@Override
 	public List<Rol> listarElementos() {
 		// TODO Auto-generated method stub
-		return em.createQuery("SELECT e FROM Generacion e").getResultList();
+		return em.createQuery("SELECT r FROM Rol r").getResultList();
 	}
 
 }

@@ -27,6 +27,8 @@ import estudiante.PrincipalEstudiante;
 import funcionalidades.DAOUsuario;
 import tutor.PrincipalTutor;
 import validaciones.Mensajes;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 
 public class LogIn {
 
@@ -180,7 +182,7 @@ public class LogIn {
 		btnRegistro.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnRegistro.setForeground(Color.decode("#f0f9ff"));
 		btnRegistro.setBounds(191, 243, 118, 29);
-		frame.getContentPane().add(btnRegistro);	
+		frame.getContentPane().add(btnRegistro);
 		
 	}
 }

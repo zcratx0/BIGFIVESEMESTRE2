@@ -3,6 +3,7 @@ package funcionalidades;
 import javax.swing.JComboBox;
 
 import com.bigfive.beans.AreaBeanRemoteRemote;
+import com.bigfive.entities.Area;
 
 public class DAOArea extends DAO<AreaBeanRemoteRemote> {
 	private static DAOArea instance = new DAOArea();
@@ -16,13 +17,14 @@ public class DAOArea extends DAO<AreaBeanRemoteRemote> {
 		initilize("ejb:/ProyectoEJB/AreaBeanRemote!com.bigfive.beans.AreaBeanRemoteRemote");
 	}
 	
-	public void cargarComboBox(JComboBox cb) {
+	public void cargarComboBox(JComboBox<Area> cb) {
 		try {
-			areaBean.listarElementos().forEach(t -> {
-				cb.addItem(t.toString());
+			System.out.println("Cargando ComboBox");
+			this.getBean().listarElementos().forEach(a -> {
+				cb.addItem(a);
 			});
 		} catch (Exception e) {
-			
+			System.err.println(e.getMessage());
 		}
 	}
 }

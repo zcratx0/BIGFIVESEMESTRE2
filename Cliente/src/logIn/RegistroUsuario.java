@@ -400,14 +400,12 @@ public class RegistroUsuario {
 					Tutor tutor = new Tutor();
 					Area area = (Area) cBoxArea.getSelectedItem();
 					Rol rol = (Rol) cBoxRol.getSelectedItem();
-
 					tutor.setUsuario(user);
 					tutor.setArea(area);
 					tutor.setRol(rol);
 					tutor.setTipo(null);
 
 				}
-
 			} else {
 				System.out.println("RED ALERT");
 			}
@@ -475,8 +473,7 @@ public class RegistroUsuario {
 	            frame.getContentPane().add(btnRegistro);
 	            frame.getContentPane().remove(lblAnioIng);
 	            frame.getContentPane().remove(tfAnioIng);
-	            //	BLOQUEO BOTON PARA TUTOR
-	            btnRegistro.setEnabled(false);
+	            btnRegistro.setEnabled(true);
 	            // en analista solo boton registar ya que no pide ningun dato mas.
 	        } else if(selected.equals("Analista")) {
 	        	frame.getContentPane().add(btnRegistro);
@@ -529,8 +526,10 @@ public class RegistroUsuario {
 		});
 		btnNewButton.setBounds(284, 19, 107, 19);
 		frame.getContentPane().add(btnNewButton);
-		DAORol.getInstance().cargarComboBox(cBoxRol);
+		
+		//	CARGAR DATOS 
 		DAOArea.getInstance().cargarComboBox(cBoxArea);
+		DAORol.getInstance().cargarComboBox(cBoxRol);
 	}
 	
 	//Valida que todos los campos estén llenos antes de guardar

@@ -22,20 +22,17 @@ public class Tipo implements Serializable {
 	private String tipo;
 
 	public Tipo() {
+		
 	}
-
 	public long getIdTipo() {
 		return this.idTipo;
 	}
-
 	public void setIdTipo(long idTipo) {
 		this.idTipo = idTipo;
 	}
-
 	public String getTipo() {
 		return this.tipo;
 	}
-
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}

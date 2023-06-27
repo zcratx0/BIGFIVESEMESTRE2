@@ -1,24 +1,54 @@
 package com.bigfive.beans;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import com.bigfive.entities.Area;
 /**
  * Session Bean implementation class AreaBeanRemote
  */
-@Stateless
+@Singleton
+@Startup
 public class AreaBeanRemote implements AreaBeanRemoteRemote {
-@PersistenceContext
+	@PersistenceContext
 	EntityManager em;
     /**
      * Default constructor. 
      */
+	
+	private List<Area> areas;
+	
+	
     public AreaBeanRemote() {
         // TODO Auto-generated constructor stub
     }
-     @Override
+    
+    
+    
+    @PostConstruct
+    public void init() {
+    	System.out.println("CARGANDO AREAS DE LA BASE DE DATOS");
+    	this.areas = new ArrayList<>();
+    	this.areas = em.createQuery("SELECT e FROM Area e").getResultList();
+    	this.areas.forEach(a ->  {
+    		System.out.println(a.getIdArea() + " - " + a.getArea() );
+    	});
+    }
+    
+    @PreDestroy
+    public void destroy() {
+    	System.out.println("SingletonBean termina");
+    }
+
+    
+    
+    @Override
 	public boolean crear(Area value) {
 		try {
 			em.persist(value);
@@ -53,9 +83,17 @@ public class AreaBeanRemote implements AreaBeanRemoteRemote {
 		}
 		return false;
 	}
-    @Override
+	@Override
+	public List<Area> listarAreas() {
+		
+		return null;
+	}
+
+
+
+	@Override
 	public List<Area> listarElementos() {
-		return em.createQuery("SELECT e FROM Area e").getResultList();
+		return this.areas;
 	}
 
 }

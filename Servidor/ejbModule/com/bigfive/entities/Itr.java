@@ -29,6 +29,11 @@ public class Itr implements Serializable {
 	@JoinColumn(name="ID_DEPARTAMENTO")
 	private Departamento departamento;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name="DEPARTAMENTO")
+	private EnumDepartamentos enumDepartamento;
+	
+	
 	public Itr() {
 	}
 
@@ -56,12 +61,19 @@ public class Itr implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public Departamento getDepartamento() {
-		return this.departamento;
+	public EnumDepartamentos getDepartamento() {
+		return this.enumDepartamento;
 	}
 
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
+	public void setDepartamento(EnumDepartamentos departamento) {
+		this.enumDepartamento = departamento;
 	}
+
+	@Override
+	public String toString() {
+		return this.nombre + " - " + this.enumDepartamento;
+	}
+	
+	
 
 }
