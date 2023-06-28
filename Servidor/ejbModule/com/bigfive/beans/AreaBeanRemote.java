@@ -36,9 +36,7 @@ public class AreaBeanRemote implements AreaBeanRemoteRemote {
     	System.out.println("CARGANDO AREAS DE LA BASE DE DATOS");
     	this.areas = new ArrayList<>();
     	this.areas = em.createQuery("SELECT e FROM Area e").getResultList();
-    	this.areas.forEach(a ->  {
-    		System.out.println(a.getIdArea() + " - " + a.getArea() );
-    	});
+    	this.areas.forEach(a ->  {System.out.println(a.getIdArea() + " - " + a.getArea() );});
     }
     
     @PreDestroy
@@ -82,11 +80,6 @@ public class AreaBeanRemote implements AreaBeanRemoteRemote {
 			e.printStackTrace();
 		}
 		return false;
-	}
-	@Override
-	public List<Area> listarAreas() {
-		
-		return null;
 	}
 
 

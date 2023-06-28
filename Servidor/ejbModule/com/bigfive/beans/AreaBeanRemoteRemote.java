@@ -8,5 +8,4 @@ import com.bigfive.entities.Area;
 
 @Remote
 public interface AreaBeanRemoteRemote extends ICrud<Area>{
-	public List<Area> listarAreas();
 }

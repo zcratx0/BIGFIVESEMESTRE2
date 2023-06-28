@@ -28,7 +28,8 @@ public class Evento implements Serializable {
 	@Column(name="FECHA_HORA_INCIO")
 	private Date fechaHoraIncio;
 
-	private String título;
+	@Column(name="TITULO")
+	private String titulo;
 
 	public Evento() {
 	}
@@ -58,11 +59,11 @@ public class Evento implements Serializable {
 	}
 
 	public String getTítulo() {
-		return this.título;
+		return this.titulo;
 	}
 
 	public void setTítulo(String título) {
-		this.título = título;
+		this.titulo = título;
 	}
 
 }

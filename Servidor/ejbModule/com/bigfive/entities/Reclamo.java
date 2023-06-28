@@ -28,8 +28,7 @@ public class Reclamo implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA")
 	private Date fechaHora;
-	
-	
+		
 	
 	@Column(name="CREDITO")
 	private Integer credito;
