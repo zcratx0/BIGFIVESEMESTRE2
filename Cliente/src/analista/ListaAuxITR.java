@@ -98,8 +98,12 @@ public class ListaAuxITR {
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaItr.getSelectedRow() > -1) {
-					AgregarITR.modificar((Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0));
-					frame.dispose();
+					int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar el ITR?", "Confirmación de modificacion", JOptionPane.YES_NO_OPTION);
+					 if (confirmacion == JOptionPane.YES_OPTION  ) {
+						 AgregarITR.modificar((Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0));
+							frame.dispose();
+					 }
+					
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes de seleccionar un ITR para modificar");
 				}

@@ -290,7 +290,7 @@ private void initialize() {
 	frame.getContentPane().add(cBoxGenero);
 
 	
-	//Boton Registro
+	//Boton confirmar cambios 
 	btnConfirmar.setBackground(Color.decode("#0284c7")); 
 	btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 	btnConfirmar.setForeground(Color.decode("#f0f9ff"));
@@ -298,6 +298,7 @@ private void initialize() {
 	btnConfirmar.addActionListener(e -> {
 
 		if (camposCompletos()) {
+			JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente");
 	        guardarCambios(usuario);
 	    } else {
 	    	JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
