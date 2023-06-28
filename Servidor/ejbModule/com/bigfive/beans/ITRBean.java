@@ -3,6 +3,10 @@ package com.bigfive.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,16 +16,35 @@ import com.bigfive.entities.Itr;
 /**
  * Session Bean implementation class ITRBean
  */
-@Stateless
+@Singleton
+@Startup
 public class ITRBean implements ITRBeanRemote {
 	@PersistenceContext
 	EntityManager em;
+	
+	private List<Itr> itrs;
+	
     /**
      * Default constructor. 
      */
-    public ITRBean() {
-        // TODO Auto-generated constructor stub
+    public ITRBean() {}
+    
+    @PostConstruct
+    public void init() {
+    	System.out.println("CARGANDO ITR'S DE LA BASE DE DATOS");
+    	this.itrs = new ArrayList<>();
+    	this.itrs = em.createQuery("SELECT u FROM Itr u").getResultList();
+    	this.itrs.forEach(i -> {
+    		System.out.println(i.getIdItr() + " - " + i.getNombre() + " - " +i.getEstado());
+    	});
     }
+    
+
+    @PreDestroy
+    public void destroy() {
+    	System.out.println("ITRBean termina");
+    }
+    
 
 	@Override
 	public boolean crear(Itr value) {
@@ -61,23 +84,21 @@ public class ITRBean implements ITRBeanRemote {
 
 	@Override
 	public List<Itr> listarElementos() {
-		List<Itr> lista = new ArrayList<Itr>();
-		try {
-			 lista = em.createQuery("SELECT u FROM Itr u").getResultList();
-		} catch (Exception e) {
-			System.out.println("ERROR AL CARGAR LA LISTA DE ELEMENTOS: " + e.getMessage());
-		}
-		return lista;
+		return this.itrs;
 	}
 	@Override
 	public List<Itr> listarElementosHabilitados() {
-		System.out.println("CARGANDO ITR'S");
-		List<Itr> lista = new ArrayList<>();
-		try {
-			lista = em.createQuery("SELECT u FROM Itr u WHERE u.estado <> 0").getResultList();
-		} catch (Exception e) {
-			System.out.println("ERROR AL CARGAR LA LISTA DE ELEMENTOS: " + e.getMessage());
-		}
-		return lista;
+		List<Itr> habilitados = new ArrayList<>();
+		this.itrs.forEach(i -> {
+			if (i.getEstado() != 0) {
+				habilitados.add(i);
+			}
+		});
+		return habilitados;
+	}
+	
+	@Override
+	public void actualizar() {
+		this.itrs = em.createQuery("SELECT u FROM Itr u").getResultList();
 	}
 }
