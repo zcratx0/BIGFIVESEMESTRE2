@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.SystemColor;
 
@@ -98,7 +100,9 @@ public class ListaAuxITR {
 				if (tablaItr.getSelectedRow() > -1) {
 					AgregarITR.modificar((Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0));
 					frame.dispose();
-				};
+				} else {
+					JOptionPane.showMessageDialog(null, "Debes de seleccionar un ITR para modificar");
+				}
 			}
 		});
 		btnModificar.setBounds(241, 406, 95, 25);
@@ -113,10 +117,23 @@ public class ListaAuxITR {
 		btnEliminar.setForeground(Color.decode("#f0f9ff"));
 		btnEliminar.setBackground(Color.decode("#0284c7"));
 		btnEliminar.addActionListener(e -> {
-			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
+            Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
+			 if ( itr.getEstado()== 0 ) {
+          	   JOptionPane.showMessageDialog(null, "Este registro ya se encuentra eliminado");
+             }
+			 else {
+				 int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro?", "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+				 if (confirmacion == JOptionPane.YES_OPTION  ) {
+					 	itr.setEstado((0));
+              
+                DAOITR.getInstance().getItrBean().modificar(itr);
+                cargarTabla();	
+                
 			itr.setEstado((0));
 			DAOITR.getInstance().getItrBean().modificar(itr);
 			cargarTabla();
+            }
+			 }
 		});
 		frame.getContentPane().add(btnEliminar);
 			// HABILITAR
@@ -126,9 +143,24 @@ public class ListaAuxITR {
 		btnHabilitar.setBackground(Color.decode("#0284c7"));
 		btnHabilitar.addActionListener(e -> {
 			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
+			if (itr.getEstado()== 1){
+				JOptionPane.showMessageDialog(null, "Este ITR ya se encuentra habilitado");
+				}
+			else {
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea habilitar este ITR?", "Confirmación de Habilitación", JOptionPane.YES_NO_OPTION);
+				 if (confirmacion == JOptionPane.YES_OPTION  ) {
+					 	itr.setEstado((1));
+             
+               DAOITR.getInstance().getItrBean().modificar(itr);
+               cargarTabla();	
+               
 			itr.setEstado((1));
 			DAOITR.getInstance().getItrBean().modificar(itr);
 			cargarTabla();
+				
+			}
+			}
+		
 		});
 		frame.getContentPane().add(btnHabilitar);
 		

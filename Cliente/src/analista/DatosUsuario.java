@@ -7,6 +7,7 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.bigfive.entities.Departamento;
@@ -66,7 +67,7 @@ public class DatosUsuario {
 	JLabel lblEstado = new JLabel("Estado");
 	JComboBox cBoxEstado = new JComboBox();
 	JButton btnGuardar = new JButton("Guardar");
-	JButton btnAtras = new JButton("Atrás");
+	JButton btnCancelar = new JButton("Cancelar");
 	Usuario user = null;
 	private final JTextField tfFechaNac = new JTextField();
 	ListaUsuarios listaUsuarios = null;
@@ -274,23 +275,28 @@ public class DatosUsuario {
 		btnGuardar.setFont(new Font("Tahona", Font.BOLD, textSize));
 		btnGuardar.setForeground(Color.decode("#f0f9ff"));
 		btnGuardar.setBackground(Color.decode("#0284c7"));
-		btnGuardar.setBounds(303, 678, 93, 32);
+		btnGuardar.setBounds(303, 678, 107, 32);
 		btnGuardar.setEnabled(false);
 		btnGuardar.addActionListener(e -> {
 			if (user != null) actualizarDatos();
 		});
 		frame.getContentPane().add(btnGuardar);
-			//Atras
-		btnAtras.addActionListener(new ActionListener() {
+			
+		//Boton Cancelar
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar Modificación?", "Cancelar Modificación", JOptionPane.YES_NO_OPTION);
+				if (confirmacion == JOptionPane.YES_OPTION  ) {
+					frame.dispose();
+				}
+				
 			}
 		});
-		btnAtras.setFont(new Font("Tahona", Font.BOLD, textSize));
-		btnAtras.setForeground(Color.decode("#f0f9ff"));
-		btnAtras.setBackground(Color.decode("#0284c7"));
-		btnAtras.setBounds(169, 678, 93, 32);
-		frame.getContentPane().add(btnAtras);
+		btnCancelar.setFont(new Font("Tahona", Font.BOLD, textSize));
+		btnCancelar.setForeground(Color.decode("#f0f9ff"));
+		btnCancelar.setBackground(Color.decode("#0284c7"));
+		btnCancelar.setBounds(155, 678, 107, 32);
+		frame.getContentPane().add(btnCancelar);
 		
 		//	FUNCIONALIDAD
 		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);

@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import com.bigfive.entities.Analista;
 import com.bigfive.entities.Area;
+import com.bigfive.entities.Departamento;
 import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Rol;
@@ -252,6 +253,19 @@ public class RegistroUsuario {
 		cBoxDepa.setBounds(142, 340, 219, 21);
 		cBoxDepa.setBackground(Color.decode("#e5e7eb"));
 		frame.getContentPane().add(cBoxDepa);
+		
+		
+		// validacion que pide que se seleccione un elemento del combobox
+		cBoxDepa.addActionListener(new ActionListener() {
+			@Override
+		    public void actionPerformed(ActionEvent e) {
+		        JComboBox comboBox = (JComboBox) e.getSource();
+		        int selectedIndex = comboBox.getSelectedIndex();
+		        if (selectedIndex == -1) {
+		            JOptionPane.showMessageDialog(frame, "Por favor seleccione un departamento", "Error", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
+		}); 
 		
 		//Mail Insitucional
 		JLabel lblMailIns = new JLabel("Email Institucional");
@@ -500,7 +514,13 @@ public class RegistroUsuario {
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
+		
+			
+		
 		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
+		
+		
+		
 		DAOITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
 		
 		JButton btnNewButton = new JButton("Rellenar datos");

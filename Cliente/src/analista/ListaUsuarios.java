@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -207,8 +208,9 @@ public class ListaUsuarios {
 		//Atras
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HabilitacionUsuario.mostrar();
-				frame.dispose();
+					HabilitacionUsuario.mostrar();
+					frame.dispose();
+				
 			}
 		});
 		btnAtras.setFont(new Font("Tahona", Font.BOLD, 10));

@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -153,17 +154,31 @@ public class HabilitacionUsuario {
 		cbEstado.addItem("ACTIVADO");
 		cbEstado.addItem("ELIMINADO");
 		
+		
+		
 		tableModel.addTableModelListener(e -> {
 			if (e.getType() == 0) {
 				System.out.println(e.getColumn() + " "+ e.getFirstRow());
 				System.out.println();
 				String value = (String)tableModel.getValueAt(e.getFirstRow(), e.getColumn());
 				Usuario usuario = (Usuario)tablaEst.getValueAt(e.getFirstRow(), 0);
-				if ( value.equalsIgnoreCase("SIN VALOR")) usuario.setEstado(0);
-				if ( value.equalsIgnoreCase("ACTIVADO")) usuario.setEstado(1);
-				if ( value.equalsIgnoreCase("ELIMINADO")) usuario.setEstado(2);
-				DAOUsuario.getInstance().getBean().modificar(usuario);
-				cargarListaDeUsuarios();
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro de cambiar el Estado?", "Cambio de estado", JOptionPane.YES_NO_OPTION);
+				 if (confirmacion == JOptionPane.YES_OPTION  ) {
+					if (value.equalsIgnoreCase("SIN VALOR")) {
+						usuario.setEstado(0);
+					}
+					else if (value.equalsIgnoreCase("ACTIVADO")) {
+						usuario.setEstado(1);
+					}
+					else if (value.equalsIgnoreCase("ELIMINADO")) {
+						usuario.setEstado(2);
+					}else {
+						tablaEst.setValueAt("SIN VALOR",e.getFirstRow(), 4);
+					}
+					DAOUsuario.getInstance().getBean().modificar(usuario);
+				}
+				 cargarListaDeUsuarios();
+				
 			}
 		} );
 		
