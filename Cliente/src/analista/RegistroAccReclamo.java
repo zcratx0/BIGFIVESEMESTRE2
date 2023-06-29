@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -138,7 +139,12 @@ public class RegistroAccReclamo {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//	ListaReclamo.main(null);
-				frame.dispose();
+				
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar Reclamo?", "Confirmación de cancelación", JOptionPane.YES_NO_OPTION);
+				 if (confirmacion == JOptionPane.YES_OPTION  ) {
+					 	ListaReclamo.main();
+						frame.dispose();
+				 }
 			}
 		});
 		frame.getContentPane().add(btnCancelar);

@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
@@ -91,6 +92,7 @@ public class DescargarEscolaridad {
 				File file = fileSelector.getSelectedFile();
 				System.out.println(file.getPath() + file.getName());
 				escolaridad(file.getAbsolutePath());
+				JOptionPane.showMessageDialog(null, "Descarga Completa");
 			}
 
 			
