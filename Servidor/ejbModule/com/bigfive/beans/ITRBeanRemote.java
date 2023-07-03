@@ -12,5 +12,6 @@ public interface ITRBeanRemote extends ICrud<Itr> {
 	List<Itr> listarElementosHabilitados();
 
 	void actualizar();
+	boolean estaEnUso(Itr itr);
 
 }

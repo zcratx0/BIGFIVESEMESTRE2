@@ -35,7 +35,7 @@ public class ITRBean implements ITRBeanRemote {
     	this.itrs = new ArrayList<>();
     	this.itrs = em.createQuery("SELECT u FROM Itr u").getResultList();
     	this.itrs.forEach(i -> {
-    		System.out.println(i.getIdItr() + " - " + i.getNombre() + " - " +i.getEstado());
+    		System.out.println(i.getIdItr() + " - " + i.getNombre() + " - " +i.getEstado()+ " - " +estaEnUso(i));
     	});
     }
     
@@ -101,4 +101,9 @@ public class ITRBean implements ITRBeanRemote {
 	public void actualizar() {
 		this.itrs = em.createQuery("SELECT u FROM Itr u").getResultList();
 	}
+	@Override
+	public boolean estaEnUso(Itr itr) {
+		return em.createQuery("SELECT e FROM Usuarios where e.itr = :itr").setParameter("itr", itr).getResultList().size() > 0 ? true : false;
+	}
+	
 }
