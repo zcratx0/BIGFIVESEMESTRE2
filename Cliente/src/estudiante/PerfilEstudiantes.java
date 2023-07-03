@@ -300,7 +300,7 @@ public class PerfilEstudiantes {
 		cBoxGenero.setBounds(142, 555, 219, 21);
 		frame.getContentPane().add(cBoxGenero);
 		
-		// Boton Registro
+		// Boton Confirmar
 		btnConfirmar.setBackground(Color.decode("#0284c7"));
 		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnConfirmar.setForeground(Color.decode("#f0f9ff"));
@@ -308,12 +308,14 @@ public class PerfilEstudiantes {
 		frame.getContentPane().add(btnConfirmar);
 		btnConfirmar.addActionListener(e -> {
 
-			if (camposCompletos()) {
-				guardarCambios(usuario);
-			} else {
-				JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
-			}
-		});
+		if (camposCompletos()) {
+			JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente");
+	        guardarCambios(usuario);
+			frame.dispose();
+	    } else {
+	    	JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+	    }
+	});
 		
 		// Boton Cancelar
 		btnCancelar.addActionListener(new ActionListener() {

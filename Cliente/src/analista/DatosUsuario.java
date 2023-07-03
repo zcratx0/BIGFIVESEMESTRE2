@@ -15,6 +15,7 @@ import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
 import funcionalidades.DAODepartamento;
+import funcionalidades.DAOGenero;
 import funcionalidades.DAOITR;
 import funcionalidades.DAOUsuario;
 
@@ -301,6 +302,7 @@ public class DatosUsuario {
 		//	FUNCIONALIDAD
 		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
 		DAOITR.getInstance().cargarComboBox(cBoxItr);
+		DAOGenero.getInstance().cargarComboBox(cBoxGenero);
 		
 		
 		

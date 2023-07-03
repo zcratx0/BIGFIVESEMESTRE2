@@ -60,5 +60,10 @@ public class GeneroBean implements GeneroBeanRemote {
 	public List<Genero> listarElementos() {
 		return em.createQuery("SELECT e FROM Genero e").getResultList();
 	}
+	@Override
+	public void actualizar() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'actualizar'");
+	}
 
 }

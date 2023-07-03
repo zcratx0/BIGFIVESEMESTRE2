@@ -35,11 +35,13 @@ import funcionalidades.DAOAnalista;
 import funcionalidades.DAOArea;
 import funcionalidades.DAODepartamento;
 import funcionalidades.DAOEstudiante;
+import funcionalidades.DAOGenero;
 import funcionalidades.DAOITR;
 import funcionalidades.DAORol;
 import funcionalidades.DAOUsuario;
 import utils.DatosFalsos;
 import utils.TBFFecha;
+
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -48,6 +50,7 @@ import validaciones.ValidacionMaxyMin;
 import validaciones.ValidacionTelefono;
 import validaciones.ValidarInputs;
 import validaciones.ValidarTipos;
+import validaciones.esMayorDeEdad;
 
 public class RegistroUsuario {
 
@@ -179,19 +182,9 @@ public class RegistroUsuario {
 		tfFech.setColumns(10);
 		//Verifica que la fecha coincida con el formato de la BD
 		tfFech.setInputVerifier(new ValidacionFecha());
+	  
+
 		
-		/*tfFech.addKeyListener(new KeyAdapter () {
-			public void keyTyped(KeyEvent e) {
-				//ValidarInputs.ValidarFechas(e);
-				 //ValidarTipos.ValidarFecha("Fecha", tfFech);
-			
-			}
-		});
-		tfFech.addFocusListener(new FocusAdapter() {
-		    public void focusLost(FocusEvent e) {
-		        //ValidarTipos.ValidarFecha("Fecha", tfFech);
-		    }
-		});*/
 		
 		//Email Personal
 		JLabel lblMailP = new JLabel("Email Personal");
@@ -312,9 +305,10 @@ public class RegistroUsuario {
 		lblGenero.setBounds(10, 518, 45, 13);
 		frame.getContentPane().add(lblGenero);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(142, 520, 219, 21);
-		frame.getContentPane().add(comboBox);
+		JComboBox comboGenerBox = new JComboBox();
+		comboGenerBox.setBounds(142, 520, 219, 21);
+		frame.getContentPane().add(comboGenerBox);
+
 		
 		//Año de ingreso - Est
 		JLabel lblAnioIng = new JLabel("Año de Ingreso");
@@ -356,6 +350,7 @@ public class RegistroUsuario {
 		cBoxRol.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxRol.setBackground(Color.decode("#e5e7eb"));
 		cBoxRol.setBounds(142, 650, 219, 21);
+		
 		
 		
 		// Boton Registro
@@ -424,12 +419,16 @@ public class RegistroUsuario {
 				System.out.println("RED ALERT");
 			}
 
-			if (resultado)
-				JOptionPane.showMessageDialog(frame, "Solicitud de usuario enviada, pronto será revisada por un analista");
+			if (resultado){
+			JOptionPane.showMessageDialog(frame, "Solicitud de usuario enviada, pronto será revisada por un analista");	
+			frame.dispose();
+			}
+	
 			else {
 				JOptionPane.showMessageDialog(frame, "ERROR AL REGISTRAR EL USUARIO");
 			}
 			System.out.println(user.toString());
+			
 		});
 
 		// Boton Cancelar
@@ -548,10 +547,16 @@ public class RegistroUsuario {
 		frame.getContentPane().add(btnNewButton);
 		
 		//	CARGAR DATOS 
+		DAOGenero.getInstance().cargarComboBox(comboGenerBox);
 		DAOArea.getInstance().cargarComboBox(cBoxArea);
 		DAORol.getInstance().cargarComboBox(cBoxRol);
+		
 	}
 	
+	private boolean esMayorDeEdad(String fechaNacimientoStr) {
+		return false;
+	}
+
 	//Valida que todos los campos estén llenos antes de guardar
 	private boolean camposCompletos() {
 	    return !tfNombre.getText().isEmpty() && 

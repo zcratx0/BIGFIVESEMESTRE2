@@ -14,21 +14,26 @@ import com.bigfive.entities.Usuario;
 import analista.ListaAuxITR;
 import analista.ListaReclamo;
 import funcionalidades.DAOReclamo;
+import funcionalidades.DAOTutor;
 import utils.TBFFecha;
 import validaciones.Mensajes;
 import validaciones.ValidacionFecha;
 import validaciones.ValidacionMaxyMin;
 import validaciones.ValidarInputs;
 import validaciones.ValidarTipos;
+import validaciones.validacionMINMAXTEXT;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
+import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -161,8 +166,12 @@ public class AltaReclamo {
 
 		taDescrip.setBackground(Color.WHITE);
 		taDescrip.setBounds(200, 100, 227, 60);
-		//taDescrip.setInputVerifier(new ValidacionMaxyMin(0,120)); 
+		taDescrip.setInputVerifier(new ValidacionMaxyMin(8, 200));
+		taDescrip.setInputVerifier(new validacionMINMAXTEXT(8, 200));
+		
+		
 		frame.getContentPane().add(taDescrip);
+	
 
 		// Nombre del evento
 		lblNomEvento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -202,7 +211,7 @@ public class AltaReclamo {
 		tfSemestre.setBounds(200, 262, 227, 19);
 		frame.getContentPane().add(tfSemestre);
 		tfSemestre.setColumns(10);
-		tfSemestre.setInputVerifier(new ValidacionMaxyMin(1,8));
+		tfSemestre.setInputVerifier(new ValidacionMaxyMin(1,1));
 		tfSemestre.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloNumeros(e);
@@ -226,6 +235,7 @@ public class AltaReclamo {
 
 		tfDocente.setBounds(200, 342, 227, 19);
 		frame.getContentPane().add(tfDocente);
+		DAOTutor.getInstance().cargarComboBox(tfDocente);
 
 		// Crédito
 		lblCredito.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
