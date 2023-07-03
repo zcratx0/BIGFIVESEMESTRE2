@@ -1,4 +1,4 @@
-package com.bigfive.entities;
+package entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -15,15 +15,17 @@ public class Accione implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ACCIONES_IDACCIONES_GENERATOR", sequenceName="SEQ_ID_ACCIONES ")
+	@SequenceGenerator(name="ACCIONES_IDACCIONES_GENERATOR" )
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ACCIONES_IDACCIONES_GENERATOR")
 	@Column(name="ID_ACCIONES")
 	private long idAcciones;
 
-	private String comentario;
+	private String descripcion;
 
-	@Column(name="NOMBRE_ACCION")
-	private String nombreAccion;
+	//uni-directional many-to-one association to Estado
+	@ManyToOne
+	@JoinColumn(name="ID_ESTADO")
+	private Estado estado;
 
 	public Accione() {
 	}
@@ -36,20 +38,20 @@ public class Accione implements Serializable {
 		this.idAcciones = idAcciones;
 	}
 
-	public String getComentario() {
-		return this.comentario;
+	public String getDescripcion() {
+		return this.descripcion;
 	}
 
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
-	public String getNombreAccion() {
-		return this.nombreAccion;
+	public Estado getEstado() {
+		return this.estado;
 	}
 
-	public void setNombreAccion(String nombreAccion) {
-		this.nombreAccion = nombreAccion;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 }

@@ -98,7 +98,7 @@ public class LogIn {
 		lblContrasenia.setFont(new Font("Bookman Old Style", Font.BOLD, 10)); 
 		lblContrasenia.setBounds(226, 131, 83, 13);
 		frame.getContentPane().add(lblContrasenia);
-		
+		  
 		
 		pasFContra.setBounds(226, 154, 188, 19);
 		frame.getContentPane().add(pasFContra);
