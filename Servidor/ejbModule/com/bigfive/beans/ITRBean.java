@@ -103,7 +103,7 @@ public class ITRBean implements ITRBeanRemote {
 	}
 	@Override
 	public boolean estaEnUso(Itr itr) {
-		return em.createQuery("SELECT e FROM Usuario where e.itr = :itr").setParameter("itr", itr).getResultList().size() > 0 ? true : false;
+		return em.createQuery("SELECT e FROM Usuario where e.itr LIKE :itr").setParameter("itr", itr).getResultList().size() > 0 ? true : false;
 	}
 	
 }
