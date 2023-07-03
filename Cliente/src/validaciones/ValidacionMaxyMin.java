@@ -3,6 +3,7 @@ package validaciones;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class ValidacionMaxyMin extends InputVerifier {
@@ -29,5 +30,5 @@ public class ValidacionMaxyMin extends InputVerifier {
 		}
 		return true;
 	}
-
+		
 }

@@ -21,6 +21,7 @@ public class AgregarConstancia {
 	JLabel lblTitAgreConst = new JLabel("Constancia");
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
+	
 
 	/**
 	 * Launch the application.

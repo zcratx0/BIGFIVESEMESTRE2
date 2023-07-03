@@ -5,6 +5,7 @@ import javax.ejb.Remote;
 import com.bigfive.entities.Tutor;
 
 @Remote
-public interface TutorBeanRemote extends ICrud<Tutor> {
+
+public interface TutorBeanRemote extends ICrud<Tutor>{
 
 }

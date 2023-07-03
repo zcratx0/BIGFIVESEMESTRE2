@@ -8,6 +8,8 @@ import javax.persistence.PersistenceContext;
 
 import com.bigfive.entities.Tutor;
 
+import com.bigfive.entities.Tutor;
+
 /**
  * Session Bean implementation class TutorBean
  */
@@ -58,4 +60,5 @@ public class TutorBean implements TutorBeanRemote {
 		return em.createQuery("SELECT t FROM Tutor t").getResultList();
 	}
 
+    
 }

@@ -300,6 +300,7 @@ private void initialize() {
 		if (camposCompletos()) {
 			JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente");
 	        guardarCambios(usuario);
+			frame.dispose();
 	    } else {
 	    	JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
 	    }

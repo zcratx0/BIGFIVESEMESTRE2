@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 public class ValidacionEmailPersonal extends InputVerifier {
 	//Acepta paréntesis al inicio y puntos y guiones como separadores
-	private static final Pattern pattern = Pattern.compile("^[\\w._]+@[\\w-]+(?:\\.[\\w-]+)*$");
+	private static final Pattern pattern = Pattern.compile("^[^@\\s]+@[\\w-]+\\.[\\w.-]+$");
 
 	@Override
 	public boolean verify(JComponent input) {
