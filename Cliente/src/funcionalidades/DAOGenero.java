@@ -32,6 +32,7 @@ private static DAOGenero instance = new DAOGenero();
 	public void cargarComboBox(JComboBox cb) {
 		try {
 			Bean.listarElementos().forEach(t -> {
+				//	Prueba
                 System.out.println(t);
 				cb.addItem(t);
 			});
