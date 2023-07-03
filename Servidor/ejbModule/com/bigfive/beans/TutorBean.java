@@ -57,6 +57,7 @@ public class TutorBean implements TutorBeanRemote {
 
 	@Override
 	public List<Tutor> listarElementos() {
+		System.out.println("listanod tutores");
 		return em.createQuery("SELECT t FROM Tutor t").getResultList();
 	}
 

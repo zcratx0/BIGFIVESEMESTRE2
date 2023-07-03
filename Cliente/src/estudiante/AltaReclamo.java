@@ -211,7 +211,7 @@ public class AltaReclamo {
 		tfSemestre.setBounds(200, 262, 227, 19);
 		frame.getContentPane().add(tfSemestre);
 		tfSemestre.setColumns(10);
-		tfSemestre.setInputVerifier(new ValidacionMaxyMin(1,1));
+
 		tfSemestre.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloNumeros(e);
@@ -288,6 +288,9 @@ public class AltaReclamo {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
+	}
+
+	private void ValidadorNumerosUnoAlOcho(String text) {
 	}
 
 	public void guardarCambios() {

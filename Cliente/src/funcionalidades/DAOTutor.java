@@ -4,6 +4,7 @@ import javax.naming.InitialContext;
 import javax.swing.JComboBox;
 
 import com.bigfive.beans.TutorBeanRemote;
+import com.bigfive.entities.Rol;
 import com.bigfive.entities.Tutor;
 
 public class DAOTutor extends DAO<TutorBeanRemote> {
@@ -20,7 +21,13 @@ public class DAOTutor extends DAO<TutorBeanRemote> {
 		return instance;
 	}
 
-    public void cargarComboBox(JComboBox<Tutor> tfDocente) {
-    }
-	
+    public void cargarComboBox(JComboBox<Tutor> cb)  {
+		try {
+			this.getBean().listarElementos().forEach(t -> {
+				cb.addItem(t);
+			});
+		} catch (Exception e) {
+			
+		}
+	}
 }
