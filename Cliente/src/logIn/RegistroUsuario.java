@@ -38,6 +38,7 @@ import funcionalidades.DAOEstudiante;
 import funcionalidades.DAOGenero;
 import funcionalidades.DAOITR;
 import funcionalidades.DAORol;
+import funcionalidades.DAOTutor;
 import funcionalidades.DAOUsuario;
 import utils.DatosFalsos;
 import utils.TBFFecha;
@@ -413,6 +414,7 @@ public class RegistroUsuario {
 					tutor.setArea(area);
 					tutor.setRol(rol);
 					tutor.setTipo(null);
+					resultado = DAOTutor.getInstance().getBean().crear(tutor);
 
 				}
 			} else {
