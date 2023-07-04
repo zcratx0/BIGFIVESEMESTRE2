@@ -133,7 +133,7 @@ public class PrincipalEstudiante {
 			//Escolaridad
 		btnEscolaridad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DescargarEscolaridad.main(null);
+				DescargarEscolaridad.main(usuarioEstudiante);
 			}
 		});
 		btnEscolaridad.setFont(new Font("Tahona", Font.BOLD, 10));

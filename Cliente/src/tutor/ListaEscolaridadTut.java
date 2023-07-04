@@ -12,10 +12,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import com.bigfive.entities.Estudiante;
 
 import analista.Escolaridad;
 import analista.ListaAuxITR;
 import analista.PrincipalAnalista;
+import funcionalidades.DAOAnalista;
+import funcionalidades.DAOEstudiante;
 
 public class ListaEscolaridadTut {
 
@@ -24,6 +29,7 @@ public class ListaEscolaridadTut {
 	JLabel lblEscPorEst = new JLabel("Escolaridad de estudiantes");
 	JButton btnMostrarEsc = new JButton("Mostrar Escolaridad");
 	JButton btnAtras = new JButton("Atrás");
+	JTable tablaEsc;
 
 	/**
 	 * Launch the application.
@@ -71,7 +77,7 @@ public class ListaEscolaridadTut {
 
 		String[] columnasEsc = { "Nombre", "Apellido", "Cédula" };
 
-		JTable tablaEsc = new JTable(datosEsc, columnasEsc);
+		tablaEsc = new JTable(datosEsc, columnasEsc);
 		JScrollPane scrollPaneEsc = new JScrollPane(tablaEsc);
 		scrollPaneEsc.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		scrollPaneEsc.setBackground(Color.decode("#f3f4f6"));
@@ -82,14 +88,20 @@ public class ListaEscolaridadTut {
 		// Mostrar Escolaridad
 		btnMostrarEsc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscolaridadTut.main(null);
-				frame.dispose();
+				if (tablaEsc.getSelectedRow() > -1) {
+					if (tablaEsc.getModel().getValueAt(tablaEsc.getSelectedRow(), 0) instanceof Estudiante) {
+						Estudiante estudiante = (Estudiante) tablaEsc.getModel().getValueAt(tablaEsc.getSelectedRow(), 0);
+						
+						frame.dispose();
+					}
+				}
 			}
 		});
 		btnMostrarEsc.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnMostrarEsc.setForeground(Color.decode("#f0f9ff"));
 		btnMostrarEsc.setBackground(Color.decode("#0284c7"));
 		btnMostrarEsc.setBounds(309, 451, 145, 32);
+		btnMostrarEsc.setEnabled(false);
 		frame.getContentPane().add(btnMostrarEsc);
 
 		// Atras
@@ -99,7 +111,7 @@ public class ListaEscolaridadTut {
 		btnAtras.setBounds(193, 451, 96, 32);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//PrincipalTutor.main(null);
+				PrincipalTutor.main(null);
 				frame.dispose();
 			}
 		});
@@ -110,6 +122,30 @@ public class ListaEscolaridadTut {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
+		
+		//	TODO CARGAR DATOS
+		cargarEstudiantes();
+		
+	}
+	
+	
+	public void cargarEstudiantes() {
+		DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addColumn("Estudiante");
+		tableModel.addColumn("Nombre");
+		tableModel.addColumn("Apellido");
+		tableModel.addColumn("Cédula");
+		DAOEstudiante.getInstance().getBean().listarElementos().forEach(e -> {
+			Object[] row = {e,  e.getUsuario().getNombre(), e.getUsuario().getApellido(), e.getUsuario().getDocumento()};
+			tableModel.addRow(row);
+		});
+		
+		tablaEsc.setModel(tableModel);
+		tablaEsc.getSelectionModel().addListSelectionListener(e -> {
+			btnMostrarEsc.setEnabled(true);
+		});
+		tablaEsc.removeColumn(tablaEsc.getColumnModel().getColumn(0));
 
 	}
+	
 }

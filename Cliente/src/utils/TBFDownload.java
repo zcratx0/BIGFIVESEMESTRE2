@@ -2,6 +2,7 @@ package utils;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -69,16 +70,41 @@ public class TBFDownload {
 		writer.newLine();
 		writer.newLine();
 		writer.newLine();
-		
-		
-		
         writer.endText();
 		
-        String[][] materias = {
-           		{"UNIDAD CURRICULAR", "Créd", "Dur", "Tip", "Año", "Conv", "Calificación"}
-         };
+        
+        //	Cargar Datos de la unidad
+        
+        ArrayList<ArrayList<String>> materias = new ArrayList<>();	//	Almacenarlo en una lista para trabajar de forma más simple
+        
+        String[] materiasTitle = {"Unidad Curricular", "Créd", "Dur", "Tip", "Año", "Conv", "Calificación"};	//	Cargar lo que será los nombres de las columnas.
+        
+        materias.add(new ArrayList<String>());
+        for (int i = 0; i < materiasTitle.length; i++) {
+        	materias.get(0).add(materiasTitle[i]);
+        }
         
         
+        System.out.println("La lista de escolaridad tiene el tamaño de " + escoList.size());
+        
+        escoList.forEach(esco -> {
+        	//TODO	Quitar los comentario.
+        	System.out.println("Cargando " + escoList.indexOf(esco) + "- " + esco.getUnidadCurricular());
+        	ArrayList<String> escolaridad = new ArrayList<>();
+        	try {
+        		escolaridad.add(esco.getUnidadCurricular()); 
+        		escolaridad.add(esco.getCredito());
+        		escolaridad.add(esco.getDuracion());
+        		escolaridad.add(esco.getTipo());
+        		escolaridad.add(esco.getAnio());
+        		escolaridad.add(esco.getConv());
+        		escolaridad.add(esco.getCalificacion());
+        		
+            	materias.add(escolaridad);
+        	} catch (Exception e) {
+				System.out.println("Tamaño de la lista: " + materias.size() + "\n" + e.getMessage());
+			}
+        });
         
         float margin = 50;
         float yStart = pagina.getMediaBox().getHeight() - margin;
@@ -86,8 +112,8 @@ public class TBFDownload {
         float yPosition = yStart - 150;
         float bottomMargin = 70;
         
-        int rows = materias.length;
-        int cols = materias[0].length;
+        int rows = materias.size();
+        int cols = materias.get(0).size();
         float rowHeight = 20;
         float tableRowStart = yPosition;
 
@@ -100,66 +126,27 @@ public class TBFDownload {
         float textY = yPosition - 15;
         float textX = margin + cellMargin;
         float cellTextY = textY - 5;
-
-        
-        
-        
+ 
        
-        /* 	OLD
         for (int i = 0; i < rows; i++) {
             textY -= rowHeight;
             for (int j = 0; j < cols; j++) {
-                String text = materias[i][j];
-                float cellTextWidth = PDType1Font.TIMES_ROMAN.getStringWidth(text) / 1000 * 12;
+                String text = materias.get(i).get(j);
+                float cellTextWidth = (text == null ? 12 : PDType1Font.TIMES_ROMAN.getStringWidth(text)) / 1000 * 12;
                 writer.setFont(PDType1Font.TIMES_ROMAN, 12);
                 if (i == 0) {
                 	writer.setFont(PDType1Font.TIMES_BOLD, 24);
                 }
                 float cellWidthMargin = textX + (cellWidth - cellTextWidth) / 2;
-
                 writer.beginText();
                 writer.setFont(PDType1Font.TIMES_ROMAN, 12);
                 writer.newLineAtOffset(cellWidthMargin, textY);
-                writer.showText(text);
+                if (text == null) writer.showText("null");
+                else writer.showText(text);
                 writer.endText();
-                
                 textX += cellWidth;
             }
             textX = margin + cellMargin;
-        }
-        
-        */
-        for (int i = 0; i < escoList.size(); i++) {
-            textY -= rowHeight;
-            Escolaridad eso = escoList.get(i);
-            try {
-            	write(writer, eso.getUnidadCurricular(), textX, textY, cellWidth);
-            	textX += cellWidth;
-            	
-            	write(writer, eso.getCredito(), textX, textY, cellWidth);
-            	textX += cellWidth;
-            
-            	write(writer, eso.getDuracion(), textX, textY, cellWidth);
-            	textX += cellWidth;
-            	
-            	write(writer, eso.getTipo(), textX, textY, cellWidth);
-            	textX += cellWidth;
-
-            	write(writer, eso.getAnio(), textX, textY, cellWidth);
-            	textX += cellWidth;
-
-            	write(writer, eso.getConv(), textX, textY, cellWidth);
-            	textX += cellWidth;
-            
-            	write(writer, eso.getCalificacion(), textX, textY, cellWidth);
-            	textX += cellWidth;
-            	
-            } catch (Exception e) {
-            	System.out.println(e.getMessage());
-			}
-            
-
-            textX = margin + cellMargin;            //	FIN DE LA ESCOLARIDAD
         }
         
         
@@ -170,17 +157,6 @@ public class TBFDownload {
 		documento.close();
 	}
 	
-	public void write(PDPageContentStream writer, String text, float textX, float textY, float cellWidth) throws IOException {
-		float cellTextWidth = PDType1Font.TIMES_ROMAN.getStringWidth(text) / 1000 * 12;
-        float cellWidthMargin = textX + (cellWidth - cellTextWidth) / 2;
-        writer.beginText();
-        
-        writer.setFont(PDType1Font.TIMES_ROMAN, 12);
-        writer.newLineAtOffset(cellWidthMargin, textY);
-        writer.showText(text);      
-        
-        writer.endText();
-	}
 	
 	/**
 	 * @return the instance
