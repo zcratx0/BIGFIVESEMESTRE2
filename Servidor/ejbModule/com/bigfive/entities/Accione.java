@@ -1,4 +1,4 @@
-package entities;
+package com.bigfive.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
