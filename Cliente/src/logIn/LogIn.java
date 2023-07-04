@@ -147,7 +147,7 @@ public class LogIn {
 				if (usuario.getEstado() == 0) {JOptionPane.showMessageDialog(null, "USUARIO NO HABILITADO");}
 				else {
 					System.out.println("tipo: " + tipo);
-					// Evlua que tipo de usuario ingresa
+					// Evalua que tipo de usuario ingresa
 					if (tipo == 0) {
 						PrincipalAnalista.mostrarAnalista(usuario);
 						frame.dispose();
@@ -164,6 +164,7 @@ public class LogIn {
 				}
 			} catch(Exception e1) {
 				Mensajes.MostrarError("Usuario o Contraseña incorrecta");
+				e1.printStackTrace();
 			}
 			
 		});
