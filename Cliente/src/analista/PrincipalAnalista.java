@@ -37,7 +37,6 @@ public class PrincipalAnalista {//Atributos
 	
 	private Usuario usuarioAnalista = null;
 	
-	
 
 	/**
 	 * Launch the application.

@@ -302,10 +302,7 @@ public class DatosUsuario {
 		//	FUNCIONALIDAD
 		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
 		DAOITR.getInstance().cargarComboBox(cBoxItr);
-		DAOGenero.getInstance().cargarComboBox(cBoxGenero);
-		
-		
-		
+		DAOGenero.getInstance().cargarComboBox(cBoxGenero);	
 		
 
 		

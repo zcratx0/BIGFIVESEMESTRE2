@@ -7,4 +7,6 @@ import com.bigfive.entities.Evento;
 @Remote
 public interface EventoBeanRemote extends ICrud<Evento>{
 
+	void actualizar();
+
 }

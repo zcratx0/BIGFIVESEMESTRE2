@@ -58,12 +58,18 @@ public class Evento implements Serializable {
 		this.fechaHoraIncio = fechaHoraIncio;
 	}
 
-	public String getTítulo() {
+	public String getTitulo() {
 		return this.titulo;
 	}
 
-	public void setTítulo(String título) {
+	public void setTitulo(String título) {
 		this.titulo = título;
 	}
+
+	@Override
+	public String toString() {
+		return idEvento + "- " + titulo;
+	}
+	
 
 }

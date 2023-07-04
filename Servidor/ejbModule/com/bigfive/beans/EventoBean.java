@@ -33,7 +33,7 @@ public class EventoBean implements EventoBeanRemote {
     	System.out.println("CARGANDO EVENTOS DE LA BASE DE DATOS");
     	this.eventos = em.createQuery("SELECT e FROM Evento e").getResultList();
     	this.eventos.forEach(e -> {
-    		System.out.println(e.getIdEvento() + " - " + e.getTítulo());
+    		System.out.println("EVENTO: " + e.getIdEvento() + " - " + e.getTitulo());
     	});
     }
     
@@ -75,6 +75,10 @@ public class EventoBean implements EventoBeanRemote {
 	@Override
 	public List<Evento> listarElementos() {
 		return this.eventos;
+	}
+	@Override
+	public void actualizar() {
+		this.eventos = em.createQuery("SELECT e FROM Evento e").getResultList();
 	}
 
 }

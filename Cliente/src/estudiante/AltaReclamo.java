@@ -13,12 +13,14 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Evento;
 import com.bigfive.entities.Reclamo;
 import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
 import analista.ListaReclamo;
+import funcionalidades.DAOEvento;
 import funcionalidades.DAOReclamo;
 import funcionalidades.DAOTutor;
 import utils.DateLabelFormatter;
@@ -67,15 +69,18 @@ public class AltaReclamo {
 	JTextArea taDescrip = new JTextArea();
 	JLabel lblNomEvento = new JLabel("Nombre del evento");
 	JTextField tfNombEvento = new JTextField();
+	JComboBox<Evento> cBoxEvento = new JComboBox<Evento>();
+	
 	JLabel lblNombAct = new JLabel("Nombre de la actividad");
 	JTextField tfNombAct = new JTextField();
 	JLabel lblSemestre = new JLabel("Semestre *");
 	JTextField tfSemestre = new JTextField();
 	JLabel lblFecha = new JLabel("Fecha *");
 	JLabel lblDocente = new JLabel("Docente *");
-	JComboBox<Tutor> tfDocente = new JComboBox<>();
+	JComboBox<Tutor> cBoxDocente = new JComboBox<>();
 	JLabel lblCredito = new JLabel("Crédito *");
-	JTextField tfCredito = new JTextField();
+	JSpinner tfCredito = new JSpinner();
+	
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
 	JDatePickerImpl datePicker;
@@ -192,7 +197,12 @@ public class AltaReclamo {
 		lblNomEvento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblNomEvento.setBounds(40, 180, 128, 13);
 		frame.getContentPane().add(lblNomEvento);
-
+		
+		
+		//	ComboBox Evento
+		cBoxEvento.setBounds(200, 182, 227, 19);
+		frame.getContentPane().add(cBoxEvento);
+		/*
 		tfNombEvento.setBounds(200, 182, 227, 19);
 		tfNombEvento.setInputVerifier(new ValidacionMaxyMin(0,62));
 		tfNombEvento.addKeyListener(new KeyAdapter() {
@@ -202,7 +212,8 @@ public class AltaReclamo {
 		});
 		frame.getContentPane().add(tfNombEvento);
 		tfNombEvento.setColumns(10);
-
+		*/
+		
 		// Nombre de la actividad
 		lblNombAct.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblNombAct.setBounds(40, 220, 144, 13);
@@ -276,9 +287,9 @@ public class AltaReclamo {
 		lblDocente.setBounds(40, 340, 77, 13);
 		frame.getContentPane().add(lblDocente);
 
-		tfDocente.setBounds(200, 342, 227, 19);
-		frame.getContentPane().add(tfDocente);
-		DAOTutor.getInstance().cargarComboBox(tfDocente);
+		cBoxDocente.setBounds(200, 342, 227, 19);
+		frame.getContentPane().add(cBoxDocente);
+		DAOTutor.getInstance().cargarComboBox(cBoxDocente);
 
 		// Crédito
 		lblCredito.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -287,19 +298,18 @@ public class AltaReclamo {
 
 		tfCredito.setBounds(200, 382, 227, 19);
 		frame.getContentPane().add(tfCredito);
-		tfCredito.setInputVerifier(new ValidacionMaxyMin(1,100));
-		tfCredito.setColumns(10);
-		tfCredito.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidarInputs.ValidarSoloNumeros(e);
-			}
-		});
+//		tfCredito.setInputVerifier(new ValidacionMaxyMin(1,100));
+//		tfCredito.addKeyListener(new KeyAdapter() {
+//			public void keyTyped(KeyEvent e) {
+//				ValidarInputs.ValidarSoloNumeros(e);
+//			}
+//		});
 
 		// Botón Confirmar
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(!camposCompletos() || camposActEven()) {
+				Date fechaNac;
+				if(!camposCompletos()) {
 					Mensajes.MostrarError("Por favor, complete todos los campos necesarios antes de confirmar.");
 				}
 				else {
@@ -331,6 +341,11 @@ public class AltaReclamo {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
+		
+		//	Cargar Datos
+		DAOEvento.getInstance().cargarComboBox(cBoxEvento);
+		DAOTutor.getInstance().cargarComboBox(cBoxDocente);
+		
 	}
 
 	private void ValidadorNumerosUnoAlOcho(String text) {
@@ -341,16 +356,38 @@ public class AltaReclamo {
 		reclamo.setEstudiante(estudiante);
 		reclamo.setTitulo(tfTitReclamo.getText());
 		reclamo.setSemestre(tfSemestre.getText());
-		// reclamo.setEvento();
+		reclamo.setTutor((Tutor)cBoxDocente.getSelectedItem());
+		reclamo.setCredito((Integer) tfCredito.getValue());
+		if (tfNombAct.getText().isEmpty()) {
+			try {
+				reclamo.setEvento((Evento)cBoxEvento.getSelectedItem());
+				DAOEvento.getInstance().getBean().modificar(reclamo.getEvento());	
+			} catch (Exception e) {
+				// TODO Borrar el comentairo. Esto es porque paso de arreglarlo.
+			}
+		} else {
+			reclamo.setNombreActividad(tfNombAct.getText());
+		}
+		
 		try {
+			//	Fecha del registro
 			LocalDateTime fechaRegistro = LocalDateTime.now();  
-			reclamo.setFechaRegistro((Date) new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(fechaRegistro.toString()));
+			reclamo.setFechaRegistro((Date) new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS").parse(fechaRegistro.toString()));
 			System.out.println("Fecha Registro: " + fechaRegistro.toString());
 			
-			Date fechaNac = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(tfFech.getText());
+
+			//	Fecha del Reclamo
+			Date fechaNac = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(datePicker.getModel().getDay() + "/" + datePicker.getModel().getMonth() + "/" + datePicker.getModel().getYear() + " " + new SimpleDateFormat("HH:mm").format(timeSpinner.getModel().getValue()));
+			System.out.println("Fecha Reclamo: " + fechaNac);
 			reclamo.setFechaHora(fechaNac);
+			
+			//	Fecha de Modificación
+			//	TODO Agregar a la base de datos y al Bean
+			
 			System.out.println("Fecha Evento: " + fechaNac);
 			Mensajes.MostrarExito("Se ha guardado correctamente");
+			
+			
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -364,29 +401,29 @@ public class AltaReclamo {
 	}
 
 	public void cargarDatos() {
-		if (reclamo.getDetalle() != null)
-			taDescrip.setText(reclamo.getDetalle());
 		if (reclamo.getFechaHora() != null) {
 			Calendar calendario = Calendar.getInstance();
 			calendario.setTime(reclamo.getFechaHora());
 			datePicker.getModel().setDate(calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH));
 			//TODO Terminar esto timeSpinner.setValue(reclamo.getFechaHora());
 		}
-			
-			
-			
 		if (reclamo.getTitulo() != null)
-			taDescrip.setText(reclamo.getTitulo());
+			tfTitReclamo.setText(reclamo.getTitulo());
+		if (reclamo.getDetalle() != null)
+			taDescrip.setText(reclamo.getDetalle());
 		if (reclamo.getSemestre() != null)
-			taDescrip.setText(reclamo.getSemestre());
+			tfSemestre.setText(reclamo.getSemestre());
+		if (reclamo.getNombreActividad() != null)
+			tfNombAct.setText(reclamo.getNombreActividad());
+		if (reclamo.getCredito() != null)
+			tfCredito.setValue(reclamo.getCredito());
 
 	}
 
 	// validar que todos los campos esten llenos antes de guardar
 	private boolean camposCompletos() {
 		return !tfTitReclamo.getText().isEmpty() && 
-				!tfSemestre.getText().isEmpty() && 
-				!tfCredito.getText().isEmpty();
+				!tfSemestre.getText().isEmpty();
 					
 	} 
 	//TODO Modificar esta validacion

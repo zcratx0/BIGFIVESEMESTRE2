@@ -9,7 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -23,13 +22,14 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.bigfive.entities.EnumDepartamentos;
+import com.bigfive.entities.Genero;
 import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
 import funcionalidades.DAODepartamento;
+import funcionalidades.DAOGenero;
 import funcionalidades.DAOITR;
 import funcionalidades.DAOUsuario;
-import io.netty.handler.codec.DateFormatter;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -161,7 +161,7 @@ private void initialize() {
 	tfApellido.setColumns(10);
 	tfApellido.setInputVerifier(new ValidacionMaxyMin(2,32));
 	tfApellido.addKeyListener(new KeyAdapter() {
-		public void keyTyped(KeyEvent e) {
+	public void keyTyped(KeyEvent e) {
 			ValidarInputs.ValidarSoloLetras(e);
 		}
 	}); 
@@ -181,7 +181,7 @@ private void initialize() {
 		}
 	});
 	//TODO Revisar porque esto se pude romper!!
-			tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
+	tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
 	
 	
 	
@@ -298,7 +298,7 @@ private void initialize() {
 	btnConfirmar.addActionListener(e -> {
 
 		if (camposCompletos()) {
-			JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente");
+			JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente.\nPor favor reinicie la sesión para cargar los datos actualizados.");
 	        guardarCambios(usuario);
 			frame.dispose();
 	    } else {
@@ -331,7 +331,7 @@ private void initialize() {
 	
 	//	CARGAR DATOS
 	DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
-	
+	DAOGenero.getInstance().cargarComboBox(cBoxGenero);
 	
 }
 	public void cargarDatosAnalista(Usuario usuario) {
@@ -350,7 +350,8 @@ private void initialize() {
 		if (usuario.getDepartamentos() != null) cBoxDepa.setSelectedItem(usuario.getDepartamentos());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
-		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
+		if (usuario.getItr() != null) DAOITR.getInstance().getItrBean().listarElementosHabilitados().forEach(itr -> {if  (usuario.getItr() == itr) cBoxITR.setSelectedIndex(DAOITR.getInstance().getItrBean().listarElementosHabilitados().indexOf(itr));});
+		if (usuario.getGenero() != null) cBoxGenero.setSelectedItem(usuario.getGenero());
 	}
 	public void guardarCambios(Usuario usuario) {
 		//		PROCESAR FECHA DE NACIMIENTO
@@ -358,9 +359,7 @@ private void initialize() {
 			Date fechaNac = new SimpleDateFormat("dd/mm/yyyy").parse(tfFechaNac.getText());
 			System.out.println(fechaNac);
 			usuario.setFechaNacimiento(fechaNac);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
+		} catch (ParseException e1) {	e1.printStackTrace();	}
 		
 		usuario.setNombre(tfNombre.getText());
 		usuario.setApellido(tfApellido.getText());
@@ -372,6 +371,16 @@ private void initialize() {
 		usuario.setLocalidad(tfLoca.getText());
 		usuario.setContrasenia(new String(pasFContra.getPassword()));
 		usuario.setItr((Itr) cBoxITR.getSelectedItem());
+		usuario.setGenero((Genero) cBoxGenero.getSelectedItem());
+		
+		try {
+			DAOGenero.getInstance().getBean().modificar(usuario.getGenero());
+			DAOITR.getInstance().getItrBean().modificar(usuario.getItr());
+			System.out.println(usuario.getItr() + " " + usuario.getGenero());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		DAOUsuario.getInstance().getBean().modificar(usuario);
 		
 		
@@ -383,7 +392,7 @@ private void initialize() {
 	    return !tfNombre.getText().isEmpty()
 	            && !tfApellido.getText().isEmpty()
 	            && !tfDocumento.getText().isEmpty()
-	            // Agregar validación para la fecha de nacimiento aquí
+	            // TODO  Agregar validación para la fecha de nacimiento aquí
 	            && !tfMailPer.getText().isEmpty()
 	            && !tfMailInst.getText().isEmpty()
 	            && !tfTel.getText().isEmpty()
