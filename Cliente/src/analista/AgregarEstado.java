@@ -7,7 +7,14 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import com.bigfive.entities.Estado;
+
+import funcionalidades.DAOEstado;
+import validaciones.Mensajes;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -80,12 +87,17 @@ public class AgregarEstado {
 		
 		
 		//Botones
-			//Guardar
+		//Guardar
 		btnGuardar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnGuardar.setForeground(Color.decode("#f0f9ff"));
 		btnGuardar.setBackground(Color.decode("#0284c7"));
 		btnGuardar.setBounds(226, 140, 85, 21);
 		frame.getContentPane().add(btnGuardar);
+		
+		btnGuardar.addActionListener(e -> {
+			crearEstado();
+		});
+		
 				
 			//Cancelar
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
@@ -103,4 +115,19 @@ public class AgregarEstado {
 		
 		
 	}
+	
+	
+	private void crearEstado() {
+		DAOEstado.getInstance().getBean().actualizar();
+		DAOEstado.getInstance().getBean().listarElementos().forEach(estado -> {
+			if (estado.getNombre().equalsIgnoreCase(tfNombre.getText())) { Mensajes.MostrarError("YA EXISTE EL ESTADO"); return;}
+		});
+		Estado estado = new Estado();		
+		estado.setNombre(tfNombre.getText());
+		estado.setEstado(true);
+		DAOEstado.getInstance().getBean().crear(estado);
+		DAOEstado.getInstance().getBean().actualizar();
+
+	}
+	
 }

@@ -4,16 +4,31 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
+
+import com.bigfive.entities.Estado;
+import com.bigfive.entities.Usuario;
+
+import funcionalidades.DAOArea;
+import funcionalidades.DAOEstado;
+import funcionalidades.DAOEstudiante;
+import funcionalidades.DAOUsuario;
+import utils.Escolaridad;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 
 public class ListaAuxEstados {
@@ -22,10 +37,11 @@ public class ListaAuxEstados {
 	JFrame frame = new JFrame();
 	JLabel lblTitLista = new JLabel("Listado de Estados de reclamos,");
 	JLabel lblTitLista2 = new JLabel(" constancias y justificaciones ");
-	JCheckBox chBoxBaja = new JCheckBox("Baja");
+	JCheckBox chBoxBaja = new JCheckBox("Filtrar por DESHABILITADOS");
 	JButton btnNuevoEst = new JButton("Nuevo estado");
 	JButton btnAtras = new JButton("Atrás");
 	JButton btnModificar = new JButton("Modificar");
+	JTable tablaEst;
 
 	/**
 	 * Launch the application.
@@ -84,6 +100,9 @@ public class ListaAuxEstados {
 		
 		chBoxBaja.setBounds(356, 80, 93, 21);
 		frame.getContentPane().add(chBoxBaja);
+		chBoxBaja.addActionListener(e -> {
+			cargarEstados();
+		});
 		
 		// Tabla
 		Object[][] datosEst = {
@@ -92,7 +111,7 @@ public class ListaAuxEstados {
 
 		String[] columnasEst  = {"Estado", "Dado de Baja"};
 
-		JTable tablaEst = new JTable(datosEst , columnasEst );
+		tablaEst = new JTable(datosEst , columnasEst );
 		JScrollPane scrollPaneEst  = new JScrollPane(tablaEst );
 		scrollPaneEst.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		scrollPaneEst.setBackground(Color.decode("#f3f4f6"));
@@ -139,5 +158,68 @@ public class ListaAuxEstados {
 		btnModificar.setBounds(249, 342, 112, 28);
 		frame.getContentPane().add(btnModificar);
 		
+		
+		
+		//	Cargar Datos
+		
+		cargarEstados();
 	}
+	
+	
+
+	public void cargarEstados() {
+		DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addColumn("Estado");
+		tableModel.addColumn("Nombre");
+		tableModel.addColumn("Estado");
+		tablaEst.setModel(tableModel);
+
+		JComboBox cbEstado = new JComboBox<>();
+		cbEstado.addItem("DESHABILITADO");
+		cbEstado.addItem("HABILITADO");
+		
+		tablaEst.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(cbEstado));
+		
+		DAOEstado.getInstance().getBean().listarElementos().forEach(e -> {
+			int est = 0;
+			if (e.getEstado() == true) est = 1;
+			Object[] row = {e,  e.getNombre(), cbEstado.getItemAt(est)};
+			if (!chBoxBaja.isSelected()) tableModel.addRow(row);
+			else {
+				if (!e.getEstado()) tableModel.addRow(row);
+			}
+		});
+		
+		
+		tablaEst.getSelectionModel().addListSelectionListener(e -> {
+			btnModificar.setEnabled(true);
+		});
+		tablaEst.removeColumn(tablaEst.getColumnModel().getColumn(0));
+		
+		
+		
+		tableModel.addTableModelListener(e -> {
+			if (e.getType() == 0) {
+				String value = (String)tableModel.getValueAt(e.getFirstRow(), e.getColumn());
+				System.out.println(value);
+				Estado estado = (Estado)tablaEst.getModel().getValueAt(e.getFirstRow(), 0);
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro de cambiar el Estado?", "Cambio de estado", JOptionPane.YES_NO_OPTION);
+				 if (confirmacion == JOptionPane.YES_OPTION  ) {
+					if (value.equalsIgnoreCase("habilitado")) {
+						estado.setEstado(true);
+					}
+					else {
+						//	TODO Agregar validación de que no este siendo utilizado.
+						estado.setEstado(false);
+					}
+					DAOEstado.getInstance().getBean().modificar(estado);
+					DAOEstado.getInstance().getBean().actualizar();
+				}
+				 cargarEstados();
+				
+			}
+		} );
+	}
+	
+	
 }

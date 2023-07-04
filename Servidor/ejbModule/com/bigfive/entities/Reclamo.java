@@ -63,6 +63,19 @@ public class Reclamo implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_TUTOR")
 	private Tutor tutor;
+	
+	//bi-directional many-to-one association to Tutor
+	@ManyToOne
+	@JoinColumn(name="ID_ESTADO")
+	private Estado estado;
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 
 	public Reclamo() {
 	}

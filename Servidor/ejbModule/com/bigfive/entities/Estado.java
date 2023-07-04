@@ -14,12 +14,14 @@ public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ESTADO_IDESTADO_GENERATOR" )
+	@SequenceGenerator(name="ESTADO_IDESTADO_GENERATOR", sequenceName="SEQ_ID_ESTADO")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ESTADO_IDESTADO_GENERATOR")
 	@Column(name="ID_ESTADO")
 	private long idEstado;
 
 	private String nombre;
+	
+	private int estado;
 
 	public Estado() {
 	}
@@ -39,5 +41,22 @@ public class Estado implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	public boolean getEstado() {
+		return estado > 0 ? true: false;
+		
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado ? 1 : 0 ;
+		
+	}
+
+	@Override
+	public String toString() {
+		return nombre;
+	}
+	
+	
 
 }
