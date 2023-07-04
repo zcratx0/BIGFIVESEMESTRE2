@@ -131,7 +131,6 @@ public class PrincipalTutor {
 		btnEscolaridad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaEscolaridadTut.main(null);
-				frame.dispose();
 			}
 		});
 		btnEscolaridad.setFont(new Font("Tahona", Font.BOLD, 10));

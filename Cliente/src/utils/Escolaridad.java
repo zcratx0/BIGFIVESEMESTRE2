@@ -1,7 +1,7 @@
 package utils;
 
 public class Escolaridad {
-	// {"UNIDAD CURRICULAR", "Créd", "Dur", "Tip", "Año", "Conv", "Calificación"}
+	
 	private String unidadCurricular;
 	private String credito;
 	private String duracion;
