@@ -152,8 +152,8 @@ public class TBFDownload {
         
         
 		writer.close();	//	Cerramos el editor de texto
-		
-		documento.save(path+".pdf");
+		if (!path.substring(path.lastIndexOf(".")+1).equalsIgnoreCase("pdf")) path += ".pdf";
+		documento.save(path);
 		documento.close();
 	}
 	

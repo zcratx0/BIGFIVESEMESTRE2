@@ -29,6 +29,7 @@ import estudiante.PrincipalEstudiante;
 import funcionalidades.DAOArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 
 public class GUIEscolaridad {
@@ -96,12 +97,31 @@ public class GUIEscolaridad {
 		btnDes.addActionListener(e -> {
 			// Guardar Archivo
 			JFileChooser fileSelector = new JFileChooser();
+			fileSelector.setFileFilter(new FileFilter() {
+				
+				@Override
+				public String getDescription() {
+					return "PDF";
+				}
+				
+				@Override
+				public boolean accept(File f) {
+					if (f.isDirectory()) {
+				        return true;
+				    }
+
+				    String extension = f.getName().substring(f.getName().lastIndexOf(".")+1);
+				    if (extension != null) {
+				        if (extension.equals("pdf")) return true;
+				    }
+					return false;
+				}
+			});
 			int fc = fileSelector.showSaveDialog(frame);
 			if (fc == JFileChooser.APPROVE_OPTION) {
 				File file = fileSelector.getSelectedFile();
 				if (debug)
 					escolaridad(file.getAbsolutePath()); // Si no hay estudiante cargado, vamos a crear uno, esto se
-															// supone es para debug
 				else
 					escolaridad(file.getAbsolutePath(), estudiante); // Al cargar el estudiante lo usamos
 				JOptionPane.showMessageDialog(null, "Descarga Completa");
