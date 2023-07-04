@@ -5,6 +5,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Reclamo;
@@ -15,6 +21,7 @@ import analista.ListaAuxITR;
 import analista.ListaReclamo;
 import funcionalidades.DAOReclamo;
 import funcionalidades.DAOTutor;
+import utils.DateLabelFormatter;
 import utils.TBFFecha;
 import validaciones.Mensajes;
 import validaciones.ValidacionFecha;
@@ -25,6 +32,7 @@ import validaciones.validacionMINMAXTEXT;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -40,8 +48,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 import java.awt.event.ActionEvent;
+import javax.swing.SpringLayout;
 
 public class AltaReclamo {
 
@@ -65,6 +78,8 @@ public class AltaReclamo {
 	JTextField tfCredito = new JTextField();
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
+	JDatePickerImpl datePicker;
+	JSpinner timeSpinner;
 	boolean modificar = false;
 	private final JTextField tfFech = new JTextField();
 	private Reclamo reclamo;
@@ -222,11 +237,39 @@ public class AltaReclamo {
 		lblFecha.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblFecha.setBounds(40, 300, 45, 13);
 		frame.getContentPane().add(lblFecha);
+		
+		
+		//	FECHA
+		UtilDateModel model = new UtilDateModel();
+		Properties datePickerProperties = new Properties();
+		datePickerProperties.put("text.today", "Hoy");
+		datePickerProperties.put("text.month", "Month");
+		datePickerProperties.put("text.year", "Year");
+		
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, datePickerProperties);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		
+		//	Carga la fecha de hoy
+		datePicker.getModel().setDay(LocalDateTime.now().getDayOfMonth());
+		datePicker.getModel().setMonth(LocalDateTime.now().getDayOfMonth());
+		datePicker.getModel().setYear(LocalDateTime.now().getYear());
+		datePicker.getModel().setSelected(true);
 
-		tfFech.setBounds(200, 297, 227, 19);
-		tfFech.setColumns(10);
-		tfFech.setInputVerifier(new ValidacionFecha());
-		frame.getContentPane().add(tfFech);
+		SpringLayout springLayout = (SpringLayout) datePicker.getLayout();
+		springLayout.putConstraint(SpringLayout.SOUTH, datePicker.getJFormattedTextField(), 0, SpringLayout.SOUTH, datePicker);
+		datePicker.setBounds(200, 292, 144, 33);
+		frame.getContentPane().add(datePicker);
+		
+		
+		//	HORA
+		SpinnerDateModel timeModel = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
+		timeSpinner = new JSpinner(timeModel);
+		JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
+        timeSpinner.setEditor(timeEditor);
+		
+		timeSpinner.setBounds(362, 287, 77, 38);
+		frame.getContentPane().add(timeSpinner);
+		
 
 		// Docente
 		lblDocente.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -256,7 +299,7 @@ public class AltaReclamo {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(!camposCompletos() || !camposActEven()) {
+				if(!camposCompletos() || camposActEven()) {
 					Mensajes.MostrarError("Por favor, complete todos los campos necesarios antes de confirmar.");
 				}
 				else {
@@ -300,9 +343,13 @@ public class AltaReclamo {
 		reclamo.setSemestre(tfSemestre.getText());
 		// reclamo.setEvento();
 		try {
+			LocalDateTime fechaRegistro = LocalDateTime.now();  
+			reclamo.setFechaRegistro((Date) new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(fechaRegistro.toString()));
+			System.out.println("Fecha Registro: " + fechaRegistro.toString());
+			
 			Date fechaNac = new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(tfFech.getText());
-			System.out.println(fechaNac);
 			reclamo.setFechaHora(fechaNac);
+			System.out.println("Fecha Evento: " + fechaNac);
 			Mensajes.MostrarExito("Se ha guardado correctamente");
 		} catch (ParseException e1) {
 			e1.printStackTrace();
@@ -319,8 +366,15 @@ public class AltaReclamo {
 	public void cargarDatos() {
 		if (reclamo.getDetalle() != null)
 			taDescrip.setText(reclamo.getDetalle());
-		if (reclamo.getFechaHora() != null)
-			tfFech.setText(TBFFecha.getFechaDDYYMMHHMM(reclamo.getFechaHora()));
+		if (reclamo.getFechaHora() != null) {
+			Calendar calendario = Calendar.getInstance();
+			calendario.setTime(reclamo.getFechaHora());
+			datePicker.getModel().setDate(calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH));
+			//TODO Terminar esto timeSpinner.setValue(reclamo.getFechaHora());
+		}
+			
+			
+			
 		if (reclamo.getTitulo() != null)
 			taDescrip.setText(reclamo.getTitulo());
 		if (reclamo.getSemestre() != null)
@@ -332,14 +386,13 @@ public class AltaReclamo {
 	private boolean camposCompletos() {
 		return !tfTitReclamo.getText().isEmpty() && 
 				!tfSemestre.getText().isEmpty() && 
-				!tfCredito.getText().isEmpty() &&
-				!tfCredito.getText().isEmpty() ;
+				!tfCredito.getText().isEmpty();
 					
 	} 
 	//TODO Modificar esta validacion
 		private boolean camposActEven() {
-			return !tfNombAct.getText().isEmpty() 
-					&& !tfNombEvento.getText().isEmpty();
+			return (!tfNombAct.getText().isEmpty() 
+					&& !tfNombEvento.getText().isEmpty()) || (tfNombAct.getText().isEmpty() && tfNombEvento.getText().isEmpty());
 		}
 	}
 
