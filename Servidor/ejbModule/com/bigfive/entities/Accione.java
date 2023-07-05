@@ -1,6 +1,8 @@
 package com.bigfive.entities;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 
 
@@ -26,6 +28,30 @@ public class Accione implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_ESTADO")
 	private Estado estado;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_ANALISTA")
+	private Analista analista;
+	
+	@Temporal(TemporalType.DATE)
+	@JoinColumn(name="FECHA_HORA")
+	private Date fechaHora;
+	
+	public Analista getAnalista() {
+		return analista;
+	}
+
+	public void setAnalista(Analista analista) {
+		this.analista = analista;
+	}
+
+	public Date getFechaHora() {
+		return fechaHora;
+	}
+
+	public void setFechaHora(Date fechaHora) {
+		this.fechaHora = fechaHora;
+	}
 
 	public Accione() {
 	}

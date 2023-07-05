@@ -15,6 +15,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
+import com.bigfive.entities.Accione;
+import com.bigfive.entities.Analista;
+import com.bigfive.entities.Estado;
+import com.bigfive.entities.RecibeReclamo;
+import com.bigfive.entities.Reclamo;
+
+import funcionalidades.DAOAccionReclamo;
+import funcionalidades.DAOEstado;
+import funcionalidades.DAORecibeReclamo;
+import funcionalidades.DAOReclamo;
+
 public class RegistroAccReclamo {
 
 	//Atributos
@@ -30,6 +41,7 @@ public class RegistroAccReclamo {
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
 	JTextField tfFechHora = new JTextField();
+	Analista analista = new Analista();
 
 	/**
 	 * Launch the application.
@@ -87,13 +99,15 @@ public class RegistroAccReclamo {
 		
 		
 		//Fecha y hora
+		/* TODO Borrar 
 		lblFechaHora.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblFechaHora.setBounds(41, 76, 91, 13);
-		frame.getContentPane().add(lblFechaHora);
+		//frame.getContentPane().add(lblFechaHora);
 		
 		tfFechHora.setBounds(188, 73, 211, 19);
-		frame.getContentPane().add(tfFechHora);
+		//frame.getContentPane().add(tfFechHora);
 		tfFechHora.setColumns(10);
+		*/
 		
 		//Analista
 		lblAnalista.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -149,5 +163,41 @@ public class RegistroAccReclamo {
 		});
 		frame.getContentPane().add(btnCancelar);
 		
+		
+		//	CARGAR DATOS
+		cBoxEstado.addItem("INGRESADO");
+		DAOEstado.getInstance().cargarComboBox(cBoxEstado);
+		
 	}
+	
+	public void guardarCambios(Reclamo reclamo) {
+		Estado estado = (Estado) cBoxEstado.getSelectedItem();
+		reclamo.setEstado(estado);
+		
+		try {
+			DAOReclamo.getInstance().getBean().modificar(reclamo);
+		} catch (Exception e) {
+		}
+		Accione accion = new Accione();
+		accion.setDescripcion(tAreaAgregarCom.getText());
+		accion.setEstado(estado);
+		accion.setAnalista(this.analista);
+		try {
+			DAOAccionReclamo.getInstance().getBean().crear(accion);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		RecibeReclamo recibe = new RecibeReclamo();
+		recibe.setReclamo(reclamo);
+		recibe.setAccione(accion);
+		try {
+			DAORecibeReclamo.getInstance().getBean().crear(reclamo);
+		}
+		
+		
+		
+	}
+	
 }

@@ -14,7 +14,7 @@ public class DAOArea extends DAO<AreaBeanRemoteRemote> {
 	}
 	
 	public DAOArea() {
-		initilize("ejb:/ProyectoEJB/AreaBeanRemote!com.bigfive.beans.AreaBeanRemoteRemote");
+		initilize("ejb:/ProyectoEJB/AccionesBean!com.bigfive.beans.AccionesBeanRemote");
 	}
 	
 	public void cargarComboBox(JComboBox<Area> cb) {
