@@ -17,6 +17,8 @@ import com.bigfive.entities.Itr;
 
 import funcionalidades.DAODepartamento;
 import funcionalidades.DAOITR;
+import validaciones.ValidacionMaxyMin;
+import validaciones.ValidarInputs;
 
 import java.awt.SystemColor;
 
@@ -26,6 +28,8 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.awt.event.ActionEvent;
 
@@ -124,6 +128,12 @@ public class AgregarITR {
 		tfNombre.setBounds(142, 76, 274, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
+		tfNombre.setInputVerifier(new ValidacionMaxyMin(2,32));
+		tfNombre.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidarInputs.ValidarSoloLetras(e);
+			}
+		}); 
 		
 		
 		//Departamento
