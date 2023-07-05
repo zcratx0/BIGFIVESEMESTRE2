@@ -16,6 +16,8 @@ import estudiante.ListaConstancias;
 import estudiante.ListaReclamoEstu;
 import estudiante.PerfilEstudiantes;
 import estudiante.PrincipalEstudiante;
+import logIn.LogIn;
+
 import javax.swing.JPanel;
 
 import com.bigfive.entities.Usuario;
@@ -36,6 +38,7 @@ public class PrincipalAnalista {//Atributos
 	JLabel lblTitAnalista = new JLabel("Analista");
 	
 	private Usuario usuarioAnalista = null;
+	private final JButton btnLogOut = new JButton("LogOut");
 	
 
 	/**
@@ -202,11 +205,25 @@ public class PrincipalAnalista {//Atributos
 				//frame.dispose();
 			}
 		});
-		btnUsuarios.setFont(new Font("Tahona", Font.BOLD, 10));
+		btnUsuarios.setFont(new Font("Tahona", Font.BOLD, 10)); 
 		btnUsuarios.setForeground(Color.decode("#f0f9ff"));
 		btnUsuarios.setBackground(Color.decode("#3b82f6"));
 		btnUsuarios.setBounds(640, 65, 107, 40);
+		
+		//TODO logout
 		frame.getContentPane().add(btnUsuarios);
+		btnLogOut.setFont(new Font("Tahona", Font.BOLD, 10)); 
+		btnLogOut.setForeground(Color.decode("#f0f9ff"));    
+		btnLogOut.setBackground(Color.decode("#0369a1"));
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LogIn.main(null);
+				frame.dispose();
+			}
+		});
+		btnLogOut.setBounds(574, 15, 89, 23);
+		
+		frame.getContentPane().add(btnLogOut);
 
 		
 		
