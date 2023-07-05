@@ -315,7 +315,6 @@ public class AltaReclamo {
 				}
 				else {
 					guardarCambios();
-					frame.dispose();
 				}
 			}
 		});
@@ -399,6 +398,9 @@ public class AltaReclamo {
 		} else {
 			DAOReclamo.getInstance().getBean().crear(reclamo);
 		}
+		
+
+		frame.dispose();
 
 	}
 
