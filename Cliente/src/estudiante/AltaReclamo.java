@@ -57,6 +57,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.awt.event.ActionEvent;
 import javax.swing.SpringLayout;
+import javax.swing.SpinnerNumberModel;
 
 public class AltaReclamo {
 
@@ -74,7 +75,7 @@ public class AltaReclamo {
 	JLabel lblNombAct = new JLabel("Nombre de la actividad");
 	JTextField tfNombAct = new JTextField();
 	JLabel lblSemestre = new JLabel("Semestre *");
-	JTextField tfSemestre = new JTextField();
+	JSpinner tfSemestre = new JSpinner();
 	JLabel lblFecha = new JLabel("Fecha *");
 	JLabel lblDocente = new JLabel("Docente *");
 	JComboBox<Tutor> cBoxDocente = new JComboBox<>();
@@ -234,16 +235,11 @@ public class AltaReclamo {
 		lblSemestre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblSemestre.setBounds(40, 260, 90, 13);
 		frame.getContentPane().add(lblSemestre);
+		tfSemestre.setModel(new SpinnerNumberModel(1, 1, 8, 1));
 
 		tfSemestre.setBounds(200, 262, 227, 19);
 		frame.getContentPane().add(tfSemestre);
-		tfSemestre.setColumns(10);
-
-		tfSemestre.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidarInputs.ValidarSoloNumeros(e);
-			}
-		});
+		
 
 		// Fecha
 		lblFecha.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -299,12 +295,6 @@ public class AltaReclamo {
 
 		tfCredito.setBounds(200, 382, 227, 19);
 		frame.getContentPane().add(tfCredito);
-//		tfCredito.setInputVerifier(new ValidacionMaxyMin(1,100));
-//		tfCredito.addKeyListener(new KeyAdapter() {
-//			public void keyTyped(KeyEvent e) {
-//				ValidarInputs.ValidarSoloNumeros(e);
-//			}
-//		});
 
 		// Botón Confirmar
 		btnConfirmar.addActionListener(new ActionListener() {
@@ -356,7 +346,7 @@ public class AltaReclamo {
 		reclamo.setDetalle(taDescrip.getText());
 		reclamo.setEstudiante(estudiante);
 		reclamo.setTitulo(tfTitReclamo.getText());
-		reclamo.setSemestre(tfSemestre.getText());
+		reclamo.setSemestre(tfSemestre.getValue() + "");
 		reclamo.setTutor((Tutor)cBoxDocente.getSelectedItem());
 		reclamo.setCredito((Integer) tfCredito.getValue());
 		if (tfNombAct.getText().isEmpty()) {
@@ -416,7 +406,7 @@ public class AltaReclamo {
 		if (reclamo.getDetalle() != null)
 			taDescrip.setText(reclamo.getDetalle());
 		if (reclamo.getSemestre() != null)
-			tfSemestre.setText(reclamo.getSemestre());
+			tfSemestre.setValue(Integer.parseInt(reclamo.getSemestre()));
 		if (reclamo.getNombreActividad() != null)
 			tfNombAct.setText(reclamo.getNombreActividad());
 		if (reclamo.getCredito() != null)
@@ -427,7 +417,7 @@ public class AltaReclamo {
 	// validar que todos los campos esten llenos antes de guardar
 	private boolean camposCompletos() {
 		return !tfTitReclamo.getText().isEmpty() && 
-				!tfSemestre.getText().isEmpty();
+				(Integer)tfSemestre.getValue()> 0 && !tfTitReclamo.getText().isEmpty();
 					
 	} 
 	//TODO Modificar esta validacion
