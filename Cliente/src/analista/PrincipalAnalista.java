@@ -133,7 +133,7 @@ public class PrincipalAnalista {//Atributos
 		});
 		frame.getContentPane().add(btnPerfil);
 		
-			//Escolaridad
+		//Escolaridad
 		btnEscolaridad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListaEscolaridad.main(null);

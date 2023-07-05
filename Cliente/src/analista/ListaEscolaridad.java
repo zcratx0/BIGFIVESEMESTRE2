@@ -5,6 +5,9 @@ import utils.GUIEscolaridad;
 import utils.GUIListaEscolaridad;
 
 import java.awt.event.ActionListener;
+
+import javax.swing.JTable;
+
 import java.awt.event.ActionEvent;
 
 public class ListaEscolaridad extends GUIListaEscolaridad {
@@ -23,4 +26,5 @@ public class ListaEscolaridad extends GUIListaEscolaridad {
 			}
 		});
 	}
+	
 }

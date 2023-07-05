@@ -21,7 +21,7 @@ public class ValidacionEmailPersonal extends InputVerifier {
 		}
 		Matcher matcher = pattern.matcher(text);
 		if (!matcher.matches()) {
-			JOptionPane.showMessageDialog(input, "Por favor, ingrese un correo electrónico válido");
+			JOptionPane.showMessageDialog(input, "Por favor, ingrese un correo electrónico válido.\nEl mismo debe contar con un @ y un punto (.)");
 			return false;
 		}
 		return true;

@@ -137,7 +137,6 @@ public class GUIEscolaridad {
 		btnAtras.setBounds(25, 402, 100, 23);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIListaEscolaridad.main(null);
 				frame.dispose();
 			}
 		});

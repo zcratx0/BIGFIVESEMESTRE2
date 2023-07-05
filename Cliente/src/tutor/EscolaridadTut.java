@@ -23,6 +23,7 @@ public class EscolaridadTut extends GUIEscolaridad {
 		getBtnAtras().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				getFrame().dispose();
+				ListaEscolaridadTut.main(null);
 			}
 		});
 	}

@@ -34,13 +34,13 @@ public class DescargarEscolaridad extends GUIEscolaridad {
 	
 	public DescargarEscolaridad() {
 		super();
+		getBtnAtras().removeActionListener(getBtnAtras().getActionListeners()[0]);
 		getBtnAtras().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//PrincipalEstudiante.main(null);
 				getFrame().dispose();
+				System.out.println("Cerro");
 			}
 		});
-		getFrame().getContentPane().add(getBtnAtras());
 	}
 	
 

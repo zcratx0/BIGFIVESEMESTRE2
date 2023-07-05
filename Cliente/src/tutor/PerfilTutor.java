@@ -7,16 +7,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import com.bigfive.entities.Area;
+import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Genero;
+import com.bigfive.entities.Itr;
+import com.bigfive.entities.Rol;
 import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
 
@@ -24,7 +33,11 @@ import analista.ListaAuxITR;
 import estudiante.PerfilEstudiantes;
 import funcionalidades.DAOArea;
 import funcionalidades.DAODepartamento;
+import funcionalidades.DAOGenero;
 import funcionalidades.DAOITR;
+import funcionalidades.DAORol;
+import funcionalidades.DAOTutor;
+import funcionalidades.DAOUsuario;
 import validaciones.ValidacionContrasenia;
 import validaciones.ValidacionEmailInsti;
 import validaciones.ValidacionEmailPersonal;
@@ -65,7 +78,7 @@ public class PerfilTutor {
 	private final JTextField tfFechaNac = new JTextField();
 	private final JLabel lblGenero = new JLabel("Género");
 	private final JComboBox cBoxGenero = new JComboBox();
-
+	private Tutor tutor;
 	/**
 	 * Launch the application.
 	 */
@@ -174,7 +187,7 @@ public class PerfilTutor {
 			}
 		});
 		//TODO Revisar porque esto se pude romper!!
-				tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
+		tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
 		
 		
 		
@@ -293,6 +306,22 @@ public class PerfilTutor {
 		frame.getContentPane().add(btnConfirmar);
 		
 		
+		btnConfirmar.addActionListener(e-> {
+			
+			if (camposCompletos()) {
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar sus datos?",
+						"Confirmación de modificacion", JOptionPane.YES_NO_OPTION);
+				if (confirmacion == JOptionPane.YES_OPTION) {
+					JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente.\nPor favor reinicie la sesión para cargar los datos actualizados.");
+		        	guardarCambios(this.tutor);
+					frame.dispose();
+				}
+		    } else {
+		    	JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+		    }
+		});
+		
+		
 		// Boton Cancelar
 		
 		btnCancelar.addActionListener(new ActionListener() {
@@ -326,6 +355,11 @@ public class PerfilTutor {
 		frame.getContentPane().add(cBoxGenero);
 		
 		
+		//	CARGAR DATOS
+		DAOGenero.getInstance().cargarComboBox(cBoxGenero);
+		DAOArea.getInstance().cargarComboBox(cBoxArea);
+		DAORol.getInstance().cargarComboBox(cBoxRol);
+		
 	}
 	public void cargarDatosTutor(Tutor tutor) {
 		Usuario usuario = null;
@@ -350,8 +384,58 @@ public class PerfilTutor {
 		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
 		if (tutor.getArea() != null) cBoxArea.setSelectedItem(tutor.getArea());
 		//if (tutor.getRol() != null) cBoxRol.setSelectedItem(tutor.getRol());
-
+		this.tutor = tutor;
 		}
+	}
+	
+	
+	public void guardarCambios(Tutor tutor) {
+		//		PROCESAR FECHA DE NACIMIENTO
+		try {
+			Date fechaNac = new SimpleDateFormat("dd/mm/yyyy").parse(tfFechaNac.getText());
+			System.out.println(fechaNac);
+			tutor.getUsuario().setFechaNacimiento(fechaNac);
+		} catch (ParseException e1) {	e1.printStackTrace();	}
+		
+		tutor.getUsuario().setNombre(tfNombre.getText());
+		tutor.getUsuario().setApellido(tfApellido.getText());
+		tutor.getUsuario().setDocumento(tfDocumento.getText());
+		tutor.getUsuario().setMail(tfMailPer.getText());
+		tutor.getUsuario().setMailInstitucional(tfMailInst.getText());
+		tutor.getUsuario().setTelefono(tfTel.getText());
+		tutor.getUsuario().setDepartamentos( (EnumDepartamentos)cBoxDepa.getSelectedItem());
+		tutor.getUsuario().setLocalidad(tfLoca.getText());
+		tutor.getUsuario().setContrasenia(new String(pasFContra.getPassword()));
+		tutor.getUsuario().setItr((Itr) cBoxITR.getSelectedItem());
+		tutor.getUsuario().setGenero((Genero) cBoxGenero.getSelectedItem());
+		
+		try {
+			DAOGenero.getInstance().getBean().modificar(tutor.getUsuario().getGenero());
+			DAOITR.getInstance().getItrBean().modificar(tutor.getUsuario().getItr());
+			System.out.println(tutor.getUsuario().getItr() + " " + tutor.getUsuario().getGenero());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		tutor.setRol((Rol) cBoxRol.getSelectedItem());
+		tutor.setArea((Area) cBoxArea.getSelectedItem());
+		DAOTutor.getInstance().getBean().modificar(tutor);
+		
+		
+	}
+	
+	public boolean camposCompletos() {
+	    return !tfNombre.getText().isEmpty()
+	            && !tfApellido.getText().isEmpty()
+	            && !tfDocumento.getText().isEmpty()
+	            // TODO  Agregar validación para la fecha de nacimiento aquí
+	            && !tfMailPer.getText().isEmpty()
+	            && !tfMailInst.getText().isEmpty()
+	            && !tfTel.getText().isEmpty()
+	            && cBoxDepa.getSelectedItem() != null
+	            && !tfLoca.getText().isEmpty()
+	            && pasFContra.getPassword().length > 0
+	            && cBoxITR.getSelectedItem() != null;
 	}
 }
 

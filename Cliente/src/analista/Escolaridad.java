@@ -10,7 +10,8 @@ public class Escolaridad extends GUIEscolaridad {
 		super();
 		getBtnAtras().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaEscolaridad.main(null);
+				System.out.println("Cerrando");
+				ListaEscolaridad.main(null);				
 				getFrame().dispose();
 			}
 		});

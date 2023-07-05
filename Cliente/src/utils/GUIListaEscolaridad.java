@@ -89,9 +89,7 @@ public class GUIListaEscolaridad {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaEsc.getSelectedRow() > -1) {
 					if (tablaEsc.getModel().getValueAt(tablaEsc.getSelectedRow(), 0) instanceof Estudiante) {
-						Estudiante estudiante = (Estudiante) tablaEsc.getModel().getValueAt(tablaEsc.getSelectedRow(), 0);
-						GUIEscolaridad.main(estudiante);
-						frame.dispose();
+						cargarEscolaridad();
 					}
 				}
 			}
@@ -187,6 +185,9 @@ public class GUIListaEscolaridad {
 		this.tablaEsc = tablaEsc;
 	}
 
-	
+	public void cargarEscolaridad() {
+		Estudiante estudiante = (Estudiante) tablaEsc.getModel().getValueAt(tablaEsc.getSelectedRow(), 0);
+		GUIEscolaridad.main(estudiante);
+	}
 	
 }

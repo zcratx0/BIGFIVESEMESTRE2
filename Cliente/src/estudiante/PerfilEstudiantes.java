@@ -24,6 +24,7 @@ import com.bigfive.entities.Usuario;
 
 import analista.ListaAuxITR;
 import funcionalidades.DAODepartamento;
+import funcionalidades.DAOGenero;
 import funcionalidades.DAOITR;
 import funcionalidades.DAOUsuario;
 import utils.TBFFecha;
@@ -309,9 +310,13 @@ public class PerfilEstudiantes {
 		btnConfirmar.addActionListener(e -> {
 
 		if (camposCompletos()) {
-			JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente");
-	        guardarCambios(usuario);
-			frame.dispose();
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar sus datos?",
+					"Confirmación de modificacion", JOptionPane.YES_NO_OPTION);
+			if (confirmacion == JOptionPane.YES_OPTION) {
+				JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente.\nPor favor reinicie la sesión para cargar los datos actualizados.");
+				guardarCambios(usuario);
+				frame.dispose();
+			}
 	    } else {
 	    	JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
 	    }
@@ -336,6 +341,10 @@ public class PerfilEstudiantes {
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 
+		//	CARGAR DATOS
+		
+		DAOGenero.getInstance().cargarComboBox(cBoxGenero);
+		
 	}
 	
 	public void cargarDatosEstudiantes(Estudiante estudiante) {

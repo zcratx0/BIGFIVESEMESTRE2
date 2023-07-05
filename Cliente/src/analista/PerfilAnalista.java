@@ -298,9 +298,13 @@ private void initialize() {
 	btnConfirmar.addActionListener(e -> {
 
 		if (camposCompletos()) {
-			JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente.\nPor favor reinicie la sesión para cargar los datos actualizados.");
-	        guardarCambios(usuario);
-			frame.dispose();
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar sus datos?",
+					"Confirmación de modificacion", JOptionPane.YES_NO_OPTION);
+			if (confirmacion == JOptionPane.YES_OPTION) {
+				JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente.\nPor favor reinicie la sesión para cargar los datos actualizados.");
+	        	guardarCambios(usuario);
+				frame.dispose();
+			}
 	    } else {
 	    	JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
 	    }
