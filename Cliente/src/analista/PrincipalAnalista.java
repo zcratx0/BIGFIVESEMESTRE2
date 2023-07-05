@@ -31,7 +31,7 @@ public class PrincipalAnalista {//Atributos
 	JButton btnPerfil = new JButton("Perfil");
 	JButton btnEscolaridad = new JButton("Escolaridad");
 	JButton btnReclamos = new JButton("Reclamos");
-	JButton btnMantenimiento = new JButton("Mantenimiento");
+	JButton btnMantenimiento = new JButton("Mantenimiento ITR's");
 	JButton btnUsuarios = new JButton("Usuarios");
 	JLabel lblPerfil = new JLabel("");
 	JLabel lblNombrePerfil = new JLabel("");

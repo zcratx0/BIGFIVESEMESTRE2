@@ -12,7 +12,9 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Reclamo;
@@ -147,6 +149,13 @@ public class ListaReclamo {
 		btnFiltrar.setForeground(Color.decode("#f0f9ff"));
 		btnFiltrar.setBounds(194, 92, 105, 21);
 		frame.getContentPane().add(btnFiltrar);
+		btnFiltrar.addActionListener(e -> {
+			//	FILTRO
+			DefaultTableModel dtm = (DefaultTableModel) tablaRe.getModel();
+			TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
+			tablaRe.setRowSorter(sorter);
+			if (!cBoxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) sorter.setRowFilter(RowFilter.regexFilter(cBoxEstado.getSelectedItem().toString()));			
+		});
 
 		// Limpiar filtro
 		btnLimpiarF.setBackground(Color.decode("#0ea5e9"));
@@ -154,7 +163,13 @@ public class ListaReclamo {
 		btnLimpiarF.setForeground(Color.decode("#f0f9ff"));
 		btnLimpiarF.setBounds(309, 92, 133, 21);
 		frame.getContentPane().add(btnLimpiarF);
+		btnLimpiarF.addActionListener(e -> {
+			DefaultTableModel dtm = (DefaultTableModel) tablaRe.getModel();
+			TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
+			tablaRe.setRowSorter(sorter);
+			sorter.setRowFilter(RowFilter.regexFilter(""));
 
+		});
 		// Tabla
 		Object[][] datosReclamo = {
 
@@ -222,6 +237,7 @@ public class ListaReclamo {
 		
 		
 		//	CARGAR DATOS
+		cBoxEstado.addItem("INGRESADO");
 		DAOEstado.getInstance().cargarComboBox(cBoxEstado);
 
 	}

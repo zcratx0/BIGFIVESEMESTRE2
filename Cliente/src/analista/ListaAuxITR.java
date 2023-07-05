@@ -143,19 +143,19 @@ public class ListaAuxITR {
 		btnHabilitar.setBackground(Color.decode("#0284c7"));
 		btnHabilitar.addActionListener(e -> {
 			Itr itr = (Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0);
-			if (itr.getEstado()== 1){
+			if (itr.getEstado() == 1) {
 				JOptionPane.showMessageDialog(null, "Este ITR ya se encuentra habilitado");
+			} else {
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea habilitar este ITR?",
+						"Confirmación de Habilitación", JOptionPane.YES_NO_OPTION);
+				if (confirmacion == JOptionPane.YES_OPTION) {
+					itr.setEstado(1);
+					DAOITR.getInstance().getItrBean().modificar(itr);
+					cargarTabla();
 				}
-					else {
-			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea habilitar este ITR?", "Confirmación de Habilitación", JOptionPane.YES_NO_OPTION);
-								if (confirmacion == JOptionPane.YES_OPTION ) {
-									itr.setEstado(1);
-									DAOITR.getInstance().getItrBean().modificar(itr);
-           							cargarTabla();		
-		}
-		}
-	
-	});
+			}
+
+		});
 		frame.getContentPane().add(btnHabilitar);
 
 		// Agregar

@@ -95,7 +95,14 @@ public class AgregarEstado {
 		frame.getContentPane().add(btnGuardar);
 		
 		btnGuardar.addActionListener(e -> {
-			crearEstado();
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea crear el Estado " + tfNombre.getText() + "? ",
+					"Confirmación de Agregar Estado", JOptionPane.YES_NO_OPTION);
+			if (confirmacion == JOptionPane.YES_OPTION) {
+				if (crearEstado()) {
+					Mensajes.MostrarExito("ESTADO CREADO!");
+					frame.dispose();
+				}
+			}
 		});
 		
 				
@@ -117,17 +124,17 @@ public class AgregarEstado {
 	}
 	
 	
-	private void crearEstado() {
+	private boolean crearEstado() {
 		DAOEstado.getInstance().getBean().actualizar();
-		DAOEstado.getInstance().getBean().listarElementos().forEach(estado -> {
-			if (estado.getNombre().equalsIgnoreCase(tfNombre.getText())) { Mensajes.MostrarError("YA EXISTE EL ESTADO"); return;}
-		});
+		for (Estado estado : DAOEstado.getInstance().getBean().listarElementos()) {
+			if (estado.getNombre().equalsIgnoreCase(tfNombre.getText())) { Mensajes.MostrarError("YA EXISTE EL ESTADO"); return false;}
+		}
 		Estado estado = new Estado();		
 		estado.setNombre(tfNombre.getText());
 		estado.setEstado(true);
 		DAOEstado.getInstance().getBean().crear(estado);
 		DAOEstado.getInstance().getBean().actualizar();
-
+		return true;
 	}
 	
 }
