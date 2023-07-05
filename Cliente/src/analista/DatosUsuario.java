@@ -191,7 +191,7 @@ public class DatosUsuario {
 		tfFechaNac.setBounds(195, 262, 260, 20);
 		tfFechaNac.setColumns(10);
 		frame.getContentPane().add(tfFechaNac);
-		
+		tfFechaNac.setEnabled(false);
 		//Email Personal
 		lblEmailP.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblEmailP.setBounds(39, 310, 265, 13);
@@ -279,7 +279,11 @@ public class DatosUsuario {
 		btnGuardar.setBounds(303, 678, 107, 32);
 		btnGuardar.setEnabled(false);
 		btnGuardar.addActionListener(e -> {
-			if (user != null) actualizarDatos();
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea guardar la Modificación?", "Guardar Modificación", JOptionPane.YES_NO_OPTION);
+			if (confirmacion == JOptionPane.YES_OPTION  ) {
+				if (user != null) actualizarDatos();
+				frame.dispose();
+			}
 		});
 		frame.getContentPane().add(btnGuardar);
 			
@@ -316,7 +320,7 @@ public class DatosUsuario {
 		if (user.getNombre() != null) tfNombre.setText(user.getNombre());
 		if (user.getApellido() != null) tfApellido.setText(user.getApellido());
 		if (user.getDocumento() != null) tfCedula.setText(user.getDocumento());
-		if (user.getFechaNacimiento() != null) lblFechNac.setText(user.getFechaNacimiento().toString());
+		if (user.getFechaNacimiento() != null) tfFechaNac.setText(user.getFechaNacimiento().toString());
 		if (user.getMail() != null) tfEmailP.setText(user.getMail());
 		if (user.getMailInstitucional() != null) tfEmailU.setText(user.getMailInstitucional());
 		if (user.getTelefono() != null) tfTel.setText(user.getTelefono());
@@ -335,8 +339,9 @@ public class DatosUsuario {
 		this.user.setMailInstitucional(tfEmailU.getText());
 		this.user.setTelefono(tfTel.getText());
 		this.user.setDepartamento((Departamento)cBoxDepa.getSelectedItem());
-		this.user.setItr((Itr) cBoxItr.getSelectedItem());
+		
 		*/
+		this.user.setItr((Itr) cBoxItr.getSelectedItem());
 		String value = (String)cBoxEstado.getSelectedItem();
 		if ( value.equalsIgnoreCase("SIN VALOR")) user.setEstado(0);
 		if ( value.equalsIgnoreCase("ACTIVADO")) user.setEstado(1);

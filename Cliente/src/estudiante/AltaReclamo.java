@@ -188,6 +188,7 @@ public class AltaReclamo {
 		taDescrip.setBounds(200, 100, 227, 60);
 		taDescrip.setInputVerifier(new ValidacionMaxyMin(8, 200));
 		taDescrip.setInputVerifier(new validacionMINMAXTEXT(8, 200));
+		taDescrip.setLineWrap(true);
 		
 		
 		frame.getContentPane().add(taDescrip);
@@ -314,6 +315,7 @@ public class AltaReclamo {
 				}
 				else {
 					guardarCambios();
+					frame.dispose();
 				}
 			}
 		});

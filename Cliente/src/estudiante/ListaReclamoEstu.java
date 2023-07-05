@@ -228,7 +228,9 @@ public class ListaReclamoEstu {
 		DAOReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
 			String fecha = t.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(t.getFechaHora()) : "FECHA";
 			String titulo = t.getDetalle() != null ? t.getTitulo() : "TITULO"; 
-			Object[] row  = {t, titulo , fecha ,0};
+			String estado = "EN PROCESO";
+			if (t.getEstado() != null) estado = t.getEstado().getNombre();
+			Object[] row  = {t, titulo , fecha ,estado};
 			model.addRow(row);
 		});
 		tablaRe.setModel(model);
