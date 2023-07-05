@@ -171,7 +171,7 @@ public class AltaReclamo {
 		frame.getContentPane().add(lblTitReclamo);
 
 		tfTitReclamo.setBounds(200, 60, 227, 19);
-		tfTitReclamo.setInputVerifier(new ValidacionMaxyMin(0,62));
+		tfTitReclamo.setInputVerifier(new ValidacionMaxyMin(1,62));
 		tfTitReclamo.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloLetras(e);
@@ -179,7 +179,7 @@ public class AltaReclamo {
 		});
 		frame.getContentPane().add(tfTitReclamo);
 		tfTitReclamo.setColumns(10);
-
+		
 		// Descripcion de Reclamo
 		lblDescrip.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblDescrip.setBounds(40, 104, 112, 13);
@@ -300,7 +300,7 @@ public class AltaReclamo {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Date fechaNac;
-				if(!camposCompletos()) {
+				if(camposCompletos()) {
 					Mensajes.MostrarError("Por favor, complete todos los campos necesarios antes de confirmar.");
 				}
 				else {
@@ -337,9 +337,6 @@ public class AltaReclamo {
 		DAOEvento.getInstance().cargarComboBox(cBoxEvento);
 		DAOTutor.getInstance().cargarComboBox(cBoxDocente);
 		
-	}
-
-	private void ValidadorNumerosUnoAlOcho(String text) {
 	}
 
 	public void guardarCambios() {
@@ -416,8 +413,7 @@ public class AltaReclamo {
 
 	// validar que todos los campos esten llenos antes de guardar
 	private boolean camposCompletos() {
-		return !tfTitReclamo.getText().isEmpty() && 
-				(Integer)tfSemestre.getValue()> 0 && !tfTitReclamo.getText().isEmpty();
+		return tfTitReclamo.getText().isEmpty();
 					
 	} 
 	//TODO Modificar esta validacion
