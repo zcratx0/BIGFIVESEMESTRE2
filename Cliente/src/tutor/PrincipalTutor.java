@@ -16,6 +16,7 @@ import com.bigfive.entities.Tutor;
 
 import analista.AgregarITR;
 import estudiante.PrincipalEstudiante;
+import logIn.LogIn;
 
 public class PrincipalTutor {
 
@@ -30,6 +31,8 @@ public class PrincipalTutor {
 		private final JLabel lblNombreUsuario = new JLabel("");
 		private final JLabel lblTitTutor = new JLabel("Tutor");
 		private Tutor usuarioTutor = null;
+			private final JButton btnLogOut = new JButton("LogOut");
+
 
 	/**
 	 * Launch the application.
@@ -164,6 +167,20 @@ public class PrincipalTutor {
 			}
 		});
 		frame.getContentPane().add(btnConstancia);
+		//TODO logout
+		
+		btnLogOut.setFont(new Font("Tahona", Font.BOLD, 10)); 
+		btnLogOut.setForeground(Color.decode("#f0f9ff"));    
+		btnLogOut.setBackground(Color.decode("#0369a1"));
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LogIn.main(null);
+				frame.dispose();
+			}
+		});
+		btnLogOut.setBounds(474, 15, 89, 23);
+		
+		frame.getContentPane().add(btnLogOut);
 		
 
 	}

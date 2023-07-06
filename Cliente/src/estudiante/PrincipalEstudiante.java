@@ -17,6 +17,7 @@ import analista.PrincipalAnalista;
 import funcionalidades.DAODepartamento;
 import funcionalidades.DAOITR;
 import funcionalidades.DAOReclamo;
+import logIn.LogIn;
 import utils.TBFTable;
 
 import javax.swing.JButton;
@@ -35,7 +36,7 @@ public class PrincipalEstudiante {
 	JLabel lblPerfil = new JLabel("");
 	private final JLabel lblNomUsuario = new JLabel("");
 	private final JLabel lblTitEstudiante = new JLabel("Estudiante");
-	
+	private final JButton btnLogOut = new JButton("LogOut");
 	private Estudiante usuarioEstudiante= null;
 	
 
@@ -165,7 +166,20 @@ public class PrincipalEstudiante {
 			}
 		});
 		frame.getContentPane().add(btnConstancia);
+		//TODO logout
 		
+		btnLogOut.setFont(new Font("Tahona", Font.BOLD, 10)); 
+		btnLogOut.setForeground(Color.decode("#f0f9ff"));    
+		btnLogOut.setBackground(Color.decode("#0369a1"));
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LogIn.main(null);
+				frame.dispose();
+			}
+		});
+		btnLogOut.setBounds(474, 15, 89, 23);
+		
+		frame.getContentPane().add(btnLogOut);
 		
 	}
 	

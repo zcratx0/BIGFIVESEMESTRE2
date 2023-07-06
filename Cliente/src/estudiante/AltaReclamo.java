@@ -294,6 +294,7 @@ public class AltaReclamo {
 		frame.getContentPane().add(lblCredito);
 
 		tfCredito.setBounds(200, 382, 227, 19);
+		tfCredito.setModel(new SpinnerNumberModel(1, 1, 100, 1));
 		frame.getContentPane().add(tfCredito);
 
 		// Botón Confirmar
