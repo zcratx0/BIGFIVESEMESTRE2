@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Evento;
 import com.bigfive.entities.Reclamo;
 
 /**
@@ -63,12 +64,27 @@ public class ReclamoBean implements ReclamoRemote {
 
 	@Override
 	public List<Reclamo> listarElementos() {
-		return em.createQuery("SELECT r FROM Reclamo r").getResultList();
+		return em.createQuery("SELECT r FROM Reclamo r WHERE r.habilitado = 1").getResultList();
 	}
 
 	@Override
 	public List<Reclamo> reclamosDelEstudiante(Estudiante estudiante) {
-		return em.createQuery("SELECT r FROM Reclamo r WHERE r.estudiante = :estudiante").setParameter("estudiante", estudiante).getResultList();
+		return em.createQuery("SELECT r FROM Reclamo r WHERE r.estudiante = :estudiante AND r.habilitado = 1").setParameter("estudiante", estudiante).getResultList();
 	}
 
+	
+	@Override
+	public boolean agregarReclamo(Reclamo value, Evento evento) {
+		try {
+			value.setEvento(evento);
+			em.persist(value);
+			em.flush();
+			return true;
+		} catch (Exception e) {
+			System.err.println("ERROR AL CREAR RECLAMO");
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 }

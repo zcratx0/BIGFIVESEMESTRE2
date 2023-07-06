@@ -27,6 +27,7 @@ import analista.DatosUsuario;
 import analista.ListaAuxITR;
 import funcionalidades.DAOReclamo;
 import utils.TBFTable;
+import validaciones.Mensajes;
 
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -183,6 +184,18 @@ public class ListaReclamoEstu {
 		btnEliminar.setForeground(Color.decode("#f0f9ff"));
 		btnEliminar.setBounds(10, 402, 100, 28);
 		frame.getContentPane().add(btnEliminar);
+		btnEliminar.addActionListener(t-> {
+			if (tablaRe.getSelectedRow() > -1) {
+				Reclamo rc = (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
+				if (rc.getEstado() != null) Mensajes.MostrarError("EL ESTADO ESTA SIENDO PROCESADO");
+				else {
+					rc.setHabilitado(false);
+					DAOReclamo.getInstance().getBean().modificar(rc);
+					cargarTabla();	
+					Mensajes.MostrarExito("ESTADO BORRADO");
+				}
+			}
+		});
 		
 		//Agregar
 		JButton btnAgregar = new JButton("Agregar");

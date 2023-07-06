@@ -335,6 +335,7 @@ public class AltaReclamo {
 		frame.getContentPane().add(lblLogoUtec);
 		
 		//	Cargar Datos
+		DAOEvento.getInstance().getBean().actualizar();
 		DAOEvento.getInstance().cargarComboBox(cBoxEvento);
 		DAOTutor.getInstance().cargarComboBox(cBoxDocente);
 		
@@ -380,11 +381,12 @@ public class AltaReclamo {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-
+		reclamo.setHabilitado(true);
 		if (modificar) {
 			DAOReclamo.getInstance().getBean().modificar(reclamo);
 		} else {
-			DAOReclamo.getInstance().getBean().crear(reclamo);
+			if (tfNombAct.getText().isEmpty()) 	DAOReclamo.getInstance().getBean().agregarReclamo(reclamo, (Evento)cBoxEvento.getSelectedItem());
+			else DAOReclamo.getInstance().getBean().crear(reclamo);
 		}
 		
 

@@ -28,7 +28,10 @@ public class Reclamo implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA")
 	private Date fechaHora;
-		
+	
+	@Column(name="HABILITADO")
+	private int habilitado;
+
 	
 	@Column(name="CREDITO")
 	private Integer credito;
@@ -46,8 +49,6 @@ public class Reclamo implements Serializable {
 	@Column(name="NOMBRE_ACTIVIDAD")
 	private String nombreActividad;
 	
-	@Column(name="NOMBRE_EVENTO")
-	private String nombreEvento;
 	
 	//uni-directional many-to-one association to Estudiante
 	@ManyToOne
@@ -168,12 +169,12 @@ public class Reclamo implements Serializable {
 		this.nombreActividad = nombreActividad;
 	}
 
-	public String getNombreEvento() {
-		return nombreEvento;
+	public boolean getHabilitado() {
+		return habilitado > 0;
 	}
 
-	public void setNombreEvento(String nombreEvento) {
-		this.nombreEvento = nombreEvento;
+	public void setHabilitado(boolean habilitado) {
+		this.habilitado = habilitado ? 1 : 0;
 	}
 	
 	
