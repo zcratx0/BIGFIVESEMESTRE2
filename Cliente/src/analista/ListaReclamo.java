@@ -33,6 +33,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class ListaReclamo {
@@ -158,7 +161,14 @@ public class ListaReclamo {
 			DefaultTableModel dtm = (DefaultTableModel) tablaRe.getModel();
 			TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
 			tablaRe.setRowSorter(sorter);
-			if (!cBoxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) sorter.setRowFilter(RowFilter.regexFilter(cBoxEstado.getSelectedItem().toString()));			
+			List<RowFilter<Object, Object>> filtros = new ArrayList<>();
+			
+			if (!cBoxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) filtros.add(RowFilter.regexFilter(cBoxEstado.getSelectedItem().toString(), 4));
+			if (!tfNombre.getText().isEmpty()) filtros.add(RowFilter.regexFilter("(?i)" + Pattern.quote(tfNombre.getText()), 2));
+			
+			sorter.setRowFilter((RowFilter<Object, Object>)RowFilter.andFilter(filtros));
+			 
+			
 		});
 
 		// Limpiar filtro
@@ -247,6 +257,7 @@ public class ListaReclamo {
 		
 		
 		//	CARGAR DATOS
+		cBoxEstado.addItem("SIN FILTRO");
 		cBoxEstado.addItem("INGRESADO");
 		DAOEstado.getInstance().cargarComboBox(cBoxEstado);
 
