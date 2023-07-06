@@ -27,6 +27,7 @@ import funcionalidades.DAOAnalista;
 import funcionalidades.DAOEstudiante;
 import funcionalidades.DAOITR;
 import utils.TBFTable;
+import validaciones.Mensajes;
 
 public class ListaUsuarios {
 
@@ -269,10 +270,17 @@ public class ListaUsuarios {
 		btnHistorial.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnHistorial.setForeground(Color.decode("#f0f9ff"));
 		btnHistorial.setBackground(Color.decode("#0ea5e9"));
+		/* OLD
 		btnHistorial.setBounds(131, 415, 85, 21);
+		*/
+		btnHistorial.setBounds(25, 415, 85, 21);
 		btnHistorial.addActionListener(e -> {
 			if (tablaUsu.getSelectedRow() > -1) {
 				if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Estudiante) ListaReclamo.main((Estudiante) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0), analista);
+				else Mensajes.MostrarError("Por favor seleccionar un estudiante de la lista.");
+				System.out.println("");
+			} else {
+				Mensajes.MostrarError("Por favor seleccionar un estudiante de la lista.");
 			}
 		} );
 		
@@ -283,6 +291,7 @@ public class ListaUsuarios {
 		
 		
 		// Datos
+		/* TODO Borrar esto de aquí ya que no tiene sentido que exista DATOS estudiante cuando el analista puede modificarlos en cualquier momento.
 		JButton btnDatos = new JButton("Datos");
 		btnDatos.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnDatos.setForeground(Color.decode("#f0f9ff"));
@@ -294,7 +303,7 @@ public class ListaUsuarios {
 			}
 		});
 		frame.getContentPane().add(btnDatos);
-		
+		*/
 		
 		//	FUNCIONALIDAD
 		cargarTabla();

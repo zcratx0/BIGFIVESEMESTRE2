@@ -225,12 +225,7 @@ public class RegistroAccReclamo {
 		
 		
 		try {
-		    DAOAccionReclamo.getInstance().getBean().crear(accion);
-		    
-		    RecibeReclamo recibe = new RecibeReclamo();
-			recibe.setReclamo(reclamo);
-			recibe.setAccione(accion);
-		    DAORecibeReclamo.getInstance().getBean().crear(recibe);
+		    DAOAccionReclamo.getInstance().getBean().reportaarAccion(accion, reclamo);
 		} catch (Exception e) {
 		    System.out.println("Error al crear Accion: " + e.getMessage());
 		    e.printStackTrace();

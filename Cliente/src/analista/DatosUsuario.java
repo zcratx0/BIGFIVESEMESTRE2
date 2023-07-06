@@ -98,7 +98,6 @@ public class DatosUsuario {
 				try {
 					DatosUsuario window = new DatosUsuario();
 					window.frame.setVisible(true);
-
 					window.listaUsuarios = listaUsuarios; 
 					window.cargarDatos(user);
 				} catch (Exception e) {

@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.bigfive.entities.Accione;
+import com.bigfive.entities.RecibeReclamo;
+import com.bigfive.entities.Reclamo;
 
 /**
  * Session Bean implementation class AccionesBean
@@ -60,6 +62,22 @@ public class AccionesBean implements AccionesBeanRemote {
 	public List<Accione> listarElementos() {
 		return em.createQuery("SELECT e FROM ACCIONE e").getResultList();
 		
+	}
+	
+	@Override
+	public boolean reportaarAccion(Accione accion, Reclamo reclamo) {
+		try {
+			em.persist(accion);
+			em.flush();
+			RecibeReclamo rc = new RecibeReclamo();
+			rc.setAccione(accion);
+			rc.setReclamo(reclamo);
+			em.persist(rc);
+			em.flush();
+		} catch (Exception e) {
+			System.out.println("ERROR AL CREAR ACCION Y REPORTE: " + e.getMessage());
+		}
+		return false;
 	}
 
 }
