@@ -92,5 +92,10 @@ public class EstadoBean implements EstadoBeanRemote {
 	public void actualizar() {
 		this.estados = em.createQuery("SELECT e FROM Estado e").getResultList();		
 	}
+	
+	@Override
+	public boolean estaUtilizado(Estado estado) {
+		return em.createQuery("Select e from Reclamo e WHERE e.estado = :estado ").setParameter("estado", estado).getResultList().size() > 0;
+	}
 
 }

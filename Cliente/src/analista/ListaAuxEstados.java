@@ -20,6 +20,7 @@ import funcionalidades.DAOEstado;
 import funcionalidades.DAOEstudiante;
 import funcionalidades.DAOUsuario;
 import utils.Escolaridad;
+import validaciones.Mensajes;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -209,8 +210,11 @@ public class ListaAuxEstados {
 						estado.setEstado(true);
 					}
 					else {
-						//	TODO Agregar validación de que no este siendo utilizado.
-						estado.setEstado(false);
+						if (DAOEstado.getInstance().getBean().estaUtilizado(estado)) Mensajes.MostrarError("ESTADO UTILIZADO");
+						else {
+							estado.setEstado(false);
+							Mensajes.MostrarExito("ESTADO ACTUALIZADO");
+						}
 					}
 					DAOEstado.getInstance().getBean().modificar(estado);
 					DAOEstado.getInstance().getBean().actualizar();

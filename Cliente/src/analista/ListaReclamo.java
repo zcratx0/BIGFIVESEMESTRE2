@@ -270,6 +270,7 @@ public class ListaReclamo {
 		model.addColumn("Estudiante");
 		model.addColumn("Fecha");
 		model.addColumn("Estado");
+		
 		DAOReclamo.getInstance().getBean().listarElementos().forEach(r -> {
 			String fecha = r.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(r.getFechaHora())
 					: "FECHA";
