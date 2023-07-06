@@ -11,6 +11,6 @@ public class DAOAccionReclamo  extends DAO<AccionesBeanRemote>{
 	}
 	
 	public DAOAccionReclamo() {
-		initilize("ejb:/ProyectoEJB/AreaBeanRemote!com.bigfive.beans.AreaBeanRemoteRemote");
+		initilize("ejb:/ProyectoEJB/AccionesBean!com.bigfive.beans.AccionesBeanRemote");
 	}
 }

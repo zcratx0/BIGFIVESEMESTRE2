@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,6 +16,7 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.transaction.Transactional;
 
 import com.bigfive.entities.Accione;
 import com.bigfive.entities.Analista;
@@ -25,6 +28,7 @@ import funcionalidades.DAOAccionReclamo;
 import funcionalidades.DAOEstado;
 import funcionalidades.DAORecibeReclamo;
 import funcionalidades.DAOReclamo;
+import validaciones.Mensajes;
 
 public class RegistroAccReclamo {
 
@@ -42,6 +46,7 @@ public class RegistroAccReclamo {
 	JButton btnCancelar = new JButton("Cancelar");
 	JTextField tfFechHora = new JTextField();
 	Analista analista = new Analista();
+	Reclamo reclamo = new Reclamo();
 
 	/**
 	 * Launch the application.
@@ -51,6 +56,24 @@ public class RegistroAccReclamo {
 			public void run() {
 				try {
 					RegistroAccReclamo window = new RegistroAccReclamo();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(Analista analista, Reclamo reclamo) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RegistroAccReclamo window = new RegistroAccReclamo();
+					window.analista = analista;
+					window.reclamo = reclamo;
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -112,6 +135,7 @@ public class RegistroAccReclamo {
 		//Analista
 		lblAnalista.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblAnalista.setBounds(41, 114, 45, 13);
+		if (analista.getUsuario() != null) lblAnalista.setText(lblAnalista + (analista.getUsuario().getMailInstitucional().toString()));
 		frame.getContentPane().add(lblAnalista);
 		
 		
@@ -143,6 +167,19 @@ public class RegistroAccReclamo {
 		btnGuardar.setForeground(Color.decode("#f0f9ff"));
 		btnGuardar.setBounds(334, 257, 86, 29);
 		frame.getContentPane().add(btnGuardar);
+		btnGuardar.addActionListener(e -> {
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea realizar la Acción?", "Confirmación de acción", JOptionPane.YES_NO_OPTION);
+			 if (confirmacion == JOptionPane.YES_OPTION  ) {
+					if (tAreaAgregarCom.getText().isEmpty()) {
+						Mensajes.MostrarError("Rellenar los campos");
+					} else if (cBoxEstado.getSelectedIndex() == 0) {
+						Mensajes.MostrarError("SELECCIONAR OTRO ESTADO!");
+					} else {
+						guardarCambios();
+						frame.dispose();
+					}
+			 }
+		});
 		
 		
 			//Cancelar
@@ -156,7 +193,6 @@ public class RegistroAccReclamo {
 				
 				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea cancelar Reclamo?", "Confirmación de cancelación", JOptionPane.YES_NO_OPTION);
 				 if (confirmacion == JOptionPane.YES_OPTION  ) {
-					 	ListaReclamo.main();
 						frame.dispose();
 				 }
 			}
@@ -169,8 +205,8 @@ public class RegistroAccReclamo {
 		DAOEstado.getInstance().cargarComboBox(cBoxEstado);
 		
 	}
-	
-	public void guardarCambios(Reclamo reclamo) {
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void guardarCambios() {
 		Estado estado = (Estado) cBoxEstado.getSelectedItem();
 		reclamo.setEstado(estado);
 		
@@ -178,26 +214,28 @@ public class RegistroAccReclamo {
 			DAOReclamo.getInstance().getBean().modificar(reclamo);
 		} catch (Exception e) {
 		}
+			
 		Accione accion = new Accione();
 		accion.setDescripcion(tAreaAgregarCom.getText());
 		accion.setEstado(estado);
 		accion.setAnalista(this.analista);
+
+
+
+		
+		
 		try {
-			DAOAccionReclamo.getInstance().getBean().crear(accion);
+		    DAOAccionReclamo.getInstance().getBean().crear(accion);
+		    
+		    RecibeReclamo recibe = new RecibeReclamo();
+			recibe.setReclamo(reclamo);
+			recibe.setAccione(accion);
+		    DAORecibeReclamo.getInstance().getBean().crear(recibe);
+		} catch (Exception e) {
+		    System.out.println("Error al crear Accion: " + e.getMessage());
+		    e.printStackTrace();
 		}
-		catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		RecibeReclamo recibe = new RecibeReclamo();
-		recibe.setReclamo(reclamo);
-		recibe.setAccione(accion);
-		try {
-			DAORecibeReclamo.getInstance().getBean().crear(reclamo);
-		}
-		
-		
-		
+
 	}
 	
 }

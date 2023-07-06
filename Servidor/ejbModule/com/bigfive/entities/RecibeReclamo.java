@@ -15,7 +15,7 @@ public class RecibeReclamo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="RECIBE_RECLAMO_IDRECIBERE_GENERATOR", sequenceName="SEQ_ID_RECIBE_RE ")
+	@SequenceGenerator(name="RECIBE_RECLAMO_IDRECIBERE_GENERATOR", sequenceName="SEQ_ID_RECIBE_RE")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RECIBE_RECLAMO_IDRECIBERE_GENERATOR")
 	@Column(name="ID_RECIBE_RE")
 	private long idRecibeRe;

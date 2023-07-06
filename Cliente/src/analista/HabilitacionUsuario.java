@@ -127,7 +127,7 @@ public class HabilitacionUsuario {
 		// Lista de Usuarios
 		btnListUsu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaUsuarios.main(null);
+				ListaUsuarios.main();
 				frame.dispose();
 			}
 		});

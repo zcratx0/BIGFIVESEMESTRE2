@@ -16,6 +16,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+import com.bigfive.entities.Analista;
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Reclamo;
 
@@ -49,6 +50,7 @@ public class ListaReclamo {
 	JButton btnAtras = new JButton("Atrás");
 	JButton btnVer = new JButton("Ver");
 	TBFTable tablaRe;
+	Analista analista = null;
 
 	/**
 	 * Launch the application.
@@ -70,12 +72,13 @@ public class ListaReclamo {
 	/**
 	 * Cargar reclamos de todos los estudiantes
 	 */
-	public static void main() {
+	public static void main(Analista analista) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					ListaReclamo window = new ListaReclamo();
 					window.cargarTabla();
+					window.analista = analista;
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -87,12 +90,13 @@ public class ListaReclamo {
 	/**
 	 * Cargar reclamos de un estudiante
 	 */
-	public static void main(Estudiante estudiante) {
+	public static void main(Estudiante estudiante, Analista analista) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					ListaReclamo window = new ListaReclamo();
 					window.cargarTablaEstudiante(estudiante);
+					window.analista = analista;
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -189,8 +193,14 @@ public class ListaReclamo {
 		// Registrar Accion
 		btnRegAcc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegistroAccReclamo.main(null);
-				frame.dispose();
+				
+				if (tablaRe.getSelectedRow() > -1) {
+					if (tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0) instanceof Reclamo) {
+						Reclamo reclamo= (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
+						if (analista != null)RegistroAccReclamo.main(null, reclamo);
+						else RegistroAccConstancias.main(null);
+					}
+				}
 			}
 		});
 		btnRegAcc.setFont(new Font("Tahona", Font.BOLD, 10));

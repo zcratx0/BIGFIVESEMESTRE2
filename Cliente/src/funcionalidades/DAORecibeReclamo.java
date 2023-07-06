@@ -1,17 +1,15 @@
 package funcionalidades;
 
-import com.bigfive.beans.RecibeReclamoBean;
-import com.bigfive.entities.RecibeReclamo;
+import com.bigfive.beans.RecibeReclamoBeanRemote;
 
-public class DAORecibeReclamo extends DAO<RecibeReclamoBean>{
-	private static DAORecibeReclamo instance = new DAORecibeReclamo();
-	private DAORecibeReclamo bean;
+public class DAORecibeReclamo extends DAO<RecibeReclamoBeanRemote>{
+private static DAORecibeReclamo instance = new DAORecibeReclamo();
 	
 	public static DAORecibeReclamo getInstance() {
 		return instance;
 	}
 	
 	public DAORecibeReclamo() {
-		initilize("ejb:/ProyectoEJB/RecibeConstanciaBean!com.bigfive.beans.RecibeConstanciaBeanRemote");
+		initilize("ejb:/ProyectoEJB/RecibeReclamoBean!com.bigfive.beans.RecibeReclamoBeanRemote");
 	}
 }

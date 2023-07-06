@@ -17,7 +17,7 @@ public class Accione implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ACCIONES_IDACCIONES_GENERATOR" )
+	@SequenceGenerator(name="ACCIONES_IDACCIONES_GENERATOR", sequenceName="SEQ_ID_ACCIONES ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ACCIONES_IDACCIONES_GENERATOR")
 	@Column(name="ID_ACCIONES")
 	private long idAcciones;
@@ -34,7 +34,7 @@ public class Accione implements Serializable {
 	private Analista analista;
 	
 	@Temporal(TemporalType.DATE)
-	@JoinColumn(name="FECHA_HORA")
+	@Column(name="FECHA_HORA")
 	private Date fechaHora;
 	
 	public Analista getAnalista() {

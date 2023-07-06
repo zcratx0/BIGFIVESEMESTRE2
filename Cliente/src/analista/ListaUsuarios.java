@@ -46,6 +46,7 @@ public class ListaUsuarios {
 	JButton btnModificar = new JButton("Modificar");
 	TBFTable tablaUsu;
 	ListaUsuarios listaUsuarios;
+	Analista analista = null;
 	/**
 	 * Launch the application.
 	 */
@@ -62,6 +63,31 @@ public class ListaUsuarios {
 		});
 	}
 
+	public static void main() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ListaUsuarios window = new ListaUsuarios();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public static void main(Analista analista) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ListaUsuarios window = new ListaUsuarios();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	/**
 	 * Create the application.
 	 */
@@ -246,7 +272,7 @@ public class ListaUsuarios {
 		btnHistorial.setBounds(131, 415, 85, 21);
 		btnHistorial.addActionListener(e -> {
 			if (tablaUsu.getSelectedRow() > -1) {
-				if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Estudiante) ListaReclamo.main((Estudiante) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0));
+				if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Estudiante) ListaReclamo.main((Estudiante) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0), analista);
 			}
 		} );
 		

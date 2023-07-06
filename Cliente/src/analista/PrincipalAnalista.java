@@ -11,18 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import estudiante.DescargarEscolaridad;
-import estudiante.ListaConstancias;
-import estudiante.ListaReclamoEstu;
-import estudiante.PerfilEstudiantes;
-import estudiante.PrincipalEstudiante;
-import logIn.LogIn;
-
-import javax.swing.JPanel;
-
+import com.bigfive.entities.Analista;
 import com.bigfive.entities.Usuario;
 
-import java.awt.CardLayout;
+import funcionalidades.DAOAnalista;
+import funcionalidades.DAOUsuario;
+import logIn.LogIn;
 
 public class PrincipalAnalista {//Atributos
 	JFrame frame = new JFrame();
@@ -36,7 +30,7 @@ public class PrincipalAnalista {//Atributos
 	JLabel lblPerfil = new JLabel("");
 	JLabel lblNombrePerfil = new JLabel("");
 	JLabel lblTitAnalista = new JLabel("Analista");
-	
+	Analista analista = null;
 	private Usuario usuarioAnalista = null;
 	private final JButton btnLogOut = new JButton("LogOut");
 	
@@ -67,6 +61,7 @@ public class PrincipalAnalista {//Atributos
 					if (usuario != null) {
 						if(usuario.getMailInstitucional() != null) {
 							window.lblNombrePerfil.setText(usuario.getMailInstitucional().split("@")[0]);
+							window.analista = DAOUsuario.getInstance().getBean().getAnalista(usuario);
 						}
 					}
 					window.frame.setVisible(true);
@@ -153,7 +148,7 @@ public class PrincipalAnalista {//Atributos
 		btnReclamos.setBounds(360, 65, 107, 40);
 		btnReclamos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaReclamo.main();
+				ListaReclamo.main(analista);
 				//frame.dispose();
 			}
 		});
