@@ -20,7 +20,6 @@
 		<class>com.bigfive.entities.Accione</class>
 		<class>com.bigfive.entities.Gestion</class>
 		<class>com.bigfive.entities.RecibeConstancia</class>
-		<class>com.bigfive.entities.RecibeJustificacion</class>
 		<class>com.bigfive.entities.RecibeReclamo</class>
 		<class>com.bigfive.entities.Responsabilidade</class>
 		<class>com.bigfive.entities.Rol</class>

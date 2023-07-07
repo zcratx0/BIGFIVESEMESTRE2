@@ -178,7 +178,7 @@ public class PrincipalTutor {
 				frame.dispose();
 			}
 		});
-		btnLogOut.setBounds(474, 15, 89, 23);
+		btnLogOut.setBounds(300, 15, 89, 23);
 		
 		frame.getContentPane().add(btnLogOut);
 		
