@@ -1,6 +1,8 @@
 package com.bigfive.beans;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -68,6 +70,9 @@ public class AccionesBean implements AccionesBeanRemote {
 	
 	@Override
 	public boolean reportaarAccion(Accione accion, Reclamo reclamo) {
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
+		LocalDateTime hora = LocalDateTime.now();
 		String msg = "<b>" + reclamo.getEstudiante().getUsuario().getNombre().toUpperCase() 
 				+"</b><br>El analista comento sobre tu reclamo"
 				+"<br>Nombre: " + reclamo.getTitulo()
@@ -76,7 +81,7 @@ public class AccionesBean implements AccionesBeanRemote {
 				+"<br>Email analista: " + accion.getAnalista().getUsuario().getMailInstitucional()
 				+"<br>Acción: " + accion.getDescripcion()
 				+"<br>Estado: " + accion.getEstado().getNombre().toUpperCase()
-				+"<br>Fecha de modificación: " + LocalDate.now();
+				+"<br>Fecha de modificación: " + dtf.format(hora);
 		try {
 			em.persist(accion);
 			em.flush();
