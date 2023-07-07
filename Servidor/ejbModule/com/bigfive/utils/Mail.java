@@ -46,7 +46,7 @@ public class Mail {
 	public static void sendMail(String to, String subject ,String msg) {
 		 try {
 	            Message message = new MimeMessage(instance.getSession());
-	            message.setFrom(new InternetAddress("zcratx98@gmail.com"));
+	            message.setFrom(new InternetAddress("mail@gmail.com"));
 	            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 	            message.setSubject(subject);
 	    
