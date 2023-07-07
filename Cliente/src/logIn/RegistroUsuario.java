@@ -552,7 +552,7 @@ public class RegistroUsuario {
 			}
 		});
 		btnNewButton.setBounds(284, 19, 107, 19);
-		frame.getContentPane().add(btnNewButton);
+		
 		
 		//	CARGAR DATOS 
 		DAOGenero.getInstance().cargarComboBox(comboGenerBox);

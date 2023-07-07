@@ -97,9 +97,10 @@ public class ListaAuxEstados {
 		lblTitLista2.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitLista2.setBounds(123, 40, 326, 20);
 		frame.getContentPane().add(lblTitLista2);
+		chBoxBaja.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		
 		
-		chBoxBaja.setBounds(356, 80, 93, 21);
+		chBoxBaja.setBounds(290, 77, 203, 21);
 		frame.getContentPane().add(chBoxBaja);
 		chBoxBaja.addActionListener(e -> {
 			cargarEstados();

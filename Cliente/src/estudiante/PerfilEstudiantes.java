@@ -325,7 +325,10 @@ public class PerfilEstudiantes {
 		// Boton Cancelar
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				int opcion = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea cancelar?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+				if (opcion == JOptionPane.YES_OPTION) {
+					frame.dispose();
+				}
 			}
 		});
 		btnCancelar.setBackground(Color.decode("#0284c7"));
