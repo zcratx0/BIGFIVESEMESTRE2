@@ -157,18 +157,19 @@ public class ListaReclamo {
 		btnFiltrar.setBounds(194, 92, 105, 21);
 		frame.getContentPane().add(btnFiltrar);
 		btnFiltrar.addActionListener(e -> {
-			//	FILTRO
+			// FILTRO
 			DefaultTableModel dtm = (DefaultTableModel) tablaRe.getModel();
 			TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
 			tablaRe.setRowSorter(sorter);
 			List<RowFilter<Object, Object>> filtros = new ArrayList<>();
-			
-			if (!cBoxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) filtros.add(RowFilter.regexFilter(cBoxEstado.getSelectedItem().toString(), 4));
-			if (!tfNombre.getText().isEmpty()) filtros.add(RowFilter.regexFilter("(?i)" + Pattern.quote(tfNombre.getText()), 2));
-			
-			sorter.setRowFilter((RowFilter<Object, Object>)RowFilter.andFilter(filtros));
-			 
-			
+
+			if (!cBoxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO"))
+				filtros.add(RowFilter.regexFilter(cBoxEstado.getSelectedItem().toString(), 4));
+			if (!tfNombre.getText().isEmpty())
+				filtros.add(RowFilter.regexFilter("(?i)" + Pattern.quote(tfNombre.getText()), 2));
+
+			sorter.setRowFilter((RowFilter<Object, Object>) RowFilter.andFilter(filtros));
+
 		});
 
 		// Limpiar filtro
@@ -203,12 +204,14 @@ public class ListaReclamo {
 		// Registrar Accion
 		btnRegAcc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (tablaRe.getSelectedRow() > -1) {
 					if (tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0) instanceof Reclamo) {
-						Reclamo reclamo= (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
-						if (analista != null)RegistroAccReclamo.main(null, reclamo);
-						else RegistroAccConstancias.main(null);
+						Reclamo reclamo = (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
+						if (analista != null)
+							RegistroAccReclamo.main(analista, reclamo);
+						else
+							RegistroAccConstancias.main(null);
 					}
 				}
 			}
@@ -249,14 +252,13 @@ public class ListaReclamo {
 		btnVer.addActionListener(e -> {
 			if (tablaRe.getSelectedRow() > -1) {
 				if (tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0) instanceof Reclamo) {
-					Reclamo reclamo= (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
+					Reclamo reclamo = (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
 					mostrarReclamo(reclamo);
 				}
 			}
 		});
-		
-		
-		//	CARGAR DATOS
+
+		// CARGAR DATOS
 		cBoxEstado.addItem("SIN FILTRO");
 		cBoxEstado.addItem("INGRESADO");
 		DAOEstado.getInstance().cargarComboBox(cBoxEstado);
@@ -270,7 +272,7 @@ public class ListaReclamo {
 		model.addColumn("Estudiante");
 		model.addColumn("Fecha");
 		model.addColumn("Estado");
-		
+
 		DAOReclamo.getInstance().getBean().listarElementos().forEach(r -> {
 			String fecha = r.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(r.getFechaHora())
 					: "FECHA";
@@ -278,8 +280,9 @@ public class ListaReclamo {
 			String estu = r.getEstudiante().getUsuario().getNombre() + " "
 					+ r.getEstudiante().getUsuario().getApellido();
 			String estado = "INGRESADO";
-			if (r.getEstado() != null) estado = r.getEstado().getNombre();
-			Object[] row = { r, titulo, estu, fecha, estado};
+			if (r.getEstado() != null)
+				estado = r.getEstado().getNombre();
+			Object[] row = { r, titulo, estu, fecha, estado };
 			model.addRow(row);
 		});
 		tablaRe.setModel(model);
@@ -304,8 +307,9 @@ public class ListaReclamo {
 					+ t.getEstudiante().getUsuario().getApellido();
 
 			String estado = "EN PROCESO";
-			if (t.getEstado() != null) estado = t.getEstado().getNombre();
-			Object[] row = { t, titulo, estu, fecha, estado};
+			if (t.getEstado() != null)
+				estado = t.getEstado().getNombre();
+			Object[] row = { t, titulo, estu, fecha, estado };
 			model.addRow(row);
 		});
 		tablaRe.setModel(model);
@@ -317,45 +321,45 @@ public class ListaReclamo {
 
 	private void mostrarReclamo(Reclamo reclamo) {
 		JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
-		JLabel estudiante = new JLabel("Estudiante: " + reclamo.getEstudiante().getUsuario().getNombre() + " " + reclamo.getEstudiante().getUsuario().getApellido());
+		JLabel estudiante = new JLabel("Estudiante: " + reclamo.getEstudiante().getUsuario().getNombre() + " "
+				+ reclamo.getEstudiante().getUsuario().getApellido());
 		panel.add(estudiante);
-		JLabel cedula = new JLabel("Documento: " +reclamo.getEstudiante().getUsuario().getDocumento());
+		JLabel cedula = new JLabel("Documento: " + reclamo.getEstudiante().getUsuario().getDocumento());
 		panel.add(cedula);
-		
-		
+
 		JLabel mail = new JLabel("Mail: " + reclamo.getEstudiante().getUsuario().getMailInstitucional());
 		panel.add(mail);
-		
+
 		JLabel titulo = new JLabel("Titulo: " + reclamo.getTitulo());
 		panel.add(titulo);
-		
+
 		JLabel fecha = new JLabel("Fecha registro: " + reclamo.getFechaRegistro());
 		panel.add(fecha);
 		JLabel fechaActividad = new JLabel("Fecha actividad: " + reclamo.getFechaHora());
 		panel.add(fechaActividad);
-		if (reclamo.getNombreActividad().isEmpty()) {
+		if (reclamo.getNombreActividad() == null || reclamo.getNombreActividad().isEmpty()) {
 			JLabel evento = new JLabel("Evento: " + reclamo.getEvento().getTitulo());
 			panel.add(evento);
-			
+
 			JLabel fechaEvento = new JLabel("Evento: " + reclamo.getEvento().getFechaHoraIncio());
 			panel.add(fechaEvento);
-			
+
 			JLabel fechaEventoFinal = new JLabel("Evento: " + reclamo.getEvento().getFechaHoraFinal());
 			panel.add(fechaEventoFinal);
-			
+
 		} else {
 			JLabel actividad = new JLabel("Evento: " + reclamo.getNombreActividad());
-			panel.add(actividad);		
+			panel.add(actividad);
 		}
 		JLabel semestre = new JLabel("Semestre: " + reclamo.getSemestre());
 		panel.add(semestre);
-		
+
 		JLabel credito = new JLabel("Credito: " + reclamo.getCredito());
-		panel.add(credito);	
-		
+		panel.add(credito);
+
 		JLabel descr = new JLabel("Descripción: " + reclamo.getDetalle());
 		panel.add(descr);
-		
+
 		JOptionPane.showMessageDialog(null, panel);
 	}
 

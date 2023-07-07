@@ -8,6 +8,7 @@ import com.bigfive.entities.Analista;
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
+import com.bigfive.utils.Mail;
 
 /**
  * Session Bean implementation class UsuarioBean
@@ -16,6 +17,9 @@ import com.bigfive.entities.Usuario;
 public class UsuarioBean implements UsuarioBeanRemote {
 	@PersistenceContext
 	EntityManager em;
+	
+	
+	
 
 	/**
 	 * Default constructor.
@@ -116,9 +120,11 @@ public class UsuarioBean implements UsuarioBeanRemote {
 
 	@Override
 	public Long createWithId(Usuario usuario) {
+		String msgCreacion = "<b>" +usuario.getNombre().toUpperCase() + "!</b><br>Estamos procesando tu solicitud de inscripción!<br>Cuando este terminada te notificaremos.";
 		try {
 			em.persist(usuario);
 			em.flush();
+			Mail.sendMail(usuario.getMail(), "Creación de Usuario", msgCreacion);
 			return (Long) usuario.getIdUsuario();
 		} catch (Exception e) {
 			System.err.println("ERROR AL CREAR USUARIO " + usuario.toString());
@@ -144,7 +150,6 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		return (Tutor) em.createQuery("SELECT t FROM Tutor t WHERE t.usuario.id = :user")
 				.setParameter("user", usuario.getIdUsuario()).getSingleResult();
 	}
-
 	
 
 }
