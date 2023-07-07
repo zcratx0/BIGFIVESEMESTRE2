@@ -288,23 +288,6 @@ public class ListaUsuarios {
 		
 		frame.getContentPane().add(btnHistorial);
 		
-		
-		
-		// Datos
-		/* TODO Borrar esto de aquí ya que no tiene sentido que exista DATOS estudiante cuando el analista puede modificarlos en cualquier momento.
-		JButton btnDatos = new JButton("Datos");
-		btnDatos.setFont(new Font("Tahona", Font.BOLD, 10));
-		btnDatos.setForeground(Color.decode("#f0f9ff"));
-		btnDatos.setBackground(Color.decode("#0ea5e9"));
-		btnDatos.setBounds(25, 415, 85, 21);
-		btnDatos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DatosUsuario.main(columnasUsu);
-			}
-		});
-		frame.getContentPane().add(btnDatos);
-		*/
-		
 		//	FUNCIONALIDAD
 		cargarTabla();
 		DAOITR.getInstance().cargarComboBox(cBoxItr);

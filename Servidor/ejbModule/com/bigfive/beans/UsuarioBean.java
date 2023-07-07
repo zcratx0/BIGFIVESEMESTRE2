@@ -132,7 +132,25 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		}
 		return null;
 	}
-
+	
+	@Override
+	public boolean habilitarUsuario(Usuario value) {
+		String msgHabilitado = "<h2>" + value.getNombre().toUpperCase() + " " + value.getApellido().toUpperCase() + " ¡Ahora formas parte de UTEC!</h2>"
+				+ "<br><br>Tras revisar tu documentación, le confirmamos que la misma ha sido <b>validada completamente</b>."
+				+ "<br><br>Mediante este correo te estamos haciendo llegar tu usuario y contraseña para el acceso a tu cuenta de Correo Institucional."
+				+ "<br><br><b>Email: </b>" + value.getMailInstitucional()
+				+ "<br><b>Contraseña: " + value.getContrasenia();
+		String msgBorrado = "<h2>" + value.getNombre().toUpperCase() + " " + value.getApellido().toUpperCase() + " ¡Ya no eres parte de UTEC!"
+				+ "<br><br>Tras revisar tu documentación, le informamos que la misma <b>no cumple los requisitos necesarios</b>.";
+		if (value.getEstado() == 1) {
+			Mail.sendMail(value.getMail(), "REGISTRO UTEC", msgHabilitado);
+		} else if (value.getEstado() == 2) {
+			Mail.sendMail(value.getMail(), "REGISTRO UTEC", msgBorrado);
+		}
+		return modificar(value);
+	}
+	
+	
 	@Override
 	public Analista getAnalista(Usuario usuario) {
 		return (Analista) em.createQuery("SELECT a FROM Analista a WHERE a.usuario.id = :user")

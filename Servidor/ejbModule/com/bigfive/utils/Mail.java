@@ -21,8 +21,8 @@ public class Mail {
 	
 	public Mail() {
 		System.out.println("Creando Mail");
-		final String username = "mail@gmail.com";
-        final String password = "ctow qgwt vmqj daie";
+		final String username = "thebigfiveutec@gmail.com";
+        final String password = "zvzp etyh oybi fxpu";
 
         Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -46,7 +46,7 @@ public class Mail {
 	public static void sendMail(String to, String subject ,String msg) {
 		 try {
 	            Message message = new MimeMessage(instance.getSession());
-	            message.setFrom(new InternetAddress("mail@gmail.com"));
+	            message.setFrom(new InternetAddress("thebigfiveutec@gmail.com"));
 	            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 	            message.setSubject(subject);
 	    

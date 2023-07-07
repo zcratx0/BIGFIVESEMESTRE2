@@ -330,16 +330,6 @@ public class DatosUsuario {
 		btnGuardar.setEnabled(true);
 	}
 	public void actualizarDatos() {
-		/*
-		this.user.setNombre(tfNombre.getText());
-		this.user.setApellido(tfApellido.getText());
-		this.user.setDocumento(tfCedula.getText());
-		this.user.setMail(tfEmailP.getText());
-		this.user.setMailInstitucional(tfEmailU.getText());
-		this.user.setTelefono(tfTel.getText());
-		this.user.setDepartamento((Departamento)cBoxDepa.getSelectedItem());
-		
-		*/
 		this.user.setItr((Itr) cBoxItr.getSelectedItem());
 		String value = (String)cBoxEstado.getSelectedItem();
 		if ( value.equalsIgnoreCase("SIN VALOR")) user.setEstado(0);

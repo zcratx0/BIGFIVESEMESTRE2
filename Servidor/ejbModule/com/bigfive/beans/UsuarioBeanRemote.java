@@ -16,4 +16,5 @@ public interface UsuarioBeanRemote extends ICrud<Usuario> {
 	Analista getAnalista(Usuario usuario);
 	Estudiante getEstudiante(Usuario usuario);
 	Tutor getTutor(Usuario usuario);
+	boolean habilitarUsuario(Usuario value);
 }

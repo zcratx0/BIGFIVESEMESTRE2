@@ -175,7 +175,7 @@ public class HabilitacionUsuario {
 					}else {
 						tablaEst.setValueAt("SIN VALOR",e.getFirstRow(), 4);
 					}
-					DAOUsuario.getInstance().getBean().modificar(usuario);
+					DAOUsuario.getInstance().getBean().habilitarUsuario(usuario);
 				}
 				 cargarListaDeUsuarios();
 				
