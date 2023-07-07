@@ -29,11 +29,10 @@ import java.awt.event.ActionEvent;
 
 public class DatosUsuario {
 	int textSize = 14;
-		//Atributo
 	JFrame frame = new JFrame();
 	JLabel lblTitDatos = new JLabel("Datos de Usuario");
 	JLabel lblTipoUsu = new JLabel("Tipo de Usuario");
-	JTextField tfTipoUsuario = new JTextField();
+	JComboBox cBoxTipoUsuario = new JComboBox();
 	
 	JLabel lblNombre = new JLabel("Nombre");
 	JTextField tfNombre = new JTextField();
@@ -108,9 +107,6 @@ public class DatosUsuario {
 		});
 	}
 	
-	/**
-	 * Create the application.
-	 */
 	public DatosUsuario() {
 		initialize();
 	}
@@ -125,31 +121,25 @@ public class DatosUsuario {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false); 
 		
-		// Imagen
 		JLabel lblLogoUtec = new JLabel("");
 		lblLogoUtec.setIcon(new ImageIcon(AgregarITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 0, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
 		
-		
-		//Titulo Datos de Usuario
 		lblTitDatos.setForeground(Color.decode("#08ACEC"));
 		lblTitDatos.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblTitDatos.setBounds(108, 25, 265, 24);
 		frame.getContentPane().add(lblTitDatos);
 		
 		
-		// Tipo de usuario
 		lblTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblTipoUsu.setBounds(39, 85, 205, 17);
 		frame.getContentPane().add(lblTipoUsu);
 		
-		tfTipoUsuario.setBounds(195, 82, 260, 20);
-		frame.getContentPane().add(tfTipoUsuario);
-		tfTipoUsuario.setColumns(10);
+		cBoxTipoUsuario.setBounds(195, 82, 260, 20);
+		frame.getContentPane().add(cBoxTipoUsuario);
 		
-				
-		//Nombre
+		
 		lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblNombre.setBounds(39, 130, 265, 13);
 		frame.getContentPane().add(lblNombre);
@@ -161,7 +151,6 @@ public class DatosUsuario {
 		frame.getContentPane().add(tfNombre);
 		
 		
-		//Apellido
 		lblApellido.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblApellido.setBounds(39, 175, 265, 13);
 		frame.getContentPane().add(lblApellido);
@@ -171,8 +160,6 @@ public class DatosUsuario {
 		tfApellido.setEnabled(false);
 		frame.getContentPane().add(tfApellido);
 		
-		
-		//Cedula
 		lblCedula.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblCedula.setBounds(39, 220, 265, 13);
 		frame.getContentPane().add(lblCedula);
@@ -182,8 +169,6 @@ public class DatosUsuario {
 		tfCedula.setEnabled(false);
 		frame.getContentPane().add(tfCedula);
 		
-		
-		//Fecha de nacimiento
 		lblFechNac.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblFechNac.setBounds(39, 265, 265, 13);
 		frame.getContentPane().add(lblFechNac);
@@ -192,7 +177,7 @@ public class DatosUsuario {
 		tfFechaNac.setColumns(10);
 		frame.getContentPane().add(tfFechaNac);
 		tfFechaNac.setEnabled(false);
-		//Email Personal
+		
 		lblEmailP.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblEmailP.setBounds(39, 310, 265, 13);
 		frame.getContentPane().add(lblEmailP);
@@ -202,7 +187,6 @@ public class DatosUsuario {
 		tfEmailP.setEnabled(false);
 		frame.getContentPane().add(tfEmailP);
 		
-		//Email UTEC
 		lblEmailU.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblEmailU.setBounds(39, 355, 265, 13);
 		frame.getContentPane().add(lblEmailU);
@@ -212,7 +196,6 @@ public class DatosUsuario {
 		tfEmailU.setEnabled(false);
 		frame.getContentPane().add(tfEmailU);
 		
-		//Telefono
 		lblTel.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblTel.setBounds(39, 400, 265, 13);
 		frame.getContentPane().add(lblTel);
@@ -222,7 +205,6 @@ public class DatosUsuario {
 		tfTel.setEnabled(false);
 		frame.getContentPane().add(tfTel);
 		
-		//Departamento
 		lblDepa.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblDepa.setBounds(39, 445, 265, 13);
 		frame.getContentPane().add(lblDepa);
@@ -231,7 +213,6 @@ public class DatosUsuario {
 		cBoxDepa.setBounds(195, 445, 265, 21);
 		frame.getContentPane().add(cBoxDepa);
 		
-		//Localidad
 		lblLocalidad.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblLocalidad.setBounds(39, 490, 265, 13);
 		frame.getContentPane().add(lblLocalidad);
@@ -241,7 +222,6 @@ public class DatosUsuario {
 		tfLocalidad.setEnabled(false);
 		frame.getContentPane().add(tfLocalidad);
 		
-		//ITR
 		lblItr.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblItr.setBounds(39, 535, 265, 13);
 		frame.getContentPane().add(lblItr);
@@ -250,7 +230,6 @@ public class DatosUsuario {
 		cBoxItr.setBounds(195, 535, 265, 21);
 		frame.getContentPane().add(cBoxItr);
 		
-		//Estado
 		lblEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		lblEstado.setBounds(39, 624, 265, 13);
 		frame.getContentPane().add(lblEstado);
@@ -262,7 +241,6 @@ public class DatosUsuario {
 		cBoxEstado.addItem("ACTIVADO");
 		cBoxEstado.addItem("ELIMINADO");
 		
-		//Genero
 		lblGenero.setBounds(39, 583, 46, 14);
 		lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		frame.getContentPane().add(lblGenero);
@@ -270,9 +248,6 @@ public class DatosUsuario {
 		cBoxGenero.setBounds(195, 579, 265, 22);
 		frame.getContentPane().add(cBoxGenero);
 		
-		
-		//Botones
-			//Guardar
 		btnGuardar.setFont(new Font("Tahona", Font.BOLD, textSize));
 		btnGuardar.setForeground(Color.decode("#f0f9ff"));
 		btnGuardar.setBackground(Color.decode("#0284c7"));
@@ -287,7 +262,6 @@ public class DatosUsuario {
 		});
 		frame.getContentPane().add(btnGuardar);
 			
-		//Boton Cancelar
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cancelar Modificación?", "Cancelar Modificación", JOptionPane.YES_NO_OPTION);
@@ -303,7 +277,6 @@ public class DatosUsuario {
 		btnCancelar.setBounds(155, 678, 107, 32);
 		frame.getContentPane().add(btnCancelar);
 		
-		//	FUNCIONALIDAD
 		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
 		DAOITR.getInstance().cargarComboBoxHabilitado(cBoxItr);
 		DAOGenero.getInstance().cargarComboBox(cBoxGenero);	
@@ -346,6 +319,7 @@ public class DatosUsuario {
 			}
 		}
 		btnGuardar.setEnabled(true);
+		DAOUsuario.getInstance().cargarTiposCBox(user, cBoxTipoUsuario);
 	}
 	public void actualizarDatos() {
 		this.user.setItr((Itr) cBoxItr.getSelectedItem());
@@ -353,8 +327,6 @@ public class DatosUsuario {
 		if ( value.equalsIgnoreCase("SIN VALOR")) user.setEstado(0);
 		if ( value.equalsIgnoreCase("ACTIVADO")) user.setEstado(1);
 		if ( value.equalsIgnoreCase("ELIMINADO")) user.setEstado(2);
-		System.out.println("MODIFICANDO USUARIO");
-		System.out.println(cBoxEstado.getSelectedItem());
 		DAOUsuario.getInstance().getBean().modificar(this.user);
 		if (listaUsuarios != null) listaUsuarios.cargarTabla();
 	}

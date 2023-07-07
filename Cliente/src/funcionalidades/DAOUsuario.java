@@ -1,5 +1,7 @@
 package funcionalidades;
 
+import javax.swing.JComboBox;
+
 import com.bigfive.beans.UsuarioBeanRemote;
 import com.bigfive.entities.Usuario;
 
@@ -18,5 +20,14 @@ public class DAOUsuario extends DAO<UsuarioBeanRemote>{
 	}
 	public int getTipo(Usuario usuario) {
 		return this.bean.detectarUsuario(usuario.getIdUsuario());
+	}
+	public void cargarTiposCBox(Usuario usuario, JComboBox cb) {
+		String tipo = this.bean.getTipoDeUsuario(usuario);
+		System.out.println(tipo);
+		if (tipo != null) {
+			for (String i : tipo.split(",")) {
+				cb.addItem(i);
+			}
+		}
 	}
 }

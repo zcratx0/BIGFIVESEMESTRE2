@@ -17,9 +17,6 @@ import com.bigfive.utils.Mail;
 public class UsuarioBean implements UsuarioBeanRemote {
 	@PersistenceContext
 	EntityManager em;
-	
-	
-	
 
 	/**
 	 * Default constructor.
@@ -84,26 +81,32 @@ public class UsuarioBean implements UsuarioBeanRemote {
 
 	@Override
 	public int detectarUsuario(Long usuario) {
-		// Retorna "0" para analista, "1" para tutor, "2" para estudiante y "-1" para
-		// error
 		Analista analista = null;
 		try {
 			analista = (Analista) em.createQuery("SELECT a FROM Analista a WHERE a.usuario.id = :user")
 					.setParameter("user", usuario).getSingleResult();
-			if (analista != null) {return 0;}
+			if (analista != null) {
+				return 0;
+			}
 		} catch (Exception e) {
 			try {
 				Tutor tutor = null;
 				tutor = (Tutor) em.createQuery("SELECT t FROM Tutor t WHERE t.usuario.id = :user")
 						.setParameter("user", usuario).getSingleResult();
-				if (tutor != null) {return 1;}
+				if (tutor != null) {
+					return 1;
+				}
 			} catch (Exception e1) {
 				try {
 					Estudiante estudiante = null;
 					estudiante = (Estudiante) em.createQuery("SELECT e FROM Estudiante e WHERE e.usuario.id = :user")
 							.setParameter("user", usuario).getSingleResult();
-					if (estudiante != null) {return 2;}
-				} catch (Exception e2) {return -1;}
+					if (estudiante != null) {
+						return 2;
+					}
+				} catch (Exception e2) {
+					return -1;
+				}
 			}
 		}
 		return -1;
@@ -120,7 +123,8 @@ public class UsuarioBean implements UsuarioBeanRemote {
 
 	@Override
 	public Long createWithId(Usuario usuario) {
-		String msgCreacion = "<b>" +usuario.getNombre().toUpperCase() + "!</b><br>Estamos procesando tu solicitud de inscripción!<br>Cuando este terminada te notificaremos.";
+		String msgCreacion = "<b>" + usuario.getNombre().toUpperCase()
+				+ "!</b><br>Estamos procesando tu solicitud de inscripción!<br>Cuando este terminada te notificaremos.";
 		try {
 			em.persist(usuario);
 			em.flush();
@@ -132,15 +136,17 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public boolean habilitarUsuario(Usuario value) {
-		String msgHabilitado = "<h2>" + value.getNombre().toUpperCase() + " " + value.getApellido().toUpperCase() + " ¡Ahora formas parte de UTEC!</h2>"
+		String msgHabilitado = "<h2>" + value.getNombre().toUpperCase() + " " + value.getApellido().toUpperCase()
+				+ " ¡Ahora formas parte de UTEC!</h2>"
 				+ "<br><br>Tras revisar tu documentación, le confirmamos que la misma ha sido <b>validada completamente</b>."
 				+ "<br><br>Mediante este correo te estamos haciendo llegar tu usuario y contraseña para el acceso a tu cuenta de Correo Institucional."
-				+ "<br><br><b>Email: </b>" + value.getMailInstitucional()
-				+ "<br><b>Contraseña: " + value.getContrasenia();
-		String msgBorrado = "<h2>" + value.getNombre().toUpperCase() + " " + value.getApellido().toUpperCase() + " ¡Ya no eres parte de UTEC!"
+				+ "<br><br><b>Email: </b>" + value.getMailInstitucional() + "<br><b>Contraseña: "
+				+ value.getContrasenia();
+		String msgBorrado = "<h2>" + value.getNombre().toUpperCase() + " " + value.getApellido().toUpperCase()
+				+ " ¡Ya no eres parte de UTEC!"
 				+ "<br><br>Tras revisar tu documentación, le informamos que la misma <b>no cumple los requisitos necesarios</b>.";
 		if (value.getEstado() == 1) {
 			Mail.sendMail(value.getMail(), "REGISTRO UTEC", msgHabilitado);
@@ -149,8 +155,7 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		}
 		return modificar(value);
 	}
-	
-	
+
 	@Override
 	public Analista getAnalista(Usuario usuario) {
 		return (Analista) em.createQuery("SELECT a FROM Analista a WHERE a.usuario.id = :user")
@@ -169,5 +174,35 @@ public class UsuarioBean implements UsuarioBeanRemote {
 				.setParameter("user", usuario.getIdUsuario()).getSingleResult();
 	}
 	
+	@Override
+	public String getTipoDeUsuario(Usuario usuario) {
+		String tipo = "";
+		try {
+			if (em.createQuery("SELECT a FROM Analista a WHERE a.usuario.id = :user")
+					.setParameter("user", usuario.getIdUsuario()).getResultList().size() > 0) {
+				tipo += "analista,";
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		try {
+			if (em.createQuery("SELECT t FROM Tutor t WHERE t.usuario.id = :user")
+					.setParameter("user", usuario.getIdUsuario()).getResultList().size() > 0) {
+				tipo += "tutor,";
+			}
+		} catch (Exception e1) {
+			System.out.println(e1.getMessage());
+		}
+		try {
+			
+			if (em.createQuery("SELECT e FROM Estudiante e WHERE e.usuario.id = :user")
+					.setParameter("user", usuario.getIdUsuario()).getResultList().size() > 0) {
+				tipo += "estudiante";
+			}
+		} catch (Exception e2) {
+			System.out.println(e2.getMessage());
+		}
+		return tipo;
+	}
 
 }

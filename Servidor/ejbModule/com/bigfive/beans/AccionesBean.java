@@ -74,7 +74,8 @@ public class AccionesBean implements AccionesBeanRemote {
 				+"<br>Analista: " + accion.getAnalista().getUsuario().getNombre() + accion.getAnalista().getUsuario().getApellido()
 				+"<br>Email analista: " + accion.getAnalista().getUsuario().getMailInstitucional()
 				+"<br>Acción: " + accion.getDescripcion()
-				+"<br>Estado: " + accion.getEstado().getNombre().toUpperCase();
+				+"<br>Estado: " + accion.getEstado().getNombre().toUpperCase()
+				+"<br>Fecha de modificación: " + accion.getFechaHora().toString();
 		try {
 			em.persist(accion);
 			em.flush();
