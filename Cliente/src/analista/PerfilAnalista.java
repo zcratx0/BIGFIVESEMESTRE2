@@ -333,7 +333,6 @@ private void initialize() {
 }
 	public void cargarDatosAnalista(Usuario usuario) {
 		this.usuario = usuario;
-		
 		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
 		DAOITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
 		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
@@ -346,8 +345,26 @@ private void initialize() {
 		if (usuario.getDepartamentos() != null) cBoxDepa.setSelectedItem(usuario.getDepartamentos());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
-		if (usuario.getItr() != null) DAOITR.getInstance().getItrBean().listarElementosHabilitados().forEach(itr -> {if  (usuario.getItr() == itr) cBoxITR.setSelectedIndex(DAOITR.getInstance().getItrBean().listarElementosHabilitados().indexOf(itr));});
-		if (usuario.getGenero() != null) cBoxGenero.setSelectedItem(usuario.getGenero());
+		if (usuario.getItr() != null) {
+			for (int i = 0; i < cBoxITR.getItemCount(); i++) {
+				Itr g = (Itr) cBoxITR.getItemAt(i);
+				if (g.getNombre().equalsIgnoreCase(usuario.getItr().getNombre())) {
+					cBoxITR.setSelectedIndex(i);
+					i = cBoxITR.getItemCount() + 1;
+				}
+			}
+		}
+		if (usuario.getGenero() != null) {
+			for (int i = 0; i < cBoxGenero.getItemCount(); i++) {
+				Genero g = (Genero) cBoxGenero.getItemAt(i);
+				if (g.getGenero().equalsIgnoreCase(usuario.getGenero().getGenero())) {
+					cBoxGenero.setSelectedIndex(i);
+					i = cBoxGenero.getItemCount() + 1;
+				}
+			}
+		}
+		
+		
 	}
 	public void guardarCambios(Usuario usuario) {
 		try {

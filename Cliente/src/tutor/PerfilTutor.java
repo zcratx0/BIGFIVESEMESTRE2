@@ -381,9 +381,42 @@ public class PerfilTutor {
 		if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
-		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
-		if (tutor.getArea() != null) cBoxArea.setSelectedItem(tutor.getArea());
-		//if (tutor.getRol() != null) cBoxRol.setSelectedItem(tutor.getRol());
+		if (tutor.getArea() != null) {
+			for (int i = 0; i < cBoxArea.getItemCount(); i++) {
+				Area g = (Area) cBoxArea.getItemAt(i);
+				if (g.getArea().equalsIgnoreCase(tutor.getArea().getArea())) {
+					cBoxRol.setSelectedIndex(i);
+					i = cBoxRol.getItemCount() + 1;
+				}
+			}
+		}cBoxArea.setSelectedItem(tutor.getArea());
+		if (tutor.getRol() != null) {
+			for (int i = 0; i < cBoxRol.getItemCount(); i++) {
+				Rol g = (Rol) cBoxRol.getItemAt(i);
+				if (g.getNombre().equalsIgnoreCase(tutor.getRol().getNombre())) {
+					cBoxRol.setSelectedIndex(i);
+					i = cBoxRol.getItemCount() + 1;
+				}
+			}
+		}
+		if (usuario.getItr() != null) {
+			for (int i = 0; i < cBoxITR.getItemCount(); i++) {
+				Itr g = (Itr) cBoxITR.getItemAt(i);
+				if (g.getNombre().equalsIgnoreCase(usuario.getItr().getNombre())) {
+					cBoxITR.setSelectedIndex(i);
+					i = cBoxITR.getItemCount() + 1;
+				}
+			}
+		}
+		if (usuario.getGenero() != null) {
+			for (int i = 0; i < cBoxGenero.getItemCount(); i++) {
+				Genero g = (Genero) cBoxGenero.getItemAt(i);
+				if (g.getGenero().equalsIgnoreCase(usuario.getGenero().getGenero())) {
+					cBoxGenero.setSelectedIndex(i);
+					i = cBoxGenero.getItemCount() + 1;
+				}
+			}
+		}
 		this.tutor = tutor;
 		}
 	}

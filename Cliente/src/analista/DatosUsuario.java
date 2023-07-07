@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import com.bigfive.entities.Departamento;
+import com.bigfive.entities.Genero;
 import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
@@ -304,7 +305,7 @@ public class DatosUsuario {
 		
 		//	FUNCIONALIDAD
 		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
-		DAOITR.getInstance().cargarComboBox(cBoxItr);
+		DAOITR.getInstance().cargarComboBoxHabilitado(cBoxItr);
 		DAOGenero.getInstance().cargarComboBox(cBoxGenero);	
 		
 
@@ -325,8 +326,25 @@ public class DatosUsuario {
 		if (user.getTelefono() != null) tfTel.setText(user.getTelefono());
 		if (user.getDepartamento() != null) cBoxDepa.setSelectedItem(user.getDepartamento());
 		if (user.getLocalidad() != null) tfLocalidad.setText(user.getLocalidad());
-		if (user.getItr() != null) cBoxItr.setSelectedItem(user.getItr());
 		if (user.getEstado() >-1 ) cBoxEstado.setSelectedIndex(user.getEstado());
+		if (user.getItr() != null) {
+			for (int i = 0; i < cBoxItr.getItemCount(); i++) {
+				Itr g = (Itr) cBoxItr.getItemAt(i);
+				if (g.getNombre().equalsIgnoreCase(user.getItr().getNombre())) {
+					cBoxItr.setSelectedIndex(i);
+					i = cBoxItr.getItemCount() + 1;
+				}
+			}
+		}
+		if (user.getGenero() != null) {
+			for (int i = 0; i < cBoxGenero.getItemCount(); i++) {
+				Genero g = (Genero) cBoxGenero.getItemAt(i);
+				if (g.getGenero().equalsIgnoreCase(user.getGenero().getGenero())) {
+					cBoxGenero.setSelectedIndex(i);
+					i = cBoxGenero.getItemCount() + 1;
+				}
+			}
+		}
 		btnGuardar.setEnabled(true);
 	}
 	public void actualizarDatos() {

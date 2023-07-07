@@ -362,7 +362,15 @@ public class PerfilEstudiantes {
 		if (usuario.getDepartamentos() != null) cBoxDepa.setSelectedItem(usuario.getDepartamentos());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
-		if (usuario.getItr() != null) cBoxITR.setSelectedItem(usuario.getItr());
+		if (usuario.getItr() != null) {
+			for (int i = 0; i < cBoxITR.getItemCount(); i++) {
+				Itr g = (Itr) cBoxITR.getItemAt(i);
+				if (g.getNombre().equalsIgnoreCase(usuario.getItr().getNombre())) {
+					cBoxITR.setSelectedIndex(i);
+					i = cBoxITR.getItemCount() + 1;
+				}
+			}
+		}
 		if (estudiante.getGeneracion() != null) tfGeneracion.setText(estudiante.getGeneracion());
 	}
 	
