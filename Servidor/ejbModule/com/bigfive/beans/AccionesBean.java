@@ -1,5 +1,6 @@
 package com.bigfive.beans;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -75,7 +76,7 @@ public class AccionesBean implements AccionesBeanRemote {
 				+"<br>Email analista: " + accion.getAnalista().getUsuario().getMailInstitucional()
 				+"<br>Acción: " + accion.getDescripcion()
 				+"<br>Estado: " + accion.getEstado().getNombre().toUpperCase()
-				+"<br>Fecha de modificación: " + accion.getFechaHora().toString();
+				+"<br>Fecha de modificación: " + LocalDate.now();
 		try {
 			em.persist(accion);
 			em.flush();
