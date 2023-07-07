@@ -39,46 +39,42 @@ import validaciones.ValidacionTelefono;
 import validaciones.ValidarInputs;
 
 public class PerfilAnalista extends JPanel {
-	//Atributo
-JFrame frame = new JFrame();
-JLabel lblTitPerfil = new JLabel("Perfil");
-JLabel lblNombre = new JLabel("Nombres");
-JTextField tfNombre = new JTextField();
-JLabel lblApellido = new JLabel("Apellidos");
-JTextField tfApellido = new JTextField();
-JLabel lblCI = new JLabel("Cédula");
-JLabel lblFecNac = new JLabel("Fecha de Nacimiento");
-JTextField tfDocumento = new JTextField();
-JTextField tfMailPer = new JTextField();
-JLabel lblMailP = new JLabel("Email Personal");
-JLabel lblTel = new JLabel("Teléfono");
-JLabel lblLoc = new JLabel("Localidad");
-JTextField tfLoca = new JTextField();
-JLabel lblDepa = new JLabel("Departamento");
-JComboBox cBoxDepa = new JComboBox();
-JLabel lblMailIns = new JLabel("Email Institucional");
-JTextField tfMailInst = new JTextField();
-JLabel lblContra = new JLabel("Contraseña");
-JPasswordField pasFContra = new JPasswordField();
-JLabel lblITR = new JLabel("ITR");
-JComboBox cBoxITR = new JComboBox();
-JButton btnConfirmar = new JButton("Confirmar");
-JButton btnCancelar = new JButton("Cancelar");
-JTextField tfTel = new JTextField();
-private final JTextField tfFechaNac = new JTextField();
-private final JLabel lblGenero = new JLabel("Genero");
-JComboBox cBoxGenero = new JComboBox();
-Usuario usuario = null;
-//	Fecha
-private Date nac;
-private SimpleDateFormat format;
+
+	JFrame frame = new JFrame();
+	JLabel lblTitPerfil = new JLabel("Perfil");
+	JLabel lblNombre = new JLabel("Nombres");
+	JTextField tfNombre = new JTextField();
+	JLabel lblApellido = new JLabel("Apellidos");
+	JTextField tfApellido = new JTextField();
+	JLabel lblCI = new JLabel("Cédula");
+	JLabel lblFecNac = new JLabel("Fecha de Nacimiento");
+	JTextField tfDocumento = new JTextField();
+	JTextField tfMailPer = new JTextField();
+	JLabel lblMailP = new JLabel("Email Personal");
+	JLabel lblTel = new JLabel("Teléfono");
+	JLabel lblLoc = new JLabel("Localidad");
+	JTextField tfLoca = new JTextField();
+	JLabel lblDepa = new JLabel("Departamento");
+	JComboBox cBoxDepa = new JComboBox();
+	JLabel lblMailIns = new JLabel("Email Institucional");
+	JTextField tfMailInst = new JTextField();
+	JLabel lblContra = new JLabel("Contraseña");
+	JPasswordField pasFContra = new JPasswordField();
+	JLabel lblITR = new JLabel("ITR");
+	JComboBox cBoxITR = new JComboBox();
+	JButton btnConfirmar = new JButton("Confirmar");
+	JButton btnCancelar = new JButton("Cancelar");
+	JTextField tfTel = new JTextField();
+	private final JTextField tfFechaNac = new JTextField();
+	private final JLabel lblGenero = new JLabel("Genero");
+	JComboBox cBoxGenero = new JComboBox();
+	Usuario usuario = null;
+	private Date nac;
+	private SimpleDateFormat format;
 
 
 
 
-/**
- * Launch the application.
- */
 public static void main(String[] args) {
 	EventQueue.invokeLater(new Runnable() {
 		public void run() {
@@ -125,13 +121,12 @@ private void initialize() {
 
 	format = new SimpleDateFormat("dd-MM-yyyy");
 	
-	//Titulo
 	lblTitPerfil.setForeground(Color.decode("#08ACEC"));  
 	lblTitPerfil.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 	lblTitPerfil.setBounds(119, 1, 168, 29);
 	frame.getContentPane().add(lblTitPerfil);
 	
-	//Nombre	
+		
 	lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblNombre.setBounds(10, 52, 80, 13);
 	frame.getContentPane().add(lblNombre);
@@ -148,7 +143,7 @@ private void initialize() {
 	}); 
 	
 	
-	//Apellido
+	
 	lblApellido.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblApellido.setBounds(10, 92, 80, 13);
 	frame.getContentPane().add(lblApellido);
@@ -166,7 +161,7 @@ private void initialize() {
 		}
 	}); 
 	
-	//Cedula
+	
 	lblCI.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblCI.setBounds(10, 139, 80, 13);
 	frame.getContentPane().add(lblCI);
@@ -180,12 +175,13 @@ private void initialize() {
 			ValidarInputs.ValidarSoloNumeros(e);;
 		}
 	});
-	//TODO Revisar porque esto se pude romper!!
+	
+	
 	tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
 	
 	
 	
-	//Fecha de Nacimiento 
+	
 	lblFecNac.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblFecNac.setBounds(10, 181, 146, 13);
 	frame.getContentPane().add(lblFecNac);
@@ -193,10 +189,10 @@ private void initialize() {
 	tfFechaNac.setBounds(142, 178, 219, 19);
 	tfFechaNac.setColumns(10);
 	frame.getContentPane().add(tfFechaNac);
-	//Verifica que la fecha ingresada tenga formato dd/mm/yy
+	
 	tfFechaNac.setInputVerifier(new ValidacionFecha());
 	
-	//Email Personal
+	
 	lblMailP.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblMailP.setBounds(10, 216, 113, 13);
 	frame.getContentPane().add(lblMailP);
@@ -207,7 +203,7 @@ private void initialize() {
 	tfMailPer.setColumns(10);
 	tfMailPer.setInputVerifier(new ValidacionEmailPersonal());
 	
-	//Telefono
+	
 	lblTel.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblTel.setBounds(10, 261, 45, 13);
 	frame.getContentPane().add(lblTel);
@@ -216,11 +212,10 @@ private void initialize() {
 	tfTel.setBounds(142, 258, 219, 19);
 	frame.getContentPane().add(tfTel);
 	tfTel.setColumns(10);
-	//tfTel.setInputVerifier(new ValidacionMaxyMin(8,16));
-	//Acepta paréntesis y signo de + al inicio además de puntos y guiones como separadores, minimo 8 caracteres
+	
 	tfTel.setInputVerifier(new ValidacionTelefono());
 	
-	//Localidad
+	
 	lblLoc.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblLoc.setBounds(10, 302, 122, 13);
 	frame.getContentPane().add(lblLoc);
@@ -237,7 +232,7 @@ private void initialize() {
 	tfLoca.setInputVerifier(new ValidacionMaxyMin(2,24));
 	
 	
-	//Departamento
+	
 	lblDepa.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblDepa.setBounds(10, 344, 113, 13);
 	frame.getContentPane().add(lblDepa);
@@ -246,7 +241,7 @@ private void initialize() {
 	cBoxDepa.setBackground(Color.decode("#e5e7eb"));
 	frame.getContentPane().add(cBoxDepa);
 	
-	//Mail Insitucional
+	
 	lblMailIns.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblMailIns.setBounds(10, 385, 132, 13);
 	frame.getContentPane().add(lblMailIns);
@@ -260,7 +255,7 @@ private void initialize() {
 	
 	tfMailInst.setEnabled(false);
 	
-	//Contraseña
+	
 	lblContra.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblContra.setBounds(10, 430, 113, 13);
 	frame.getContentPane().add(lblContra);
@@ -271,7 +266,7 @@ private void initialize() {
 
 	
 	
-	//ITR
+	
 	lblITR.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	lblITR.setBounds(10, 476, 45, 13);
 	frame.getContentPane().add(lblITR);
@@ -281,7 +276,7 @@ private void initialize() {
 	cBoxITR.setBounds(142, 472, 219, 21);
 	frame.getContentPane().add(cBoxITR);
 	
-	//Genero
+	
 	lblGenero.setBounds(10, 515, 65, 13);
 	lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	frame.getContentPane().add(lblGenero);
@@ -290,7 +285,7 @@ private void initialize() {
 	frame.getContentPane().add(cBoxGenero);
 
 	
-	//Boton confirmar cambios 
+	
 	btnConfirmar.setBackground(Color.decode("#0284c7")); 
 	btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10)); 
 	btnConfirmar.setForeground(Color.decode("#f0f9ff"));
@@ -301,22 +296,20 @@ private void initialize() {
 			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar sus datos?",
 					"Confirmación de modificacion", JOptionPane.YES_NO_OPTION);
 			if (confirmacion == JOptionPane.YES_OPTION) {
-				JOptionPane.showMessageDialog(null, "Los datos se actualizaron correctamente.\nPor favor reinicie la sesión para cargar los datos actualizados.");
-	        	guardarCambios(usuario);
+				JOptionPane.showMessageDialog(null,
+						"Los datos se actualizaron correctamente.\nPor favor reinicie la sesión para cargar los datos actualizados.");
+				guardarCambios(usuario);
 				frame.dispose();
 			}
-	    } else {
-	    	JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
-	    }
+		} else {
+			JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+		}
 	});
 	frame.getContentPane().add(btnConfirmar);
 	
 	
-	// Boton Cancelar
-	
 	btnCancelar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			//PrincipalAnalista.main(null);
 			frame.dispose();
 		}
 	});
@@ -327,22 +320,22 @@ private void initialize() {
     frame.getContentPane().add(btnCancelar);
 
 	
-	//Imagen
+	
 	JLabel lblLogoUtec = new JLabel("");
 	lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 	lblLogoUtec.setBounds(25, 1, 107, 50);
 	frame.getContentPane().add(lblLogoUtec);
 	
-	//	CARGAR DATOS
+	
 	DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
 	DAOGenero.getInstance().cargarComboBox(cBoxGenero);
 	
 }
 	public void cargarDatosAnalista(Usuario usuario) {
 		this.usuario = usuario;
-		//Carga el combobox de departamento e itr con los valores
+		
 		DAODepartamento.getInstance().cargarComboBox(cBoxDepa);
-		DAOITR.getInstance().cargarComboBox(cBoxITR);
+		DAOITR.getInstance().cargarComboBoxHabilitado(cBoxITR);
 		if (usuario.getNombre() != null) tfNombre.setText(usuario.getNombre());
 		if (usuario.getApellido() != null) tfApellido.setText(usuario.getApellido());
 		if (usuario.getDocumento() != null) tfDocumento.setText(usuario.getDocumento());
@@ -350,7 +343,6 @@ private void initialize() {
 		if (usuario.getMail() != null) tfMailPer.setText(usuario.getMail());
 		if (usuario.getTelefono() != null) tfTel.setText(usuario.getTelefono());
 		if (usuario.getLocalidad() != null) tfLoca.setText(usuario.getLocalidad());
-		//if (usuario.getDepartamento() != null) cBoxDepa.setSelectedItem(usuario.getDepartamento().getIdDepartamento());
 		if (usuario.getDepartamentos() != null) cBoxDepa.setSelectedItem(usuario.getDepartamentos());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
@@ -358,7 +350,6 @@ private void initialize() {
 		if (usuario.getGenero() != null) cBoxGenero.setSelectedItem(usuario.getGenero());
 	}
 	public void guardarCambios(Usuario usuario) {
-		//		PROCESAR FECHA DE NACIMIENTO
 		try {
 			Date fechaNac = new SimpleDateFormat("dd/mm/yyyy").parse(tfFechaNac.getText());
 			System.out.println(fechaNac);
@@ -391,12 +382,11 @@ private void initialize() {
 		
 	}
 	
-	//Valida que todos los campos estén llenos antes de guardar
+	
 	public boolean camposCompletos() {
 	    return !tfNombre.getText().isEmpty()
 	            && !tfApellido.getText().isEmpty()
 	            && !tfDocumento.getText().isEmpty()
-	            // TODO  Agregar validación para la fecha de nacimiento aquí
 	            && !tfMailPer.getText().isEmpty()
 	            && !tfMailInst.getText().isEmpty()
 	            && !tfTel.getText().isEmpty()
