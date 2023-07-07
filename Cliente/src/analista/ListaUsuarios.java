@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -194,11 +197,15 @@ public class ListaUsuarios {
 			DefaultTableModel dtm = (DefaultTableModel) tablaUsu.getModel();
 			TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
 			tablaUsu.setRowSorter(sorter);
-			if (!cBoxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) sorter.setRowFilter(RowFilter.regexFilter(cBoxEstado.getSelectedItem().toString()));
-			if (!cBoxItr.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) sorter.setRowFilter(RowFilter.regexFilter(cBoxItr.getSelectedItem().toString()));
-			if (!cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) sorter.setRowFilter(RowFilter.regexFilter(cBoxTipoUsu.getSelectedItem().toString().toUpperCase()));
-			if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("ESTUDIANTE") && !tfGeneracion.getText().isEmpty()) sorter.setRowFilter(RowFilter.regexFilter(tfGeneracion.getText()));
 			
+			List<RowFilter<Object, Object>> filtros = new ArrayList<>();
+			
+			if (!cBoxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) filtros.add(RowFilter.regexFilter(cBoxEstado.getSelectedItem().toString(), 6));
+			if (!cBoxItr.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) filtros.add(RowFilter.regexFilter(cBoxItr.getSelectedItem().toString(), 5));
+			if (!cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO")) filtros.add(RowFilter.regexFilter(cBoxTipoUsu.getSelectedItem().toString().toUpperCase(), 4));
+			if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("ESTUDIANTE") && !tfGeneracion.getText().isEmpty()) filtros.add(RowFilter.regexFilter(tfGeneracion.getText(), 7));
+			
+			sorter.setRowFilter((RowFilter<Object, Object>) RowFilter.andFilter(filtros));
 		});
 		
 		frame.getContentPane().add(btnFiltrar);
