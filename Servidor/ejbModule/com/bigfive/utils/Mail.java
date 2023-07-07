@@ -21,7 +21,7 @@ public class Mail {
 	
 	public Mail() {
 		System.out.println("Creando Mail");
-		final String username = "zcratx98@gmail.com";
+		final String username = "mail@gmail.com";
         final String password = "ctow qgwt vmqj daie";
 
         Properties prop = new Properties();
