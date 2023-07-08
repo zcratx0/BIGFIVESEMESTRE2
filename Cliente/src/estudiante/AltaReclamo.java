@@ -317,8 +317,12 @@ public class AltaReclamo {
 		btnCancelar.setBounds(210, 446, 104, 38);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaReclamoEstu.main(estudiante);
-				frame.dispose();
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir sin guardar cambios?",
+						"Confirmación de modificacion", JOptionPane.YES_NO_OPTION);
+				if (confirmacion == JOptionPane.YES_OPTION) {
+					ListaReclamoEstu.main(estudiante);
+					frame.dispose();
+				}
 			}
 		});
 		frame.getContentPane().add(btnCancelar);
