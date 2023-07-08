@@ -154,7 +154,7 @@ public class PerfilTutor {
 				ValidarInputs.ValidarSoloLetras(e);
 			}
 		}); 
-		
+		tfNombre.setEnabled(false);
 		
 		//Apellido
 		lblApellido.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -173,6 +173,7 @@ public class PerfilTutor {
 				ValidarInputs.ValidarSoloLetras(e);
 			}
 		}); 
+		tfApellido.setEnabled(false);
 		
 		
 		//Cedula
@@ -189,9 +190,9 @@ public class PerfilTutor {
 				ValidarInputs.ValidarSoloNumeros(e);;
 			}
 		});
-		//TODO Revisar porque esto se pude romper!!
-		tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
 		
+		tfDocumento.setInputVerifier(new ValidacionMaxyMin(8,8));
+		tfDocumento.setEnabled(false);
 		
 		
 		//Fecha de Nacimiento 
@@ -261,7 +262,7 @@ public class PerfilTutor {
 		frame.getContentPane().add(tfMailInst);
 		tfMailInst.setColumns(10);
 		tfMailInst.setInputVerifier(new ValidacionEmailInsti());
-		
+		tfMailInst.setEnabled(false);
 		//Contraseña
 		lblContra.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblContra.setBounds(10, 430, 113, 13);
@@ -310,10 +311,6 @@ public class PerfilTutor {
 		
 		
 		btnConfirmar.addActionListener(e-> {
-			if (!esMayorDeEdad(tfFechaNac.getText())) {
-				JOptionPane.showMessageDialog(null, "Por favor, fecha de .");
-				return;
-			}
 			
 			if (camposCompletos()) {
 				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar sus datos?",
@@ -354,7 +351,7 @@ public class PerfilTutor {
 		lblLogoUtec.setIcon(new ImageIcon(ListaAuxITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 1, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
-		
+		tfFechaNac.setEnabled(false);
 		frame.getContentPane().add(tfFechaNac);
 		lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblGenero.setBounds(10, 616, 45, 13);
