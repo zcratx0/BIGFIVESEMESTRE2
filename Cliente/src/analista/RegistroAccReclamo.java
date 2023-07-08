@@ -121,24 +121,6 @@ public class RegistroAccReclamo {
 		frame.getContentPane().add(lblTitReclamo);
 		
 		
-		//Fecha y hora
-		/* TODO Borrar 
-		lblFechaHora.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblFechaHora.setBounds(41, 76, 91, 13);
-		//frame.getContentPane().add(lblFechaHora);
-		
-		tfFechHora.setBounds(188, 73, 211, 19);
-		//frame.getContentPane().add(tfFechHora);
-		tfFechHora.setColumns(10);
-		*/
-		
-		//Analista
-		lblAnalista.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblAnalista.setBounds(41, 114, 45, 13);
-		if (analista.getUsuario() != null) lblAnalista.setText(lblAnalista + (analista.getUsuario().getMailInstitucional().toString()));
-		frame.getContentPane().add(lblAnalista);
-		
-		
 		//Estado
 		lblEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblEstado.setBounds(41, 152, 45, 13);
