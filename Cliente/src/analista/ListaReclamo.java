@@ -26,6 +26,7 @@ import utils.GUIEscolaridad;
 import utils.TBFTable;
 
 import javax.swing.JComboBox;
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.SystemColor;
@@ -290,6 +291,12 @@ public class ListaReclamo {
 		tablaRe.getSelectionModel().addListSelectionListener(e -> {
 			btnRegAcc.setEnabled(true);
 		});
+
+		for (int i = 0; i < model.getColumnCount(); i++) {
+			JTextField x = new JTextField();
+			x.setEnabled(false);
+			tablaRe.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(x));
+		}
 		tablaRe.removeColumn(tablaRe.getColumnModel().getColumn(0));
 	}
 
@@ -317,6 +324,12 @@ public class ListaReclamo {
 		tablaRe.getSelectionModel().addListSelectionListener(e -> {
 			btnRegAcc.setEnabled(true);
 		});
+
+		for (int i = 0; i < model.getColumnCount(); i++) {
+			JTextField x = new JTextField();
+			x.setEnabled(false);
+			tablaRe.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(x));
+		}
 		tablaRe.removeColumn(tablaRe.getColumnModel().getColumn(0));
 	}
 

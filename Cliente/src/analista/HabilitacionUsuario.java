@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.bigfive.entities.Usuario;
@@ -182,7 +183,12 @@ public class HabilitacionUsuario {
 				
 			}
 		} );
-		
+
+		for (int i = 0; i < tableModel.getColumnCount(); i++) {
+			JTextField x = new JTextField();
+			x.setEnabled(false);
+			tablaEst.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(x));
+		}
 		tablaEst.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(cbEstado));
 		DAOEstudiante.getInstance().getBean().listarElementos().forEach(t -> {
 			if (t.getUsuario().getEstado() == 0) {

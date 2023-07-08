@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -344,6 +345,12 @@ public class ListaUsuarios {
 		tablaUsu.getSelectionModel().addListSelectionListener(e -> {
 			btnModificar.setEnabled(true);
 		});
+		
+		for (int i = 0; i < tableModel.getColumnCount(); i++) {
+			JTextField x = new JTextField();
+			x.setEnabled(false);
+			tablaUsu.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(x));
+		}
 		tablaUsu.removeColumn(tablaUsu.getColumnModel().getColumn(0));
 
 	}

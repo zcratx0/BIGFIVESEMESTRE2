@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.SystemColor;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +21,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.bigfive.entities.Itr;
@@ -205,9 +207,8 @@ public class ListaAuxITR {
 		tableModel.addColumn("DEPARTAMENTO");
 		tableModel.addColumn("ESTADO");
 
-		JComboBox cbEstado = new JComboBox<>();
-		cbEstado.addItem("DESACTIVADO");
-		cbEstado.addItem("ACTIVADO");
+
+		
 		DAOITR.getInstance().getItrBean().actualizar();
 		DAOITR.getInstance().getItrBean().listarElementos().forEach(t -> {
 			String value = "";
@@ -219,7 +220,13 @@ public class ListaAuxITR {
 			Object[] tabla = { (Itr) t, t.getDepartamento(), value };
 			tableModel.addRow(tabla);
 		});
+
 		tablaItr.setModel(tableModel);
+		for (int i = 0; i < tableModel.getColumnCount(); i++) {
+			JTextField x = new JTextField();
+			x.setEnabled(false);
+			tablaItr.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(x));
+		}
 	}
 
 }
