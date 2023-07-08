@@ -39,7 +39,8 @@ import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class ListaReclamo {
-
+	
+	ListaReclamo instane;
 	// Atributos
 	JFrame frame = new JFrame();
 	JLabel lblTitListRec = new JLabel("Lista de Reclamos");

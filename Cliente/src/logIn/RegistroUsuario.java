@@ -71,6 +71,7 @@ public class RegistroUsuario {
 	private JComboBox cBoxTipoUsu;
 	private JTextField tfFech;
 	private Date nac;
+	private JTextField tfAnioIng;
 	
 	/**
 	 * Launch the application.
@@ -320,7 +321,7 @@ public class RegistroUsuario {
 		lblAnioIng.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblAnioIng.setBounds(10, 609, 132, 13);
 		
-		JTextField tfAnioIng = new JTextField();
+		tfAnioIng = new JTextField();
 		tfAnioIng.setBounds(142, 606, 219, 19);
 		tfAnioIng.setColumns(10);
 		tfAnioIng.setInputVerifier(new ValidacionMaxyMin(2,32));
@@ -365,7 +366,9 @@ public class RegistroUsuario {
 		btnRegistro.setForeground(Color.decode("#f0f9ff"));
 		btnRegistro.setBounds(261, 695, 112, 40);
 		btnRegistro.addActionListener(e -> {
-
+			if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("estudiante")) {
+				if (tfAnioIng.)
+			}
 			if (!camposCompletos()) {
 				JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
 				return;
