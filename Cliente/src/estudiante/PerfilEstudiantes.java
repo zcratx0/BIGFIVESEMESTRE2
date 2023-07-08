@@ -407,23 +407,6 @@ public class PerfilEstudiantes {
 		DAOUsuario.getInstance().getBean().modificar(usuario);
 	}
 	
-	private boolean esMayorDeEdad(String fechaNacimientoStr) {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			Date nac = format.parse(fechaNacimientoStr);
-			Calendar cl = Calendar.getInstance();
-			cl.setTime(nac);
-			
-			LocalDate nacDate = LocalDate.of(cl.get(Calendar.YEAR), cl.get(Calendar.MONTH), cl.get(Calendar.DAY_OF_MONTH));
-			LocalDate now = LocalDate.now();
-	        Period ageDifference = Period.between(nacDate, now);
-	        if (ageDifference.getYears() >= 18) return true;			
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
 	
 	//Valida que todos los campos estén llenos antes de guardar
 	public boolean camposCompletos() {
