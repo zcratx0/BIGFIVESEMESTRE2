@@ -186,11 +186,16 @@ public class RegistroAccReclamo {
 		//	CARGAR DATOS
 		cBoxEstado.addItem("INGRESADO");
 		DAOEstado.getInstance().cargarComboBox(cBoxEstado);
-		for (int i = 1; i < cBoxEstado.getItemCount(); i++) {
-			Estado g = (Estado) cBoxEstado.getItemAt(i);
-			if (g.getNombre().equalsIgnoreCase(reclamo.getEstado().getNombre())) {
-				cBoxEstado.setSelectedIndex(i);
-				i = cBoxEstado.getItemCount() + 1;
+		if (reclamo.getEstado() != null) {
+			for (int i = 1; i < cBoxEstado.getItemCount(); i++) {
+				try {
+					Estado g = (Estado) cBoxEstado.getItemAt(i);
+					if (g.getNombre().equalsIgnoreCase(reclamo.getEstado().getNombre())) {
+						cBoxEstado.setSelectedIndex(i);
+						i = cBoxEstado.getItemCount() + 1;
+					}
+				} catch (Exception e) {
+				}
 			}
 		}
 	}
