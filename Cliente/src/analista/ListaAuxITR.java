@@ -26,6 +26,7 @@ import com.bigfive.entities.Itr;
 
 import funcionalidades.DAO;
 import funcionalidades.DAOITR;
+import validaciones.Mensajes;
 
 public class ListaAuxITR {
 
@@ -103,7 +104,6 @@ public class ListaAuxITR {
 						AgregarITR.modificar((Itr) tablaItr.getValueAt(tablaItr.getSelectedRow(), 0));
 						frame.dispose();
 					}
-
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes de seleccionar un ITR para modificar");
 				}
@@ -128,10 +128,14 @@ public class ListaAuxITR {
 				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro?",
 						"Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
 				if (confirmacion == JOptionPane.YES_OPTION) {
-					itr.setEstado((0));
-
-					DAOITR.getInstance().getItrBean().modificar(itr);
-					cargarTabla();
+					if (DAOITR.getInstance().getItrBean().estaEnUso(itr)) {
+						Mensajes.MostrarError("Este ITR esta siendo utilizado! No se puede usar!");
+					}
+					else {
+						itr.setEstado((0));
+						DAOITR.getInstance().getItrBean().modificar(itr);
+						cargarTabla();
+					}
 				}
 			}
 		});
