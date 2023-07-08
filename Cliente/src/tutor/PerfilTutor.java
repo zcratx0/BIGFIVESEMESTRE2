@@ -392,11 +392,11 @@ public class PerfilTutor {
 			for (int i = 0; i < cBoxArea.getItemCount(); i++) {
 				Area g = (Area) cBoxArea.getItemAt(i);
 				if (g.getArea().equalsIgnoreCase(tutor.getArea().getArea())) {
-					cBoxRol.setSelectedIndex(i);
-					i = cBoxRol.getItemCount() + 1;
+					cBoxArea.setSelectedIndex(i);
+					i = cBoxArea.getItemCount() + 1;
 				}
 			}
-		}cBoxArea.setSelectedItem(tutor.getArea());
+		}
 		if (tutor.getRol() != null) {
 			for (int i = 0; i < cBoxRol.getItemCount(); i++) {
 				Rol g = (Rol) cBoxRol.getItemAt(i);
