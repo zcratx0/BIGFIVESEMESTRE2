@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 import com.bigfive.entities.Estado;
+import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Usuario;
 
 import funcionalidades.DAOArea;
@@ -150,8 +151,10 @@ public class ListaAuxEstados {
 			//Modificar
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AgregarEstado.main(null);
-				frame.dispose();
+				if (tablaEst.getSelectedRow() > -1) {
+					AgregarEstado.main((Estado) tablaEst.getModel().getValueAt(tablaEst.getSelectedRow(), 0));
+					frame.dispose();
+				}
 			}
 		});
 		btnModificar.setFont(new Font("Tahoma", Font.BOLD, 10));

@@ -27,6 +27,7 @@ public class AgregarEstado {
 	JTextField tfNombre = new JTextField();
 	JButton btnGuardar = new JButton("Guardar");
 	JButton btnCancelar = new JButton("Cancelar");
+	Estado est = null;
 
 	/**
 	 * Launch the application.
@@ -43,6 +44,21 @@ public class AgregarEstado {
 			}
 		});
 	}
+	
+	
+	public static void main(Estado estado) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AgregarEstado window = new AgregarEstado(estado);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 
 	/**
 	 * Create the application.
@@ -50,6 +66,13 @@ public class AgregarEstado {
 	public AgregarEstado() {
 		initialize();
 	}
+	
+
+	public AgregarEstado(Estado estado) {
+		this.est = estado;
+		initialize();
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -129,10 +152,16 @@ public class AgregarEstado {
 		for (Estado estado : DAOEstado.getInstance().getBean().listarElementos()) {
 			if (estado.getNombre().equalsIgnoreCase(tfNombre.getText())) { Mensajes.MostrarError("YA EXISTE EL ESTADO"); return false;}
 		}
-		Estado estado = new Estado();		
+
+		Estado estado = new Estado();
+		if (this.est == null) estado = this.est;		
 		estado.setNombre(tfNombre.getText());
 		estado.setEstado(true);
-		DAOEstado.getInstance().getBean().crear(estado);
+		if (this.est == null) DAOEstado.getInstance().getBean().crear(estado);
+		else {
+			DAOEstado.getInstance().getBean().modificar(estado);
+		}
+		
 		DAOEstado.getInstance().getBean().actualizar();
 		return true;
 	}

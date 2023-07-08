@@ -150,7 +150,6 @@ public class PrincipalTutor {
 		btnReclamos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MantenimientoTutor.main(null);
-				frame.dispose();
 			}
 		});
 		frame.getContentPane().add(btnReclamos);
@@ -163,7 +162,6 @@ public class PrincipalTutor {
 		btnConstancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MantenimientoTutor.main(null);
-				frame.dispose();
 			}
 		});
 		frame.getContentPane().add(btnConstancia);

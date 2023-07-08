@@ -68,7 +68,6 @@ public class MantenimientoTutor {
 		JButton btnPrincipal = new JButton("Volver a Ventana Principal");
 		btnPrincipal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalTutor.main(null);
 				frame.dispose();
 				
 			}
