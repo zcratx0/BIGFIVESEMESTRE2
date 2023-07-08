@@ -205,7 +205,7 @@ public class AltaReclamo {
 		frame.getContentPane().add(cBoxEvento);
 		cBoxEvento.addActionListener(t-> {
 			if (cBoxEvento.getSelectedIndex() != 0) {
-				tfNombEvento.setEnabled(false);
+				tfNombAct.setEnabled(false);
 			}
 			else {
 				tfNombAct.setEnabled(true);
