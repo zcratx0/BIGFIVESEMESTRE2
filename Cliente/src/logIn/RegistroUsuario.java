@@ -28,6 +28,8 @@ import com.bigfive.entities.Analista;
 import com.bigfive.entities.Area;
 import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Genero;
+import com.bigfive.entities.Itr;
 import com.bigfive.entities.Rol;
 import com.bigfive.entities.Tutor;
 import com.bigfive.entities.Usuario;
@@ -383,6 +385,8 @@ public class RegistroUsuario {
 			user.setLocalidad(tfLoca.getText());
 			user.setContrasenia(new String(pasFContra.getPassword()));
 			user.setDepartamentos((EnumDepartamentos) cBoxDepa.getSelectedItem());
+			user.setItr((Itr)cBoxITR.getSelectedItem());
+			user.setGenero((Genero) comboGenerBox.getSelectedItem());
 			
 			//	PROCESAR FECHA DE NACIMIENTO
 			try {
@@ -402,6 +406,7 @@ public class RegistroUsuario {
 				System.out.println(user.getIdUsuario());
 				if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("analista")) {
 					Analista analista = new Analista();
+					
 					analista.setUsuario(user);
 					resultado = DAOAnalista.getInstance().getBean().crear(analista);
 					System.out.println("CREADO - ANALISTA");
