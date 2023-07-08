@@ -294,7 +294,12 @@ public class AltaReclamo {
 								Mensajes.MostrarError("Elegir una fecha del evento valida!");
 								return;
 							}
-					guardarCambios();
+					int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar sus datos?",
+							"Confirmación de modificacion", JOptionPane.YES_NO_OPTION);
+					if (confirmacion == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(null, "Reclamo actualizado!");
+						guardarCambios();
+					}
 
 				}
 			}

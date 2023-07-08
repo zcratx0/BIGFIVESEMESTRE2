@@ -152,7 +152,6 @@ public class ListaConstancias {
 		btnAtras.setBounds(170, 342, 85, 31);
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrincipalEstudiante.main(null);
 				frame.dispose();
 				
 			}

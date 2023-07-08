@@ -19,6 +19,7 @@ import funcionalidades.DAOITR;
 import funcionalidades.DAOReclamo;
 import logIn.LogIn;
 import utils.TBFTable;
+import validaciones.Mensajes;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -162,6 +163,7 @@ public class PrincipalEstudiante {
 		btnConstancia.setBounds(500, 65, 107, 40);
 		btnConstancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Mensajes.MostrarError("Esta ventana esta en desarollo! Sus funcionalidades no están implementadas.");
 				ListaConstancias.main(null);
 			}
 		});
