@@ -44,6 +44,18 @@ public class AgregarEstado {
 			}
 		});
 	}
+	public static void main() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AgregarEstado window = new AgregarEstado();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	
 	
 	public static void main(Estado estado) {

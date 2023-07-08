@@ -129,7 +129,7 @@ public class ListaAuxEstados {
 		btnNuevoEst.setBackground(Color.decode("#0284c7"));
 		btnNuevoEst.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AgregarEstado.main(null);
+				AgregarEstado.main();
 				frame.dispose();
 			}
 		});
