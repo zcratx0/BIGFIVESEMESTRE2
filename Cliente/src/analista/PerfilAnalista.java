@@ -395,7 +395,6 @@ private void initialize() {
 		try {
 			DAOGenero.getInstance().getBean().modificar(usuario.getGenero());
 			DAOITR.getInstance().getItrBean().modificar(usuario.getItr());
-			System.out.println(usuario.getItr() + " " + usuario.getGenero());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
