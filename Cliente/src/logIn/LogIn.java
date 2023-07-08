@@ -38,6 +38,7 @@ public class LogIn {
 	JLabel lblContrasenia = new JLabel("Contraseña");
 	JPasswordField pasFContra = new JPasswordField();
 	JLabel lblOlvidContra = new JLabel("¿Olvidaste tu Contraseña?");
+	private final JLabel lblNewLabel = new JLabel("");
 	
 
 
@@ -77,6 +78,9 @@ public class LogIn {
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 10, 153, 273);
 		frame.getContentPane().add(panel);
+		lblNewLabel.setIcon(new ImageIcon(LogIn.class.getResource("/img/logoSIGA.jpg")));
+		
+		panel.add(lblNewLabel);
 		
 		
 		//Usuario
