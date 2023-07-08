@@ -152,8 +152,12 @@ public class ListaAuxEstados {
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (tablaEst.getSelectedRow() > -1) {
-					AgregarEstado.main((Estado) tablaEst.getModel().getValueAt(tablaEst.getSelectedRow(), 0));
-					frame.dispose();
+					int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar el Estado?",
+							"Confirmación de modificacion", JOptionPane.YES_NO_OPTION);
+					if (confirmacion == JOptionPane.YES_OPTION) {
+						AgregarEstado.main((Estado) tablaEst.getModel().getValueAt(tablaEst.getSelectedRow(), 0));
+						frame.dispose();
+					}
 				}
 			}
 		});
