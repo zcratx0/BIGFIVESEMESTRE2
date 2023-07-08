@@ -21,6 +21,7 @@ import javax.transaction.Transactional;
 import com.bigfive.entities.Accione;
 import com.bigfive.entities.Analista;
 import com.bigfive.entities.Estado;
+import com.bigfive.entities.Genero;
 import com.bigfive.entities.RecibeReclamo;
 import com.bigfive.entities.Reclamo;
 
@@ -185,7 +186,13 @@ public class RegistroAccReclamo {
 		//	CARGAR DATOS
 		cBoxEstado.addItem("INGRESADO");
 		DAOEstado.getInstance().cargarComboBox(cBoxEstado);
-		
+		for (int i = 0; i < cBoxEstado.getItemCount(); i++) {
+			Estado g = (Estado) cBoxEstado.getItemAt(i);
+			if (g.getNombre().equalsIgnoreCase(reclamo.getEstado().getNombre())) {
+				cBoxEstado.setSelectedIndex(i);
+				i = cBoxEstado.getItemCount() + 1;
+			}
+		}
 	}
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void guardarCambios() {
