@@ -430,13 +430,7 @@ public class PerfilTutor {
 	
 	
 	public void guardarCambios(Tutor tutor) {
-		//		PROCESAR FECHA DE NACIMIENTO
-		try {
-			Date fechaNac = new SimpleDateFormat("dd/mm/yyyy").parse(tfFechaNac.getText());
-			System.out.println(fechaNac);
-			tutor.getUsuario().setFechaNacimiento(fechaNac);
-		} catch (ParseException e1) {	e1.printStackTrace();	}
-		
+
 		tutor.getUsuario().setNombre(tfNombre.getText());
 		tutor.getUsuario().setApellido(tfApellido.getText());
 		tutor.getUsuario().setDocumento(tfDocumento.getText());
