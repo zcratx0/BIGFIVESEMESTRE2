@@ -389,6 +389,7 @@ public class AltaReclamo {
 				DAOReclamo.getInstance().getBean().crear(reclamo);
 		}
 
+		ListaReclamoEstu.main(estudiante);
 		frame.dispose();
 
 	}
