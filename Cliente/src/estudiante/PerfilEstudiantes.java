@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 
 import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
+import com.bigfive.entities.Genero;
 import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
 
@@ -373,6 +374,15 @@ public class PerfilEstudiantes {
 		if (usuario.getDepartamentos() != null) cBoxDepa.setSelectedItem(usuario.getDepartamentos());
 		if (usuario.getMailInstitucional() != null) tfMailInst.setText(usuario.getMailInstitucional());
 		if (usuario.getContrasenia() != null) pasFContra.setText(usuario.getContrasenia());
+		if (usuario.getGenero() != null) {
+			for (int i = 0; i < cBoxGenero.getItemCount(); i++) {
+				Genero g = (Genero) cBoxGenero.getItemAt(i);
+				if (g.getGenero().equalsIgnoreCase(usuario.getGenero().getGenero())) {
+					cBoxGenero.setSelectedIndex(i);
+					i = cBoxGenero.getItemCount() + 1;
+				}
+			}
+		}
 		if (usuario.getItr() != null) {
 			for (int i = 0; i < cBoxITR.getItemCount(); i++) {
 				Itr g = (Itr) cBoxITR.getItemAt(i);
