@@ -146,7 +146,6 @@ public class LogIn {
 				tipo = DAOUsuario.getInstance().getTipo(usuario);
 				if (usuario.getEstado() == 0) {JOptionPane.showMessageDialog(null, "Usuario no habilitado");}
 				else {
-					System.out.println("tipo: " + tipo);
 					// Evalua que tipo de usuario ingresa
 					if (tipo == 0) {
 						PrincipalAnalista.mostrarAnalista(usuario);
@@ -164,7 +163,6 @@ public class LogIn {
 				}
 			} catch(Exception e1) {
 				Mensajes.MostrarError("Usuario o Contraseña incorrecta");
-				e1.printStackTrace();
 			}
 			
 		});
