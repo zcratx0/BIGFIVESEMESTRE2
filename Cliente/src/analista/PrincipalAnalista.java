@@ -17,6 +17,7 @@ import com.bigfive.entities.Usuario;
 import funcionalidades.DAOAnalista;
 import funcionalidades.DAOUsuario;
 import logIn.LogIn;
+import validaciones.Mensajes;
 
 public class PrincipalAnalista {//Atributos
 	JFrame frame = new JFrame();
@@ -162,8 +163,8 @@ public class PrincipalAnalista {//Atributos
 		frame.getContentPane().add(btnConstancia);
 		btnConstancia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Mensajes.MostrarError("Esta ventana esta en desarollo! Sus funcionalidades no están implementadas.");
 				ListaSoliConstancias.main(null);
-				//frame.dispose();
 			}
 		});
 		
