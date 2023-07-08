@@ -186,7 +186,7 @@ public class RegistroAccReclamo {
 		//	CARGAR DATOS
 		cBoxEstado.addItem("INGRESADO");
 		DAOEstado.getInstance().cargarComboBox(cBoxEstado);
-		for (int i = 0; i < cBoxEstado.getItemCount(); i++) {
+		for (int i = 1; i < cBoxEstado.getItemCount(); i++) {
 			Estado g = (Estado) cBoxEstado.getItemAt(i);
 			if (g.getNombre().equalsIgnoreCase(reclamo.getEstado().getNombre())) {
 				cBoxEstado.setSelectedIndex(i);
