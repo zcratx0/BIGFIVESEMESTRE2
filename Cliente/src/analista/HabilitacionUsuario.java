@@ -21,6 +21,7 @@ import com.bigfive.entities.Usuario;
 
 import funcionalidades.DAOAnalista;
 import funcionalidades.DAOEstudiante;
+import funcionalidades.DAOTutor;
 import funcionalidades.DAOUsuario;
 
 public class HabilitacionUsuario {
@@ -199,5 +200,13 @@ public class HabilitacionUsuario {
 			}
 		});
 
+		DAOTutor.getInstance().getBean().listarElementos().forEach(t -> {
+
+			if (t.getUsuario().getEstado() == 0) {
+				Object[] row = { t.getUsuario(), "TUTOR", "", "GENERACION", "SIN VALOR",
+						"INFORMACION" };
+				tableModel.addRow(row);
+			}
+		});
 	}
 }
