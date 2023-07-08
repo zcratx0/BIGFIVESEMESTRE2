@@ -7,14 +7,12 @@
 		<class>com.bigfive.entities.Area</class>
 		<class>com.bigfive.entities.Constancia</class>
 		<class>com.bigfive.entities.ConvocatoriaAsistencia</class>
-		<class>com.bigfive.entities.Departamento</class>
 		<class>com.bigfive.entities.Estudiante</class>
 		<class>com.bigfive.entities.Evento</class>
 		<class>com.bigfive.entities.Genero</class>
 		<class>com.bigfive.entities.Itr</class>
 		<class>com.bigfive.entities.Justificacion</class>
 		<class>com.bigfive.entities.Reclamo</class>
-		<class>com.bigfive.entities.Tipo</class>
 		<class>com.bigfive.entities.Tutor</class>
 		<class>com.bigfive.entities.Usuario</class>
 		<class>com.bigfive.entities.Accione</class>

@@ -56,10 +56,6 @@ public class Usuario implements Serializable {
 
 	private String telefono;
 
-	//uni-directional many-to-one association to Departamento
-	@ManyToOne
-	@JoinColumn(name="ID_DEPARTAMENTO")
-	private Departamento departamento;
 
 	//uni-directional many-to-one association to Genero
 	@ManyToOne
@@ -166,13 +162,6 @@ public class Usuario implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public Departamento getDepartamento() {
-		return this.departamento;
-	}
-
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
-	}
 
 	public Genero getGenero() {
 		return this.genero;

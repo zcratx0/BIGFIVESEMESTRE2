@@ -391,7 +391,6 @@ public class DatosUsuarios {
 					tutor.setUsuario(user);
 					tutor.setArea(area);
 					tutor.setRol(rol);
-					tutor.setTipo(null);
 
 				}
 

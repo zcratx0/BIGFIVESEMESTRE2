@@ -3,7 +3,6 @@ package funcionalidades;
 import javax.naming.InitialContext;
 import javax.swing.JComboBox;
 
-import com.bigfive.beans.DepartamentoBeanRemote;
 import com.bigfive.beans.ITRBeanRemote;
 
 public class DAOITR {

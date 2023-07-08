@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 
-import com.bigfive.entities.Departamento;
 import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Itr;
 
@@ -41,7 +40,7 @@ public class AgregarITR {
 	JLabel lblNombre = new JLabel("Nombre");
 	JTextField tfNombre = new JTextField();
 	JLabel lblDepa = new JLabel("Departamento");
-	JComboBox<Departamento> cbDepa = new JComboBox<Departamento>();
+	JComboBox<EnumDepartamentos> cbDepa = new JComboBox<EnumDepartamentos>();
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
 	private Itr itr = new Itr();
@@ -245,11 +244,11 @@ public class AgregarITR {
 		this.lblDepa = lblDepa;
 	}
 
-	public JComboBox<Departamento> getCbDepa() {
+	public JComboBox<EnumDepartamentos> getCbDepa() {
 		return cbDepa;
 	}
 
-	public void setCbDepa(JComboBox<Departamento> cbDepa) {
+	public void setCbDepa(JComboBox<EnumDepartamentos> cbDepa) {
 		this.cbDepa = cbDepa;
 	}
 

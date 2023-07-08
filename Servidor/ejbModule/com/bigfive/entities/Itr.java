@@ -24,11 +24,6 @@ public class Itr implements Serializable {
 
 	private String nombre;
 
-	//uni-directional many-to-one association to Departamento
-	@ManyToOne
-	@JoinColumn(name="ID_DEPARTAMENTO")
-	private Departamento departamento;
-
 	@Enumerated(EnumType.STRING)
 	@Column(name="DEPARTAMENTO")
 	private EnumDepartamentos enumDepartamento;

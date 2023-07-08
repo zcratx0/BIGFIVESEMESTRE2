@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import com.bigfive.entities.Departamento;
+import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Genero;
 import com.bigfive.entities.Itr;
 import com.bigfive.entities.Usuario;
@@ -54,7 +54,7 @@ public class DatosUsuario {
 	JTextField tfEmailU = new JTextField();
 	
 	JLabel lblDepa = new JLabel("Departamento");
-	JComboBox<Departamento> cBoxDepa = new JComboBox<Departamento>();
+	JComboBox<EnumDepartamentos> cBoxDepa = new JComboBox<EnumDepartamentos>();
 	
 	JLabel lblLocalidad = new JLabel("Localidad");
 	JTextField tfLocalidad = new JTextField();
@@ -297,7 +297,7 @@ public class DatosUsuario {
 		if (user.getMail() != null) tfEmailP.setText(user.getMail());
 		if (user.getMailInstitucional() != null) tfEmailU.setText(user.getMailInstitucional());
 		if (user.getTelefono() != null) tfTel.setText(user.getTelefono());
-		if (user.getDepartamento() != null) cBoxDepa.setSelectedItem(user.getDepartamento());
+		if (user.getDepartamentos() != null) cBoxDepa.setSelectedItem(user.getDepartamentos());
 		if (user.getLocalidad() != null) tfLocalidad.setText(user.getLocalidad());
 		if (user.getEstado() >-1 ) cBoxEstado.setSelectedIndex(user.getEstado());
 		if (user.getItr() != null) {

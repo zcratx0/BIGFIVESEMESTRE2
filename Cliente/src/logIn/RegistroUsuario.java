@@ -26,7 +26,6 @@ import javax.swing.JTextField;
 
 import com.bigfive.entities.Analista;
 import com.bigfive.entities.Area;
-import com.bigfive.entities.Departamento;
 import com.bigfive.entities.EnumDepartamentos;
 import com.bigfive.entities.Estudiante;
 import com.bigfive.entities.Rol;
@@ -419,7 +418,6 @@ public class RegistroUsuario {
 					tutor.setUsuario(user);
 					tutor.setArea(area);
 					tutor.setRol(rol);
-					tutor.setTipo(null);
 					resultado = DAOTutor.getInstance().getBean().crear(tutor);
 
 				}
