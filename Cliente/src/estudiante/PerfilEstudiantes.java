@@ -146,7 +146,7 @@ public class PerfilEstudiantes {
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
 		tfNombre.setInputVerifier(new ValidacionMaxyMin(02,32));
-		
+		tfNombre.setEnabled(false);
 		
 		tfNombre.addKeyListener(new KeyAdapter() {
 			
@@ -169,6 +169,7 @@ public class PerfilEstudiantes {
 		frame.getContentPane().add(tfApellido);
 		tfApellido.setColumns(10);
 		tfApellido.setInputVerifier(new ValidacionMaxyMin(2,32));
+		tfApellido.setEnabled(false);
 		tfApellido.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloLetras(e);
@@ -202,6 +203,7 @@ public class PerfilEstudiantes {
 		tfFechaNac.setColumns(10);
 		frame.getContentPane().add(tfFechaNac);
 		tfFechaNac.setInputVerifier(new ValidacionFecha());
+		tfFechaNac.setEnabled(false);
 		
 		
 		//Email Personal

@@ -116,7 +116,7 @@ public class DatosUsuario {
 	 */
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
-		frame.setBounds(100, 100, 431+50, 760);
+		frame.setBounds(100, 50, 431+50, 760);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false); 
@@ -241,7 +241,7 @@ public class DatosUsuario {
 		cBoxEstado.addItem("ACTIVADO");
 		cBoxEstado.addItem("ELIMINADO");
 		
-		lblGenero.setBounds(39, 583, 46, 14);
+		lblGenero.setBounds(39, 583, 146, 14);
 		lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		frame.getContentPane().add(lblGenero);
 		

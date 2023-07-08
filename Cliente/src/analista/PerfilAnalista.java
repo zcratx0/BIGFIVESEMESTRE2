@@ -168,6 +168,7 @@ private void initialize() {
 	
 	tfDocumento.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 	tfDocumento.setBounds(142, 136, 219, 19);
+	tfDocumento.setEnabled(false);
 	frame.getContentPane().add(tfDocumento);
 	tfDocumento.setColumns(10);
 	tfDocumento.addKeyListener(new KeyAdapter () {
@@ -188,7 +189,9 @@ private void initialize() {
 	
 	tfFechaNac.setBounds(142, 178, 219, 19);
 	tfFechaNac.setColumns(10);
+	tfFechaNac.setEnabled(false);
 	frame.getContentPane().add(tfFechaNac);
+	
 	
 	tfFechaNac.setInputVerifier(new ValidacionFecha());
 	
