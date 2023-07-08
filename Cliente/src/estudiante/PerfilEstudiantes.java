@@ -316,10 +316,6 @@ public class PerfilEstudiantes {
 		btnConfirmar.setBounds(249, 613, 112, 40);
 		frame.getContentPane().add(btnConfirmar);
 		btnConfirmar.addActionListener(e -> {
-			if (!esMayorDeEdad(tfFechaNac.getText())) {
-				JOptionPane.showMessageDialog(null, "Por favor, fecha de .");
-				return;
-			}
 
 		if (camposCompletos()) {
 			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar sus datos?",
@@ -413,7 +409,6 @@ public class PerfilEstudiantes {
 	    return !tfNombre.getText().isEmpty()
 	            && !tfApellido.getText().isEmpty()
 	            && !tfDocumento.getText().isEmpty()
-	            // Agregar validación para la fecha de nacimiento aquí
 	            && !tfMailPer.getText().isEmpty()
 	            && !tfMailInst.getText().isEmpty()
 	            && !tfTel.getText().isEmpty()
