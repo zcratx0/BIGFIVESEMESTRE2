@@ -123,22 +123,22 @@ public class RegistroAccReclamo {
 		
 		//Estado
 		lblEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblEstado.setBounds(41, 152, 45, 13);
+		lblEstado.setBounds(41, 113, 45, 13);
 		frame.getContentPane().add(lblEstado);
 		
 		cBoxEstado.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		cBoxEstado.setBackground(Color.decode("#e5e7eb"));
-		cBoxEstado.setBounds(188, 148, 211, 21);
+		cBoxEstado.setBounds(184, 109, 211, 21);
 		frame.getContentPane().add(cBoxEstado);
 		
 		//Agregar Comentario
 		lblAgregarCom.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		lblAgregarCom.setBounds(41, 191, 156, 13);
+		lblAgregarCom.setBounds(41, 155, 156, 13);
 		frame.getContentPane().add(lblAgregarCom);
 		
 	
 		tAreaAgregarCom.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
-		tAreaAgregarCom.setBounds(51, 211, 368, 38);
+		tAreaAgregarCom.setBounds(41, 186, 378, 56);
 		frame.getContentPane().add(tAreaAgregarCom);
 		
 		
@@ -168,7 +168,7 @@ public class RegistroAccReclamo {
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
 		btnCancelar.setBackground(Color.decode("#0284c7"));
-		btnCancelar.setBounds(217, 259, 86, 27);
+		btnCancelar.setBounds(211, 257, 92, 29);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//	ListaReclamo.main(null);

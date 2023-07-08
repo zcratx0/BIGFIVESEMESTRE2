@@ -119,6 +119,7 @@ public class AgregarEstado {
 		tfNombre.setBounds(96, 84, 215, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
+		if (this.est != null) tfNombre.setText(this.est.getNombre());
 		
 		
 		//Botones
