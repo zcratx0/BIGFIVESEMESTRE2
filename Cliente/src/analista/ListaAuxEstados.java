@@ -214,7 +214,7 @@ public class ListaAuxEstados {
 						if (DAOEstado.getInstance().getBean().estaUtilizado(estado)) Mensajes.MostrarError("ESTADO UTILIZADO");
 						else {
 							estado.setEstado(false);
-							Mensajes.MostrarExito("ESTADO ACTUALIZADO");
+							Mensajes.MostrarExito("Estado actualizado");
 						}
 					}
 					DAOEstado.getInstance().getBean().modificar(estado);

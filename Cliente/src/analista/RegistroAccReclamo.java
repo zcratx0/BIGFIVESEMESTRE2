@@ -173,7 +173,7 @@ public class RegistroAccReclamo {
 					if (tAreaAgregarCom.getText().isEmpty()) {
 						Mensajes.MostrarError("Rellenar los campos");
 					} else if (cBoxEstado.getSelectedIndex() == 0) {
-						Mensajes.MostrarError("SELECCIONAR OTRO ESTADO!");
+						Mensajes.MostrarError("Seleccionar otro estado");
 					} else {
 						guardarCambios();
 						frame.dispose();
