@@ -136,6 +136,7 @@ public class AgregarEstado {
 			if (confirmacion == JOptionPane.YES_OPTION) {
 				if (crearEstado()) {
 					Mensajes.MostrarExito("ESTADO CREADO!");
+					ListaAuxEstados.main(null);
 					frame.dispose();
 				}
 			}
