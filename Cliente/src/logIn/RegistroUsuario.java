@@ -377,7 +377,7 @@ public class RegistroUsuario {
 				return;
 			}
 			if (!esMayorDeEdad(tfFech.getText())) {
-				JOptionPane.showMessageDialog(null, "Por favor, fecha de .");
+				JOptionPane.showMessageDialog(null, "Por favor, ingresar una fecha valida.");
 				return;
 			}
 			System.out.println("USUARIO CREADO!");
