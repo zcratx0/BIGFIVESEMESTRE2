@@ -25,6 +25,7 @@ import com.bigfive.entities.Usuario;
 
 import analista.DatosUsuario;
 import analista.ListaAuxITR;
+import funcionalidades.DAOEstado;
 import funcionalidades.DAOReclamo;
 import utils.TBFTable;
 import validaciones.Mensajes;
@@ -114,9 +115,8 @@ public class ListaReclamoEstu {
 		frame.getContentPane().add(cboxEstado);
 
 		cboxEstado.addItem("SIN FILTRO");
-		cboxEstado.addItem("SIN VALOR");
-		cboxEstado.addItem("ACTIVADO");
-		cboxEstado.addItem("ELIMINADO");
+		cboxEstado.addItem("INGRESADO");
+		DAOEstado.getInstance().cargarComboBox(cboxEstado);
 		
 		
 			//filtro
