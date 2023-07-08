@@ -367,7 +367,10 @@ public class RegistroUsuario {
 		btnRegistro.setBounds(261, 695, 112, 40);
 		btnRegistro.addActionListener(e -> {
 			if (cBoxTipoUsu.getSelectedItem().toString().equalsIgnoreCase("estudiante")) {
-				if (tfAnioIng.)
+				if (Integer.parseInt(tfAnioIng.getText()) > LocalDate.now().getYear()) {
+					JOptionPane.showMessageDialog(null, "Por favor, ingresar un año de generación menor al año actual.");
+					return;
+				}
 			}
 			if (!camposCompletos()) {
 				JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
