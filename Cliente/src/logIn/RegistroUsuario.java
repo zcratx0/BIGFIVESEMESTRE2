@@ -452,7 +452,10 @@ public class RegistroUsuario {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir sin guardar sus datos?",
+						"Confirmación de salir", JOptionPane.YES_NO_OPTION);
+				if (confirmacion == JOptionPane.YES_OPTION)
+					frame.dispose();
 			}
 		});
 		btnCancelar.setBackground(Color.decode("#0284c7"));
@@ -470,7 +473,6 @@ public class RegistroUsuario {
 		// Combo Box
 		cBoxTipoUsu = new JComboBox(new String[] { "Seleccione Tipo", "Analista", "Estudiante", "Tutor" });
 
-		// TODO CAMBIAR AÑO POR ANIO
 		
 		cBoxTipoUsu.setBounds(142, 561, 219, 21);
 		cBoxTipoUsu.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
