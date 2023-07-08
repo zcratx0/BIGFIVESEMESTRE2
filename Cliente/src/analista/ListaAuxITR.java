@@ -202,7 +202,7 @@ public class ListaAuxITR {
 		System.out.println("Cargando tabla ITR's");
 		DefaultTableModel tableModel = new DefaultTableModel();
 		tableModel.addColumn("ITR");
-		tableModel.addColumn("NOMBRE");
+		tableModel.addColumn("DEPARTAMENTO");
 		tableModel.addColumn("ESTADO");
 
 		JComboBox cbEstado = new JComboBox<>();

@@ -167,10 +167,10 @@ public class AgregarEstado {
 		}
 
 		Estado estado = new Estado();
-		if (this.est == null) estado = this.est;		
+		if (this.est != null) estado = this.est;		
 		estado.setNombre(tfNombre.getText());
 		estado.setEstado(true);
-		if (this.est == null) DAOEstado.getInstance().getBean().crear(estado);
+		if (this.est != null) DAOEstado.getInstance().getBean().crear(estado);
 		else {
 			DAOEstado.getInstance().getBean().modificar(estado);
 		}
