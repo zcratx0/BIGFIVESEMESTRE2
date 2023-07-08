@@ -132,8 +132,7 @@ public class ListaAuxITR {
 				if (confirmacion == JOptionPane.YES_OPTION) {
 					if (DAOITR.getInstance().getItrBean().estaEnUso(itr)) {
 						Mensajes.MostrarError("Este ITR esta siendo utilizado! No se puede usar!");
-					}
-					else {
+					} else {
 						itr.setEstado((0));
 						DAOITR.getInstance().getItrBean().modificar(itr);
 						cargarTabla();
@@ -167,8 +166,13 @@ public class ListaAuxITR {
 		// Agregar
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AgregarITR.main(null);
-				frame.dispose();
+				int confirmacion = JOptionPane.showConfirmDialog(null,
+						"¿Está seguro que desea agregar un nuevo ITR?", "Confirmación ITR",
+						JOptionPane.YES_NO_OPTION);
+				if (confirmacion == JOptionPane.YES_OPTION) {
+					AgregarITR.main(null);
+					frame.dispose();
+				}
 			}
 		});
 		btnAgregar.setBounds(346, 406, 95, 25);
@@ -207,8 +211,6 @@ public class ListaAuxITR {
 		tableModel.addColumn("DEPARTAMENTO");
 		tableModel.addColumn("ESTADO");
 
-
-		
 		DAOITR.getInstance().getItrBean().actualizar();
 		DAOITR.getInstance().getItrBean().listarElementos().forEach(t -> {
 			String value = "";

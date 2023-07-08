@@ -34,7 +34,7 @@ import java.awt.event.ActionEvent;
 
 public class AgregarITR {
 
-	//Atributo
+	// Atributo
 	JFrame frame = new JFrame();
 	JLabel lblAgregarITR = new JLabel("ITR");
 	JLabel lblNombre = new JLabel("Nombre");
@@ -44,6 +44,7 @@ public class AgregarITR {
 	JButton btnConfirmar = new JButton("Confirmar");
 	JButton btnCancelar = new JButton("Cancelar");
 	private Itr itr = new Itr();
+
 	/**
 	 * Launch the application.
 	 */
@@ -84,8 +85,9 @@ public class AgregarITR {
 					int type = 1;
 					AgregarITR window = new AgregarITR(type);
 					window.setItr(itr);
-					if (itr.getNombre() != null )window.getTfNombre().setText(itr.getNombre().toString());
-					
+					if (itr.getNombre() != null)
+						window.getTfNombre().setText(itr.getNombre().toString());
+
 					window.cbDepa.setSelectedItem(itr.getDepartamento());
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -94,10 +96,7 @@ public class AgregarITR {
 			}
 		});
 	}
-	
-	
-	
-	
+
 	public AgregarITR(int type) {
 		initialize(type);
 	}
@@ -110,100 +109,105 @@ public class AgregarITR {
 		frame.setBounds(100, 100, 469, 281);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setResizable(false); //TODO bloquear tamaño. Agregar a los demás
-		
-		//Titulo Agregar ITR
+		frame.setResizable(false); // TODO bloquear tamaño. Agregar a los demás
+
+		// Titulo Agregar ITR
 		lblAgregarITR.setForeground(Color.decode("#08ACEC"));
 		lblAgregarITR.setFont(new Font("Bookman Old Style", Font.BOLD, 20));
 		lblAgregarITR.setBounds(142, 10, 169, 25);
 		frame.getContentPane().add(lblAgregarITR);
-		
-		
-		//Nombre
+
+		// Nombre
 		lblNombre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblNombre.setBounds(25, 79, 45, 13);
 		frame.getContentPane().add(lblNombre);
-		
+
 		tfNombre.setBounds(142, 76, 274, 19);
 		frame.getContentPane().add(tfNombre);
 		tfNombre.setColumns(10);
-		tfNombre.setInputVerifier(new ValidacionMaxyMin(2,32));
+		tfNombre.setInputVerifier(new ValidacionMaxyMin(2, 32));
 		tfNombre.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidarInputs.ValidarSoloLetras(e);
 			}
-		}); 
-		
-		
-		//Departamento
+		});
+
+		// Departamento
 		lblDepa.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblDepa.setBounds(25, 120, 105, 13);
 		frame.getContentPane().add(lblDepa);
-		
+
 		cbDepa.setBounds(142, 117, 274, 19);
 		frame.getContentPane().add(cbDepa);
-		
-		
-		//Boton Agregar
+
+		// Boton Agregar
 		btnConfirmar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnConfirmar.setForeground(Color.decode("#f0f9ff"));
 		btnConfirmar.setBackground(Color.decode("#0284c7"));
 		btnConfirmar.setBounds(311, 184, 105, 33);
 		frame.getContentPane().add(btnConfirmar);
 		btnConfirmar.addActionListener(e -> {
-			this.itr.setDepartamento((EnumDepartamentos) cbDepa.getSelectedItem());
-			this.itr.setNombre(tfNombre.getText());
-			System.out.println(this.itr.getNombre() + "-" +this.itr.getDepartamento());			
-			boolean resultado = false;
-			if (type == 0) {
-				this.itr.setEstado(1);
-				resultado = DAOITR.getInstance().getItrBean().crear(itr);
+
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar ITR?",
+					"Confirmación ITR", JOptionPane.YES_NO_OPTION);
+			if (confirmacion == JOptionPane.YES_OPTION) {
+
+				this.itr.setDepartamento((EnumDepartamentos) cbDepa.getSelectedItem());
+				this.itr.setNombre(tfNombre.getText());
+				boolean resultado = false;
+				if (type == 0) {
+					this.itr.setEstado(1);
+					resultado = DAOITR.getInstance().getItrBean().crear(itr);
+				} else if (type == 1)
+					resultado = DAOITR.getInstance().getItrBean().modificar(itr);
+				if (resultado) {
+					JOptionPane.showMessageDialog(frame,
+							"ITR Agregado\n" + this.itr.getNombre() + " - " + this.itr.getDepartamento());
+					DAOITR.getInstance().getItrBean().actualizar();
+					ListaAuxITR.main(null);
+					frame.dispose();
+				} else {
+					JOptionPane.showMessageDialog(frame, "Hubo un error al agregar el ITR");
 				}
-			else if (type == 1) resultado = DAOITR.getInstance().getItrBean().modificar(itr);
-			if (resultado) {
-				System.out.println("ITR CREADO");
-				JOptionPane.showMessageDialog(frame, "ITR Agregado\n"+this.itr.getNombre() + " - " +this.itr.getDepartamento());
-				DAOITR.getInstance().getItrBean().actualizar();
-				ListaAuxITR.main(null);
-				frame.dispose();
-			} else {
-				System.out.println("ERROR AL CREAR ITR" + itr.toString());
-				JOptionPane.showMessageDialog(frame, "Hubo un error al agregar el ITR");
 			}
 		});
-		
-		//Boton Cancelar
+
+		// Boton Cancelar
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnCancelar.setForeground(Color.decode("#f0f9ff"));
 		btnCancelar.setBackground(Color.decode("#0284c7"));
 		btnCancelar.setBounds(184, 184, 106, 33);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaAuxITR.main(null);
-				frame.dispose();
+				int confirmacion = JOptionPane.showConfirmDialog(null,
+						"¿Está seguro que desea salir sin guardar cambios?", "Confirmación salir",
+						JOptionPane.YES_NO_OPTION);
+				if (confirmacion == JOptionPane.YES_OPTION) {
+					ListaAuxITR.main(null);
+					frame.dispose();
+				}
 			}
 		});
 		frame.getContentPane().add(btnCancelar);
-		
-		//Imagen
+
+		// Imagen
 		JLabel lblLogoUtec = new JLabel("");
 		lblLogoUtec.setIcon(new ImageIcon(AgregarITR.class.getResource("/img/LogoUTEC30x30.png")));
 		lblLogoUtec.setBounds(25, 0, 107, 50);
 		frame.getContentPane().add(lblLogoUtec);
-		
-		
-		//	FUNCIONALIDADES
+
+		// FUNCIONALIDADES
 		DAODepartamento.getInstance().cargarComboBox(cbDepa);
 	}
 
 	public Itr getItr() {
 		return itr;
-		
+
 	}
 
 	public void setItr(Itr itr) {
 		this.itr = itr;
-		
+
 	}
 
 	public JFrame getFrame() {
