@@ -29,6 +29,7 @@ import estudiante.ListaReclamoEstu;
 import funcionalidades.DAOAnalista;
 import funcionalidades.DAOEstudiante;
 import funcionalidades.DAOITR;
+import funcionalidades.DAOTutor;
 import utils.TBFTable;
 import validaciones.Mensajes;
 
@@ -327,6 +328,15 @@ public class ListaUsuarios {
 			else if (estado == 1)valor = "ACTIVADO";
 			else if (estado == 2) valor = "ELIMINADO";
 			Object[] row = {t, t.getUsuario().getMail(), t.getUsuario().getDocumento(), t.getUsuario().getNombre() + " " + t.getUsuario().getApellido(), "ESTUDIANTE", t.getUsuario().getItr(), valor, t.getGeneracion()};
+			tableModel.addRow(row);
+		});
+		DAOTutor.getInstance().getBean().listarElementos().forEach(t -> {
+			String valor = "";
+			int estado = t.getUsuario().getEstado();
+			if (estado == 0) valor = "SIN VALOR";
+			else if (estado == 1)valor = "ACTIVADO";
+			else if (estado == 2) valor = "ELIMINADO";
+			Object[] row = {t, t.getUsuario().getMail(), t.getUsuario().getDocumento(), t.getUsuario().getNombre() + " " + t.getUsuario().getApellido(), "TUTOR", t.getUsuario().getItr(), valor};
 			tableModel.addRow(row);
 		});
 		
