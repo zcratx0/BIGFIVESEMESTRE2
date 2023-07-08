@@ -187,12 +187,12 @@ public class ListaReclamoEstu {
 		btnEliminar.addActionListener(t-> {
 			if (tablaRe.getSelectedRow() > -1) {
 				Reclamo rc = (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
-				if (rc.getEstado() != null) Mensajes.MostrarError("EL ESTADO ESTA SIENDO PROCESADO");
+				if (rc.getEstado() != null) Mensajes.MostrarError("El estado esta siendo procesado");
 				else {
 					rc.setHabilitado(false);
 					DAOReclamo.getInstance().getBean().modificar(rc);
 					cargarTabla();	
-					Mensajes.MostrarExito("ESTADO BORRADO");
+					Mensajes.MostrarExito("Estado borrado");
 				}
 			}
 		});

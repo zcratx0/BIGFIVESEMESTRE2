@@ -9,6 +9,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -307,6 +310,10 @@ public class PerfilTutor {
 		
 		
 		btnConfirmar.addActionListener(e-> {
+			if (!esMayorDeEdad(tfFechaNac.getText())) {
+				JOptionPane.showMessageDialog(null, "Por favor, fecha de .");
+				return;
+			}
 			
 			if (camposCompletos()) {
 				int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar sus datos?",
@@ -349,6 +356,7 @@ public class PerfilTutor {
 		frame.getContentPane().add(lblLogoUtec);
 		
 		frame.getContentPane().add(tfFechaNac);
+		lblGenero.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
 		lblGenero.setBounds(10, 616, 45, 13);
 		
 		frame.getContentPane().add(lblGenero);
@@ -457,6 +465,24 @@ public class PerfilTutor {
 		DAOTutor.getInstance().getBean().modificar(tutor);
 		
 		
+	}
+	
+	private boolean esMayorDeEdad(String fechaNacimientoStr) {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			Date nac = format.parse(fechaNacimientoStr);
+			Calendar cl = Calendar.getInstance();
+			cl.setTime(nac);
+			
+			LocalDate nacDate = LocalDate.of(cl.get(Calendar.YEAR), cl.get(Calendar.MONTH), cl.get(Calendar.DAY_OF_MONTH));
+			LocalDate now = LocalDate.now();
+	        Period ageDifference = Period.between(nacDate, now);
+	        if (ageDifference.getYears() >= 18) return true;			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 	
 	public boolean camposCompletos() {

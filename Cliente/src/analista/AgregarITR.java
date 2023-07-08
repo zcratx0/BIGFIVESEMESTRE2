@@ -167,7 +167,7 @@ public class AgregarITR {
 				DAOITR.getInstance().getItrBean().actualizar();
 			} else {
 				System.out.println("ERROR AL CREAR ITR" + itr.toString());
-				JOptionPane.showMessageDialog(frame, "HUBO UN ERROR AL AGREGAR EL ITR");
+				JOptionPane.showMessageDialog(frame, "Hubo un error al agregar el ITR");
 			}
 		});
 		

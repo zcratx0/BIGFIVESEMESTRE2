@@ -144,7 +144,7 @@ public class LogIn {
 				//	CONSEGUIMOS EL USUARIO
 				Usuario usuario = DAOUsuario.getInstance().login(tfUsuario.getText(),new String(pasFContra.getPassword()));
 				tipo = DAOUsuario.getInstance().getTipo(usuario);
-				if (usuario.getEstado() == 0) {JOptionPane.showMessageDialog(null, "USUARIO NO HABILITADO");}
+				if (usuario.getEstado() == 0) {JOptionPane.showMessageDialog(null, "Usuario no habilitado");}
 				else {
 					System.out.println("tipo: " + tipo);
 					// Evalua que tipo de usuario ingresa
