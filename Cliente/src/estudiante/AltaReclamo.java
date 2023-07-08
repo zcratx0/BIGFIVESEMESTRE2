@@ -72,7 +72,7 @@ public class AltaReclamo {
 	JTextArea taDescrip = new JTextArea();
 	JLabel lblNomEvento = new JLabel("Nombre del evento");
 	JTextField tfNombEvento = new JTextField();
-	JComboBox<Evento> cBoxEvento = new JComboBox<Evento>();
+	JComboBox cBoxEvento = new JComboBox();
 
 	JLabel lblNombAct = new JLabel("Nombre de la actividad");
 	JTextField tfNombAct = new JTextField();
@@ -203,6 +203,14 @@ public class AltaReclamo {
 		// ComboBox Evento
 		cBoxEvento.setBounds(200, 182, 227, 19);
 		frame.getContentPane().add(cBoxEvento);
+		cBoxEvento.addActionListener(t-> {
+			if (cBoxEvento.getSelectedIndex() != 0) {
+				tfNombEvento.setEnabled(false);
+			}
+			else {
+				tfNombAct.setEnabled(true);
+			}
+		});
 
 		// Nombre de la actividad
 		lblNombAct.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -217,6 +225,7 @@ public class AltaReclamo {
 			}
 		});
 		tfNombAct.setColumns(10);
+		frame.getContentPane().add(tfNombAct);
 
 		// Semestre
 		lblSemestre.setFont(new Font("Bookman Old Style", Font.PLAIN, 10));
@@ -347,15 +356,12 @@ public class AltaReclamo {
 		reclamo.setSemestre(tfSemestre.getValue() + "");
 		reclamo.setTutor((Tutor) cBoxDocente.getSelectedItem());
 		reclamo.setCredito((Integer) tfCredito.getValue());
-		if (tfNombAct.getText().isEmpty()) {
-			try {
-				reclamo.setEvento((Evento) cBoxEvento.getSelectedItem());
-				DAOEvento.getInstance().getBean().modificar(reclamo.getEvento());
-			} catch (Exception e) {
-				// TODO Borrar el comentairo. Esto es porque paso de arreglarlo.
-			}
-		} else {
+		if (cBoxEvento.getSelectedIndex() == 0) {
 			reclamo.setNombreActividad(tfNombAct.getText());
+		}
+		else {
+			reclamo.setEvento((Evento) cBoxEvento.getSelectedItem());
+			DAOEvento.getInstance().getBean().modificar(reclamo.getEvento());
 		}
 
 		try {

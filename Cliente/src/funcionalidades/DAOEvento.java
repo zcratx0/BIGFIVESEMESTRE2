@@ -15,10 +15,9 @@ public class DAOEvento extends DAO<EventoBeanRemote>{
 	
 	public void cargarComboBox(JComboBox cb) {
 		cb.removeAllItems();
-		System.out.println("Cargando estado");
+		cb.addItem("SELECCIONAR EVENTO");
 		instance.getBean().listarElementos().forEach(estado -> {
 			cb.addItem(estado);
-			System.out.println("Estado: " + estado);
 		});
 	}
 }
