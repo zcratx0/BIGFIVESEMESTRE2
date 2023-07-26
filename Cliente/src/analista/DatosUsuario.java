@@ -211,6 +211,7 @@ public class DatosUsuario {
 
 		cBoxDepa.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
 		cBoxDepa.setBounds(195, 445, 265, 21);
+		cBoxDepa.setEnabled(false);
 		frame.getContentPane().add(cBoxDepa);
 		
 		lblLocalidad.setFont(new Font("Bookman Old Style", Font.PLAIN, textSize));
