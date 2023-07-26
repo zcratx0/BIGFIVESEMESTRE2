@@ -34,6 +34,9 @@ import validaciones.Mensajes;
 
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
 public class ListaReclamoEstu {
@@ -126,6 +129,16 @@ public class ListaReclamoEstu {
 		btnFiltrar.setForeground(Color.decode("#f0f9ff"));
 		btnFiltrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// FILTRO
+				DefaultTableModel dtm = (DefaultTableModel) tablaRe.getModel();
+				TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
+				tablaRe.setRowSorter(sorter);
+				List<RowFilter<Object, Object>> filtros = new ArrayList<>();
+
+				if (!cboxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO"))
+					filtros.add(RowFilter.regexFilter(cboxEstado.getSelectedItem().toString(), 4));
+
+				sorter.setRowFilter((RowFilter<Object, Object>) RowFilter.andFilter(filtros));
 			}
 		});
 		btnFiltrar.setFont(new Font("Tahona", Font.BOLD, 8));
