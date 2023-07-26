@@ -419,6 +419,16 @@ public class AltaReclamo {
 			tfNombAct.setText(reclamo.getNombreActividad());
 		if (reclamo.getCredito() != null)
 			tfCredito.setValue(reclamo.getCredito());
+		if (reclamo.getEvento() != null) {
+			if (reclamo.getEvento().getTitulo() != null) {
+				for (int i = 0; i < cBoxEvento.getItemCount(); i++) {
+					String x = cBoxEvento.getItemAt(i).toString();
+					if (reclamo.getEvento().toString().equals(x)) {
+						cBoxEvento.setSelectedIndex(i);
+					}
+				}
+			}
+		}
 
 	}
 
