@@ -147,8 +147,11 @@ public class AgregarITR {
 		btnConfirmar.setBounds(311, 184, 105, 33);
 		frame.getContentPane().add(btnConfirmar);
 		btnConfirmar.addActionListener(e -> {
-
-			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea modificar ITR?",
+			String pregunta = "agregar";
+			if (type == 1) {
+				pregunta = "modificar";
+			}
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea "+ pregunta+" ITR?",
 					"Confirmación ITR", JOptionPane.YES_NO_OPTION);
 			if (confirmacion == JOptionPane.YES_OPTION) {
 
