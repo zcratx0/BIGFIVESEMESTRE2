@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -103,7 +104,7 @@ public class ListaReclamoEstu {
 		lblListaReclamo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblListaReclamo.setBounds(123, 10, 161, 28);
 		frame.getContentPane().add(lblListaReclamo);
-		frame.setBounds(100, 100, 489, 512);
+		frame.setBounds(0, 0, 489, 512);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		//Filtro Estado
@@ -200,14 +201,18 @@ public class ListaReclamoEstu {
 		btnEliminar.setBounds(10, 402, 100, 28);
 		frame.getContentPane().add(btnEliminar);
 		btnEliminar.addActionListener(t-> {
-			if (tablaRe.getSelectedRow() > -1) {
-				Reclamo rc = (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
-				if (rc.getEstado() != null) Mensajes.MostrarError("El estado esta siendo procesado");
-				else {
-					rc.setHabilitado(false);
-					DAOReclamo.getInstance().getBean().modificar(rc);
-					cargarTabla();	
-					Mensajes.MostrarExito("Estado borrado");
+			int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el Reclamo? ",
+					"Confirmación de Eliminar Reclamo", JOptionPane.YES_NO_OPTION);
+			if (confirmacion == JOptionPane.YES_OPTION) {
+				if (tablaRe.getSelectedRow() > -1) {
+					Reclamo rc = (Reclamo) tablaRe.getModel().getValueAt(tablaRe.getSelectedRow(), 0);
+					if (rc.getEstado() != null) Mensajes.MostrarError("El reclamo esta siendo procesado");
+					else {
+						rc.setHabilitado(false);
+						DAOReclamo.getInstance().getBean().modificar(rc);
+						cargarTabla();	
+						Mensajes.MostrarExito("Reclamo borrado");
+					}
 				}
 			}
 		});

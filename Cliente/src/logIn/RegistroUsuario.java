@@ -102,7 +102,7 @@ public class RegistroUsuario {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));  
-		frame.setBounds(100, 30, 417, 800);
+		frame.setBounds(0, 0, 417, 800);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);

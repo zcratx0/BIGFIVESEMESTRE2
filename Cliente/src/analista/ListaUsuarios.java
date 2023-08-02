@@ -87,6 +87,7 @@ public class ListaUsuarios {
 			public void run() {
 				try {
 					ListaUsuarios window = new ListaUsuarios();
+					window.analista = analista;
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -279,13 +280,10 @@ public class ListaUsuarios {
 		btnHistorial.setFont(new Font("Tahona", Font.BOLD, 10));
 		btnHistorial.setForeground(Color.decode("#f0f9ff"));
 		btnHistorial.setBackground(Color.decode("#0ea5e9"));
-		/* OLD
-		btnHistorial.setBounds(131, 415, 85, 21);
-		*/
 		btnHistorial.setBounds(25, 415, 85, 21);
 		btnHistorial.addActionListener(e -> {
 			if (tablaUsu.getSelectedRow() > -1) {
-				if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Estudiante) ListaReclamo.main((Estudiante) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0), analista);
+				if (tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0) instanceof Estudiante) ListaReclamo.main((Estudiante) tablaUsu.getModel().getValueAt(tablaUsu.getSelectedRow(), 0));
 				else Mensajes.MostrarError("Por favor seleccionar un estudiante de la lista.");
 				System.out.println("");
 			} else {

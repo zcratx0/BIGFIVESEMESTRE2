@@ -110,6 +110,21 @@ public class ListaReclamo {
 		});
 	}
 
+	public static void main(Estudiante estudiante) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ListaReclamo window = new ListaReclamo();
+					window.cargarTablaEstudiante(estudiante);
+					window.btnRegAcc.setEnabled(false);
+					window.btnRegAcc.setVisible(false);
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	/**
 	 * Create the application.
 	 */
@@ -213,7 +228,7 @@ public class ListaReclamo {
 						if (analista != null)
 							RegistroAccReclamo.main(analista, reclamo);
 						else
-							RegistroAccConstancias.main(null);
+							RegistroAccReclamo.main(null);
 					}
 				}
 			}

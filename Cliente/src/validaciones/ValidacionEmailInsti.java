@@ -22,7 +22,7 @@ public class ValidacionEmailInsti extends InputVerifier {
 		Matcher matcher = pattern.matcher(text);
 		if (!matcher.matches()) {
 			JOptionPane.showMessageDialog(input,
-					"Por favor, ingrese un correo electrónico válido con el dominio utec.edu.uy.");
+					"Por favor, ingrese un correo electrónico válido con el dominio utec.edu.uy o estudiantes.utec.edu.uy.");
 			return false;
 		}
 		return true;

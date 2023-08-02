@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import com.bigfive.entities.Analista;
 import com.bigfive.entities.Usuario;
 
 import funcionalidades.DAOAnalista;
@@ -34,7 +35,6 @@ public class HabilitacionUsuario {
 	JButton btnAtras = new JButton("Atrás");
 	JButton btnListUsu = new JButton("Lista de Usuarios");
 	JTable tablaEst;
-
 	/**
 	 * Launch the application.
 	 */

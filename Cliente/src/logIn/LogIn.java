@@ -133,6 +133,7 @@ public class LogIn {
 		lblOlvidContra.setBounds(226, 194, 171, 13);
 		frame.getContentPane().add(lblOlvidContra);
 		
+		
 		//Boton
 			//Ingresar
 		JButton btnIngresar = new JButton("Ingresar");
@@ -186,6 +187,13 @@ public class LogIn {
 		btnRegistro.setForeground(Color.decode("#f0f9ff"));
 		btnRegistro.setBounds(191, 243, 118, 29);
 		frame.getContentPane().add(btnRegistro);
+		
+		
+		pasFContra.addActionListener(new ActionListener() {
+			  public void actionPerformed(ActionEvent e) {
+				  btnIngresar.doClick(); 
+			  }
+		});
 		
 	}
 }

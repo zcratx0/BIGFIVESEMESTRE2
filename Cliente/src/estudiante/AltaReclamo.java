@@ -434,7 +434,7 @@ public class AltaReclamo {
 
 	// validar que todos los campos esten llenos antes de guardar
 	private boolean camposCompletos() {
-		return tfTitReclamo.getText().isEmpty();
+		return tfTitReclamo.getText().isEmpty() || taDescrip.getText().isEmpty();
 
 	}
 
