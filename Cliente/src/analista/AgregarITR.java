@@ -147,6 +147,13 @@ public class AgregarITR {
 		btnConfirmar.setBounds(311, 184, 105, 33);
 		frame.getContentPane().add(btnConfirmar);
 		btnConfirmar.addActionListener(e -> {
+			if ( tfNombre.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(frame,
+						"El nombre del ITR no puede estar vacio");
+			
+			} else 
+			{
+			
 			String pregunta = "agregar";
 			if (type == 1) {
 				pregunta = "modificar";
@@ -173,7 +180,9 @@ public class AgregarITR {
 					JOptionPane.showMessageDialog(frame, "Hubo un error al agregar el ITR");
 				}
 			}
-		});
+		}
+		}
+				);
 
 		// Boton Cancelar
 		btnCancelar.setFont(new Font("Tahona", Font.BOLD, 10));

@@ -11,6 +11,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -402,7 +404,6 @@ public class RegistroUsuario {
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
-			
 			
 			boolean resultado = false;
 			Long x = DAOUsuario.getInstance().getBean().createWithId(user);

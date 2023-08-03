@@ -116,7 +116,7 @@ public class DatosUsuario {
 	 */
 	private void initialize() {
 		frame.getContentPane().setBackground(Color.decode("#f9fafb"));
-		frame.setBounds(100, 50, 431+50, 760);
+		frame.setBounds(0, 0, 431+50, 760);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false); 

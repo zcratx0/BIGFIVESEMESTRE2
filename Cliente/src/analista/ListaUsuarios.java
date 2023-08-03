@@ -317,7 +317,7 @@ public class ListaUsuarios {
 			if (estado == 0) valor = "SIN VALOR";
 			else if (estado == 1)valor = "ACTIVADO";
 			else if (estado == 2) valor = "ELIMINADO";
-			Object[] row = {t, t.getUsuario().getMail(), t.getUsuario().getDocumento(), t.getUsuario().getNombre() + " " + t.getUsuario().getApellido(),  "ANALISTA" , t.getUsuario().getItr(), valor};
+			Object[] row = {t, t.getUsuario().getMailInstitucional(), t.getUsuario().getDocumento(), t.getUsuario().getNombre() + " " + t.getUsuario().getApellido(),  "ANALISTA" , t.getUsuario().getItr(), valor};
 			tableModel.addRow(row);
 		});
 		DAOEstudiante.getInstance().getBean().listarElementos().forEach(t -> {

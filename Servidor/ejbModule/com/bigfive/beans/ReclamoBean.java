@@ -76,12 +76,14 @@ public class ReclamoBean implements ReclamoRemote {
 	@Override
 	public boolean agregarReclamo(Reclamo value, Evento evento) {
 		try {
+			System.out.println();
 			value.setEvento(evento);
 			em.persist(value);
 			em.flush();
 			return true;
 		} catch (Exception e) {
 			System.err.println("ERROR AL CREAR RECLAMO");
+			System.out.println(value.getIdReclamo());
 			e.printStackTrace();
 		}
 		return false;
