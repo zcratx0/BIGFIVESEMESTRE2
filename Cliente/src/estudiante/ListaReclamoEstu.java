@@ -137,7 +137,7 @@ public class ListaReclamoEstu {
 				List<RowFilter<Object, Object>> filtros = new ArrayList<>();
 
 				if (!cboxEstado.getSelectedItem().toString().equalsIgnoreCase("SIN FILTRO"))
-					filtros.add(RowFilter.regexFilter(cboxEstado.getSelectedItem().toString(), 4));
+					filtros.add(RowFilter.regexFilter(cboxEstado.getSelectedItem().toString(), 3));
 
 				sorter.setRowFilter((RowFilter<Object, Object>) RowFilter.andFilter(filtros));
 			}
@@ -154,7 +154,10 @@ public class ListaReclamoEstu {
 		frame.getContentPane().add(btnLimpFiltro);
 		btnLimpFiltro.addActionListener(e -> {
 			cboxEstado.setSelectedIndex(0);
-			tablaRe.limpiarFiltro();
+			DefaultTableModel dtm = (DefaultTableModel) tablaRe.getModel();
+			TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(dtm);
+			tablaRe.setRowSorter(sorter);
+			sorter.setRowFilter(RowFilter.regexFilter(""));
 		});
 		
 		
@@ -261,7 +264,7 @@ public class ListaReclamoEstu {
 		DAOReclamo.getInstance().getBean().reclamosDelEstudiante(estudiante).forEach(t -> {
 			String fecha = t.getFechaHora() != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm").format(t.getFechaHora()) : "FECHA";
 			String titulo = t.getDetalle() != null ? t.getTitulo() : "TITULO"; 
-			String estado = "EN PROCESO";
+			String estado = "INGRESADO";
 			if (t.getEstado() != null) estado = t.getEstado().getNombre();
 			Object[] row  = {t, titulo , fecha ,estado};
 			model.addRow(row);
